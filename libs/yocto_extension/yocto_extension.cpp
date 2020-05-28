@@ -28,6 +28,8 @@
 
 #include "yocto_extension.h"
 
+#include <pybind11/pybind11.h>
+
 #include <atomic>
 #include <deque>
 #include <future>
@@ -78,5 +80,19 @@ using math::zero4i;
 // IMPLEMENTATION FOR EXTENSION
 // -----------------------------------------------------------------------------
 namespace yocto::extension {
+    // namespace py = pybind11;
+
+    // PYBIND11_MODULE(example, m) {
+    //     py::class_<vec2f>(m, "vec2f")
+    //         .def(py::init<>())
+    //         .def_readwrite("x", &vec2f::x)
+    //         .def_readwrite("y", &vec2f::y);
+    // }
+
+
+    // PYBIND11_MODULE(test_yscene, m) {
+    //     m.doc() = "pybind11 example plugin"; // optional module docstring
+    //     m.def("add", &add);
+    // }
 
 }  // namespace yocto::pathtrace

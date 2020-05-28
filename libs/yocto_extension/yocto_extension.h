@@ -35,6 +35,7 @@
 // INCLUDES
 // -----------------------------------------------------------------------------
 
+// #include <yocto/yocto_trace.h>
 #include <yocto/yocto_image.h>
 #include <yocto/yocto_math.h>
 
@@ -75,6 +76,7 @@ using math::zero3f;
 // -----------------------------------------------------------------------------
 namespace yocto::extension {
 
+    // int add(int, int);
 }  // namespace yocto::pathtrace
 
 #endif

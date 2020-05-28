@@ -1,0 +1,6 @@
+setup.py
+yocto_pathextension.egg-info/PKG-INFO
+yocto_pathextension.egg-info/SOURCES.txt
+yocto_pathextension.egg-info/dependency_links.txt
+yocto_pathextension.egg-info/not-zip-safe
+yocto_pathextension.egg-info/top_level.txt

@@ -2,6 +2,17 @@ cmake_minimum_required (VERSION 3.12)
 
 project (yocto_pathextension VERSION 2.0)
 
+# find_package(pybind11)
+# find_package(PythonInterp)
+# find_package(PythonLibs)
+
+# GCC/clang:
+set(PYBIND11_CPP_STANDARD -std=c++1z) # Experimental C++17 support
+add_subdirectory(libs/pybind11) 
+pybind11_add_module(test_yscene libs/yocto/yocto_trace.cpp)
+pybind11_add_module(example libs/yocto/yocto_trace.cpp)
+
+
 option(YOCTO_OPENGL "Build OpenGL apps" ON)
 option(YOCTO_EMBREE "Use Intel's Embree raytracer" OFF)
 option(YOCTO_TESTING "Enable testing" OFF)
@@ -36,3 +47,9 @@ endif(MSVC)
 
 add_subdirectory(libs)
 add_subdirectory(apps)
+
+
+# find_package(pybind11 REQUIRED)
+# target_link_libraries(test_yscene PRIVATE yocto)
+# set_target_properties(yocto PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+# target_link_libraries(test_yscene PUBLIC yocto)

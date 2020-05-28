@@ -28,6 +28,7 @@
 
 #include "yocto_trace.h"
 
+#include <pybind11/pybind11.h>
 #include <atomic>
 #include <cstring>
 #include <deque>
@@ -39,6 +40,13 @@ using namespace std::string_literals;
 #ifdef YOCTO_EMBREE
 #include <embree3/rtcore.h>
 #endif
+
+// Test pybind11
+int add(int i, int j) {
+    return i - 3*j;
+}
+
+
 
 // -----------------------------------------------------------------------------
 // ALIASES
@@ -114,6 +122,20 @@ static vec3f eval_normal(const trc::shape* shape, int element) {
     norm = {0, 0, 1};
   }
   return norm;
+}
+
+namespace py = pybind11;
+
+PYBIND11_MODULE(test_yscene, m) {
+    m.doc() = "pybind11 example plugin"; // optional module docstring
+    m.def("add", &add);
+}
+
+PYBIND11_MODULE(example, m) {
+    py::class_<vec2f>(m, "vec2f")
+        .def(py::init<>())
+        .def_readwrite("x", &vec2f::x)
+        .def_readwrite("y", &vec2f::y);
 }
 
 // Shape element normal.

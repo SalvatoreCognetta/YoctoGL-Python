@@ -28,6 +28,7 @@
 
 #include "yocto_pathtrace.h"
 
+#include <pybind11/pybind11.h>
 #include <yocto/yocto_shape.h>
 
 #include <atomic>
@@ -2008,4 +2009,14 @@ void set_emission(ptr::environment* environment, const vec3f& emission,
   environment->emission_tex = emission_tex;
 }
 
+// Bindings
+namespace py = pybind11;
+
+PYBIND11_MODULE(py_pathtrace, m) {
+    py::class_<trace_params>(m, "trace_params")
+        .def_readwrite("resolution", &trace_params::resolution)
+        .def_readwrite("samples", &trace_params::samples);
+}
+
 }  // namespace yocto::pathtrace
+

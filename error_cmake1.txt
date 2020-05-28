@@ -1,0 +1,859 @@
+Processing /home/salvatore/Documenti/04_finalproject
+Installing collected packages: yocto-pathextension
+  Running setup.py install for yocto-pathextension: started
+    Running setup.py install for yocto-pathextension: still running...
+    Running setup.py install for yocto-pathextension: finished with status 'error'
+    Complete output from command /usr/bin/python -u -c "import setuptools, tokenize;__file__='/tmp/pip-cn0s04w4-build/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))" install --record /tmp/pip-uudtlkv6-record/install-record.txt --single-version-externally-managed --compile --user --prefix=:
+    running install
+    running build
+    running build_ext
+    -- The C compiler identification is GNU 7.5.0
+    -- The CXX compiler identification is Clang 9.0.0
+    -- Check for working C compiler: /usr/bin/cc
+    -- Check for working C compiler: /usr/bin/cc - works
+    -- Detecting C compiler ABI info
+    -- Detecting C compiler ABI info - done
+    -- Detecting C compile features
+    -- Detecting C compile features - done
+    -- Check for working CXX compiler: /usr/bin/c++
+    -- Check for working CXX compiler: /usr/bin/c++ - works
+    -- Detecting CXX compiler ABI info
+    -- Detecting CXX compiler ABI info - done
+    -- Detecting CXX compile features
+    -- Detecting CXX compile features - done
+    -- Found PythonInterp: /usr/bin/python (found version "3.6.9")
+    -- Found PythonLibs: /usr/lib/x86_64-linux-gnu/libpython3.6m.so
+    -- pybind11 v2.5.dev1
+    -- Performing Test HAS_FLTO
+    -- Performing Test HAS_FLTO - Failed
+    -- LTO disabled (not supported by the compiler and/or linker)
+    -- Looking for pthread.h
+    -- Looking for pthread.h - found
+    -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+    -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+    -- Looking for pthread_create in pthreads
+    -- Looking for pthread_create in pthreads - not found
+    -- Looking for pthread_create in pthread
+    -- Looking for pthread_create in pthread - found
+    -- Found Threads: TRUE
+    -- Found OpenGL: /usr/lib/x86_64-linux-gnu/libOpenGL.so
+    -- Using X11 for window creation
+    -- Found X11: /usr/include
+    -- Looking for XOpenDisplay in /usr/lib/x86_64-linux-gnu/libX11.so;/usr/lib/x86_64-linux-gnu/libXext.so
+    -- Looking for XOpenDisplay in /usr/lib/x86_64-linux-gnu/libX11.so;/usr/lib/x86_64-linux-gnu/libXext.so - found
+    -- Looking for gethostbyname
+    -- Looking for gethostbyname - found
+    -- Looking for connect
+    -- Looking for connect - found
+    -- Looking for remove
+    -- Looking for remove - found
+    -- Looking for shmat
+    -- Looking for shmat - found
+    -- Looking for IceConnectionNumber in ICE
+    -- Looking for IceConnectionNumber in ICE - found
+    -- Configuring done
+    -- Generating done
+    -- Build files have been written to: /tmp/pip-cn0s04w4-build/build/temp.linux-x86_64-3.6
+    Scanning dependencies of target test_yscene
+    Scanning dependencies of target example
+    [  2%] Building CXX object CMakeFiles/example.dir/libs/yocto/yocto_trace.cpp.o
+    [  4%] Building CXX object CMakeFiles/test_yscene.dir/libs/yocto/yocto_trace.cpp.o
+    [  6%] Linking CXX shared module ../lib.linux-x86_64-3.6/test_yscene.cpython-36m-x86_64-linux-gnu.so
+    [  6%] Built target test_yscene
+    Scanning dependencies of target yocto
+    [  8%] Building CXX object libs/yocto/CMakeFiles/yocto.dir/yocto_shape.cpp.o
+    [ 10%] Linking CXX shared module ../lib.linux-x86_64-3.6/example.cpython-36m-x86_64-linux-gnu.so
+    [ 10%] Built target example
+    Scanning dependencies of target glfw
+    [ 12%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/context.c.o
+    [ 14%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/init.c.o
+    [ 17%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/input.c.o
+    [ 19%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/monitor.c.o
+    [ 21%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o
+    [ 23%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/window.c.o
+    [ 25%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/x11_init.c.o
+    [ 27%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/x11_monitor.c.o
+    [ 29%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/x11_window.c.o
+    [ 31%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/xkb_unicode.c.o
+    [ 34%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/posix_time.c.o
+    [ 36%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/posix_thread.c.o
+    [ 38%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/glx_context.c.o
+    [ 40%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/egl_context.c.o
+    [ 42%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/osmesa_context.c.o
+    [ 44%] Building C object libs/yocto_gui/glfw/src/CMakeFiles/glfw.dir/linux_joystick.c.o
+    [ 46%] Linking C static library ../../../../../../bin/libglfw3.a
+    [ 46%] Built target glfw
+    [ 48%] Building CXX object libs/yocto/CMakeFiles/yocto.dir/yocto_image.cpp.o
+    [ 51%] Building CXX object libs/yocto/CMakeFiles/yocto.dir/yocto_trace.cpp.o
+    [ 53%] Building CXX object libs/yocto/CMakeFiles/yocto.dir/yocto_sceneio.cpp.o
+    [ 55%] Building CXX object libs/yocto/CMakeFiles/yocto.dir/ext/stb_image.cpp.o
+    [ 57%] Building CXX object libs/yocto/CMakeFiles/yocto.dir/ext/cgltf.cpp.o
+    [ 59%] Building CXX object libs/yocto/CMakeFiles/yocto.dir/ext/tinyexr.cpp.o
+    Scanning dependencies of target yocto_gui
+    [ 61%] Building CXX object libs/yocto_gui/CMakeFiles/yocto_gui.dir/yocto_gui.cpp.o
+    [ 63%] Building CXX object libs/yocto_gui/CMakeFiles/yocto_gui.dir/ext/imgui/imgui.cpp.o
+    [ 65%] Building CXX object libs/yocto_gui/CMakeFiles/yocto_gui.dir/ext/imgui/imgui_draw.cpp.o
+    [ 68%] Building CXX object libs/yocto_gui/CMakeFiles/yocto_gui.dir/ext/imgui/imgui_widgets.cpp.o
+    [ 70%] Building CXX object libs/yocto_gui/CMakeFiles/yocto_gui.dir/ext/imgui/imgui_impl_glfw.cpp.o
+    [ 72%] Building CXX object libs/yocto_gui/CMakeFiles/yocto_gui.dir/ext/imgui/imgui_impl_opengl3.cpp.o
+    [ 74%] Building C object libs/yocto_gui/CMakeFiles/yocto_gui.dir/ext/glad/glad.c.o
+    [ 76%] Linking CXX static library ../../../../bin/libyocto_gui.a
+    [ 76%] Built target yocto_gui
+    [ 78%] Linking CXX static library ../../../../bin/libyocto.a
+    [ 78%] Built target yocto
+    Scanning dependencies of target yocto_pathtrace
+    Scanning dependencies of target py_pathtrace
+    [ 80%] Building CXX object libs/yocto_pathtrace/CMakeFiles/yocto_pathtrace.dir/yocto_pathtrace.cpp.o
+    [ 82%] Building CXX object libs/yocto_pathtrace/CMakeFiles/py_pathtrace.dir/yocto_pathtrace.cpp.o
+    [ 85%] Linking CXX static library ../../../../bin/libyocto_pathtrace.a
+    [ 85%] Built target yocto_pathtrace
+    Scanning dependencies of target yocto_extension
+    [ 87%] Building CXX object libs/yocto_extension/CMakeFiles/yocto_extension.dir/yocto_extension.cpp.o
+    [ 89%] Linking CXX shared library ../../../../bin/py_pathtrace.cpython-36m-x86_64-linux-gnu.so
+    [ 89%] Built target py_pathtrace
+    Scanning dependencies of target yscenetrace
+    [ 91%] Building CXX object apps/yscenetrace/CMakeFiles/yscenetrace.dir/yscenetrace.cpp.o
+    [ 93%] Linking CXX static library ../../../../bin/libyocto_extension.a
+    [ 93%] Built target yocto_extension
+    Scanning dependencies of target ysceneitraces
+    [ 95%] Building CXX object apps/ysceneitraces/CMakeFiles/ysceneitraces.dir/ysceneitraces.cpp.o
+    [ 97%] Linking CXX executable ../../../../bin/yscenetrace
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "PyInit_py_pathtrace":
+    yocto_pathtrace.cpp:(.text+0x85ba): riferimento non definito a "Py_GetVersion"
+    yocto_pathtrace.cpp:(.text+0x85e3): riferimento non definito a "PyExc_ImportError"
+    yocto_pathtrace.cpp:(.text+0x85fa): riferimento non definito a "PyErr_Format"
+    yocto_pathtrace.cpp:(.text+0x8658): riferimento non definito a "PyModule_Create2"
+    yocto_pathtrace.cpp:(.text+0x8709): riferimento non definito a "PyExc_ImportError"
+    yocto_pathtrace.cpp:(.text+0x871d): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text+0x8771): riferimento non definito a "PyExc_ImportError"
+    yocto_pathtrace.cpp:(.text+0x8785): riferimento non definito a "PyErr_SetString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::get_internals()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x25): riferimento non definito a "PyGILState_Ensure"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x36): riferimento non definito a "PyEval_GetBuiltins"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x5d): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x90): riferimento non definito a "PyCapsule_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0xf6): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x131): riferimento non definito a "PyCapsule_GetName"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x13c): riferimento non definito a "PyCapsule_GetPointer"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x349): riferimento non definito a "PyEval_InitThreads"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x34e): riferimento non definito a "PyThreadState_Get"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x356): riferimento non definito a "PyThread_create_key"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x373): riferimento non definito a "PyThread_set_key_value"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x392): riferimento non definito a "PyCapsule_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x3ac): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x3c6): riferimento non definito a "PyObject_SetItem"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x463): riferimento non definito a "PyGILState_Release"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x651): riferimento non definito a "PyGILState_Release"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::translate_exception(std::__exception_ptr::exception_ptr)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x5f): riferimento non definito a "PyErr_Restore"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x8d): riferimento non definito a "PyExc_MemoryError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0xa1): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0xb7): riferimento non definito a "PyExc_ValueError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0xcb): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0xe1): riferimento non definito a "PyExc_ValueError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0xf5): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x10b): riferimento non definito a "PyExc_ValueError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x11f): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x135): riferimento non definito a "PyExc_IndexError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x149): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x15f): riferimento non definito a "PyExc_ValueError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x173): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x186): riferimento non definito a "PyExc_OverflowError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x19a): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x1ad): riferimento non definito a "PyExc_RuntimeError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x1c1): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x1ca): riferimento non definito a "PyExc_RuntimeError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x1d4): riferimento non definito a "PyErr_SetString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::make_static_property_type()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0xe): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0x16): riferimento non definito a "PyType_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0x1e): riferimento non definito a "PyType_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0x63): riferimento non definito a "PyProperty_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0x6f): riferimento non definito a "PyProperty_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0x98): riferimento non definito a "PyType_Ready"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0xa6): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0xbe): riferimento non definito a "PyObject_SetAttrString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::make_default_metaclass()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0xe): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0x16): riferimento non definito a "PyType_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0x1e): riferimento non definito a "PyType_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0x63): riferimento non definito a "PyType_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0x6f): riferimento non definito a "PyType_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0x98): riferimento non definito a "PyType_Ready"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0xa6): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0xbe): riferimento non definito a "PyObject_SetAttrString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::make_object_base_type(_typeobject*)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail21make_object_base_typeEP11_typeobject[_ZN8pybind116detail21make_object_base_typeEP11_typeobject]+0x14): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail21make_object_base_typeEP11_typeobject[_ZN8pybind116detail21make_object_base_typeEP11_typeobject]+0x67): riferimento non definito a "PyBaseObject_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail21make_object_base_typeEP11_typeobject[_ZN8pybind116detail21make_object_base_typeEP11_typeobject]+0x73): riferimento non definito a "PyBaseObject_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail21make_object_base_typeEP11_typeobject[_ZN8pybind116detail21make_object_base_typeEP11_typeobject]+0xb7): riferimento non definito a "PyType_Ready"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail21make_object_base_typeEP11_typeobject[_ZN8pybind116detail21make_object_base_typeEP11_typeobject]+0xc5): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail21make_object_base_typeEP11_typeobject[_ZN8pybind116detail21make_object_base_typeEP11_typeobject]+0xe1): riferimento non definito a "PyObject_SetAttrString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::object pybind11::detail::object_api<pybind11::detail::accessor<pybind11::detail::accessor_policies::str_attr> >::operator()<(pybind11::return_value_policy)1, char const* const&>(char const* const&) const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJRKPKcEEENS_6objectEDpOT0_[_ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJRKPKcEEENS_6objectEDpOT0_]+0x25): riferimento non definito a "PyObject_CallObject"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::tuple pybind11::make_tuple<(pybind11::return_value_policy)1, char const* const&>(char const* const&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1110make_tupleILNS_19return_value_policyE1EJRKPKcEEENS_5tupleEDpOT0_[_ZN8pybind1110make_tupleILNS_19return_value_policyE1EJRKPKcEEENS_5tupleEDpOT0_]+0x25): riferimento non definito a "PyTuple_New"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::type_caster<char, void>::cast(char const*, pybind11::return_value_policy, pybind11::handle)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE[_ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE]+0x61): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE[_ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE]+0x68): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE[_ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE]+0x70): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE[_ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE]+0x77): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE[_ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE]+0x7c): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE[_ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE]+0xaa): riferimento non definito a "PyUnicode_DecodeUTF8"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::error_already_set::error_already_set()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1117error_already_setC2Ev[_ZN8pybind1117error_already_setC2Ev]+0x65): riferimento non definito a "PyErr_Fetch"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::error_already_set::~error_already_set()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1117error_already_setD2Ev[_ZN8pybind1117error_already_setD2Ev]+0x3c): riferimento non definito a "PyErr_Fetch"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1117error_already_setD2Ev[_ZN8pybind1117error_already_setD2Ev]+0xa8): riferimento non definito a "PyErr_Restore"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1117error_already_setD2Ev[_ZN8pybind1117error_already_setD2Ev]+0x120): riferimento non definito a "PyErr_Restore"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::error_string[abi:cxx11]()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x15): riferimento non definito a "PyErr_Occurred"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x3d): riferimento non definito a "PyErr_Fetch"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x15f): riferimento non definito a "PyExc_RuntimeError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x169): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x329): riferimento non definito a "PyObject_Str"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x490): riferimento non definito a "PyErr_NormalizeException"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x4b0): riferimento non definito a "PyException_SetTraceback"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x601): riferimento non definito a "PyFrame_GetLineNumber"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x1128): riferimento non definito a "PyErr_Restore"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x1499): riferimento non definito a "PyErr_Restore"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::str::operator std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind113strcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv[_ZNK8pybind113strcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv]+0x33): riferimento non definito a "PyUnicode_AsUTF8String"
+    yocto_pathtrace.cpp:(.text._ZNK8pybind113strcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv[_ZNK8pybind113strcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv]+0x69): riferimento non definito a "PyBytes_AsStringAndSize"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::accessor<pybind11::detail::accessor_policies::str_attr>::get_cache() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail8accessorINS0_17accessor_policies8str_attrEE9get_cacheEv[_ZNK8pybind116detail8accessorINS0_17accessor_policies8str_attrEE9get_cacheEv]+0x26): riferimento non definito a "PyObject_GetAttrString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::string_caster<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, false>::load(pybind11::handle, bool)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb[_ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb]+0x4e): riferimento non definito a "PyUnicode_AsEncodedString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb[_ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb]+0x5e): riferimento non definito a "PyBytes_AsString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb[_ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb]+0x69): riferimento non definito a "PyBytes_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb[_ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb]+0xc5): riferimento non definito a "PyErr_Clear"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "_ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE10load_bytesIcEEbNSt9enable_ifIXsr3std7is_sameIT_cEE5valueENS_6handleEE4typeE":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE10load_bytesIcEEbNSt9enable_ifIXsr3std7is_sameIT_cEE5valueENS_6handleEE4typeE[_ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE10load_bytesIcEEbNSt9enable_ifIXsr3std7is_sameIT_cEE5valueENS_6handleEE4typeE]+0x24): riferimento non definito a "PyBytes_AsString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE10load_bytesIcEEbNSt9enable_ifIXsr3std7is_sameIT_cEE5valueENS_6handleEE4typeE[_ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE10load_bytesIcEEbNSt9enable_ifIXsr3std7is_sameIT_cEE5valueENS_6handleEE4typeE]+0x34): riferimento non definito a "PyBytes_Size"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::gil_scoped_acquire::gil_scoped_acquire()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquireC2Ev[_ZN8pybind1118gil_scoped_acquireC2Ev]+0x21): riferimento non definito a "PyThread_get_key_value"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquireC2Ev[_ZN8pybind1118gil_scoped_acquireC2Ev]+0x33): riferimento non definito a "_PyThreadState_UncheckedGet"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquireC2Ev[_ZN8pybind1118gil_scoped_acquireC2Ev]+0x49): riferimento non definito a "PyEval_AcquireThread"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquireC2Ev[_ZN8pybind1118gil_scoped_acquireC2Ev]+0x60): riferimento non definito a "PyGILState_GetThisThreadState"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquireC2Ev[_ZN8pybind1118gil_scoped_acquireC2Ev]+0x74): riferimento non definito a "PyThreadState_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquireC2Ev[_ZN8pybind1118gil_scoped_acquireC2Ev]+0x90): riferimento non definito a "PyThread_set_key_value"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::gil_scoped_acquire::~gil_scoped_acquire()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquireD2Ev[_ZN8pybind1118gil_scoped_acquireD2Ev]+0x10): riferimento non definito a "PyEval_SaveThread"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::gil_scoped_acquire::dec_ref()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquire7dec_refEv[_ZN8pybind1118gil_scoped_acquire7dec_refEv]+0x13): riferimento non definito a "PyThreadState_Clear"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquire7dec_refEv[_ZN8pybind1118gil_scoped_acquire7dec_refEv]+0x18): riferimento non definito a "PyThreadState_DeleteCurrent"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquire7dec_refEv[_ZN8pybind1118gil_scoped_acquire7dec_refEv]+0x2a): riferimento non definito a "PyThread_set_key_value"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::cast_error::set_error() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind1110cast_error9set_errorEv[_ZNK8pybind1110cast_error9set_errorEv]+0x4): riferimento non definito a "PyExc_RuntimeError"
+    yocto_pathtrace.cpp:(.text._ZNK8pybind1110cast_error9set_errorEv[_ZNK8pybind1110cast_error9set_errorEv]+0x16): riferimento non definito a "PyErr_SetString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::type_caster<bool, void>& pybind11::detail::load_type<bool, void>(pybind11::detail::type_caster<bool, void>&, pybind11::handle const&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE[_ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE]+0x10): riferimento non definito a "_Py_TrueStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE[_ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE]+0x1a): riferimento non definito a "_Py_FalseStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE[_ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE]+0x24): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE[_ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE]+0x6c): riferimento non definito a "PyErr_Clear"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::accessor<pybind11::detail::accessor_policies::generic_item>::get_cache() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail8accessorINS0_17accessor_policies12generic_itemEE9get_cacheEv[_ZNK8pybind116detail8accessorINS0_17accessor_policies12generic_itemEE9get_cacheEv]+0x26): riferimento non definito a "PyObject_GetItem"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_static_get":
+    yocto_pathtrace.cpp:(.text.pybind11_static_get[pybind11_static_get]+0x3): riferimento non definito a "PyProperty_Type"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_static_set":
+    yocto_pathtrace.cpp:(.text.pybind11_static_set[pybind11_static_set]+0x12): riferimento non definito a "PyProperty_Type"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_meta_setattro":
+    yocto_pathtrace.cpp:(.text.pybind11_meta_setattro[pybind11_meta_setattro]+0x13): riferimento non definito a "_PyType_Lookup"
+    yocto_pathtrace.cpp:(.text.pybind11_meta_setattro[pybind11_meta_setattro]+0x32): riferimento non definito a "PyObject_IsInstance"
+    yocto_pathtrace.cpp:(.text.pybind11_meta_setattro[pybind11_meta_setattro]+0x41): riferimento non definito a "PyObject_IsInstance"
+    yocto_pathtrace.cpp:(.text.pybind11_meta_setattro[pybind11_meta_setattro]+0x4c): riferimento non definito a "PyType_Type"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_meta_getattro":
+    yocto_pathtrace.cpp:(.text.pybind11_meta_getattro[pybind11_meta_getattro]+0xb): riferimento non definito a "_PyType_Lookup"
+    yocto_pathtrace.cpp:(.text.pybind11_meta_getattro[pybind11_meta_getattro]+0x15): riferimento non definito a "PyInstanceMethod_Type"
+    yocto_pathtrace.cpp:(.text.pybind11_meta_getattro[pybind11_meta_getattro]+0x22): riferimento non definito a "PyType_Type"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_object_init":
+    yocto_pathtrace.cpp:(.text.pybind11_object_init[pybind11_object_init]+0x197): riferimento non definito a "PyExc_TypeError"
+    yocto_pathtrace.cpp:(.text.pybind11_object_init[pybind11_object_init]+0x1a0): riferimento non definito a "PyErr_SetString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::instance::allocate_layout()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail8instance15allocate_layoutEv[_ZN8pybind116detail8instance15allocate_layoutEv]+0x12e): riferimento non definito a "PyMem_Calloc"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::all_type_info_get_cache(_typeobject*)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail23all_type_info_get_cacheEP11_typeobject[_ZN8pybind116detail23all_type_info_get_cacheEP11_typeobject]+0x6f): riferimento non definito a "PyWeakref_NewRef"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::cpp_function::initialize_generic(pybind11::detail::function_record*, char const*, std::type_info const* const*, unsigned long)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x1830): riferimento non definito a "PyInstanceMethod_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x1851): riferimento non definito a "PyCFunction_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x185c): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x18e3): riferimento non definito a "PyCapsule_GetName"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x18ee): riferimento non definito a "PyCapsule_GetPointer"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x19f1): riferimento non definito a "PyObject_HasAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x1a59): riferimento non definito a "PyObject_HasAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x1ac6): riferimento non definito a "PyCFunction_NewEx"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x296b): riferimento non definito a "PyInstanceMethod_New"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::cpp_function::initialize<pybind11::detail::all_type_info_get_cache(_typeobject*)::{lambda(pybind11::handle)#1}, void, pybind11::handle>(pybind11::detail::all_type_info_get_cache(_typeobject*)::{lambda(pybind11::handle)#1}&&, void (*)(pybind11::handle))::{lambda(pybind11::detail::function_call&)#1}::__invoke(pybind11::detail::function_call)":
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_[_ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_]+0x1a): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_[_ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_]+0x21): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_[_ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_]+0x29): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_[_ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_]+0x30): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_[_ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_]+0x35): riferimento non definito a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::object pybind11::detail::object_api<pybind11::detail::accessor<pybind11::detail::accessor_policies::str_attr> >::operator()<(pybind11::return_value_policy)1>() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJEEENS_6objectEDpOT0_[_ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJEEENS_6objectEDpOT0_]+0x11): riferimento non definito a "PyTuple_New"
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJEEENS_6objectEDpOT0_[_ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJEEENS_6objectEDpOT0_]+0x2c): riferimento non definito a "PyObject_CallObject"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::cpp_function::dispatcher(_object*, _object*, _object*)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x21): riferimento non definito a "PyCapsule_GetPointer"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x298): riferimento non definito a "PyDict_GetItemString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x2ba): riferimento non definito a "PyDict_Copy"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x472): riferimento non definito a "PyDict_DelItemString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x943): riferimento non definito a "PyDict_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x987): riferimento non definito a "PyTuple_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x9bb): riferimento non definito a "PyTuple_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0xa14): riferimento non definito a "PyTuple_SetItem"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0xae3): riferimento non definito a "PyTuple_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x1112): riferimento non definito a "PyDict_GetItemString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x1138): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x1b10): riferimento non definito a "PyDict_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x260a): riferimento non definito a "PyExc_TypeError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x2614): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x2636): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x263d): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x2859): riferimento non definito a "_Py_NotImplementedStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x2860): riferimento non definito a "_Py_NotImplementedStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x2b14): riferimento non definito a "PyExc_TypeError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x2b1e): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x3d12): riferimento non definito a "PyTuple_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x3e3e): riferimento non definito a "PyObject_Repr"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x403f): riferimento non definito a "PyDict_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x423d): riferimento non definito a "PyDict_Next"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x4372): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x4547): riferimento non definito a "PyDict_Next"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x46a3): riferimento non definito a "PyExc_TypeError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x46ad): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x5033): riferimento non definito a "PyErr_Restore"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x50eb): riferimento non definito a "PyExc_SystemError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x50f5): riferimento non definito a "PyErr_SetString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::capsule::capsule(void const*, void (*)(void*))":
+    yocto_pathtrace.cpp:(.text._ZN8pybind117capsuleC2EPKvPFvPvE[_ZN8pybind117capsuleC2EPKvPFvPvE]+0x1d): riferimento non definito a "PyCapsule_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind117capsuleC2EPKvPFvPvE[_ZN8pybind117capsuleC2EPKvPFvPvE]+0x30): riferimento non definito a "PyCapsule_SetContext"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::accessor<pybind11::detail::accessor_policies::tuple_item>::get_cache() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail8accessorINS0_17accessor_policies10tuple_itemEE9get_cacheEv[_ZNK8pybind116detail8accessorINS0_17accessor_policies10tuple_itemEE9get_cacheEv]+0x26): riferimento non definito a "PyTuple_GetItem"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::object pybind11::detail::object_api<pybind11::detail::accessor<pybind11::detail::accessor_policies::str_attr> >::operator()<(pybind11::return_value_policy)1, pybind11::handle&, pybind11::handle&>(pybind11::handle&, pybind11::handle&) const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJRNS_6handleESA_EEENS_6objectEDpOT0_[_ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJRNS_6handleESA_EEENS_6objectEDpOT0_]+0x28): riferimento non definito a "PyObject_CallObject"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::str::str(pybind11::object&&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind113strC2EONS_6objectE[_ZN8pybind113strC2EONS_6objectE]+0x2e): riferimento non definito a "PyObject_Str"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::tuple pybind11::make_tuple<(pybind11::return_value_policy)1, pybind11::handle&, pybind11::handle&>(pybind11::handle&, pybind11::handle&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1110make_tupleILNS_19return_value_policyE1EJRNS_6handleES3_EEENS_5tupleEDpOT0_[_ZN8pybind1110make_tupleILNS_19return_value_policyE1EJRNS_6handleES3_EEENS_5tupleEDpOT0_]+0x39): riferimento non definito a "PyTuple_New"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::capsule::capsule(void const*, void (*)(void*))::{lambda(_object*)#1}::__invoke(_object*)":
+    yocto_pathtrace.cpp:(.text._ZZN8pybind117capsuleC1EPKvPFvPvEENUlP7_objectE_8__invokeES7_[_ZZN8pybind117capsuleC1EPKvPFvPvEENUlP7_objectE_8__invokeES7_]+0x8): riferimento non definito a "PyCapsule_GetContext"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind117capsuleC1EPKvPFvPvEENUlP7_objectE_8__invokeES7_[_ZZN8pybind117capsuleC1EPKvPFvPvEENUlP7_objectE_8__invokeES7_]+0x15): riferimento non definito a "PyCapsule_GetPointer"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::clear_instance(_object*)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail14clear_instanceEP7_object[_ZN8pybind116detail14clear_instanceEP7_object]+0x1f6): riferimento non definito a "PyObject_ClearWeakRefs"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail14clear_instanceEP7_object[_ZN8pybind116detail14clear_instanceEP7_object]+0x1fe): riferimento non definito a "_PyObject_GetDictPtr"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::instance::deallocate_layout()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail8instance17deallocate_layoutEv[_ZN8pybind116detail8instance17deallocate_layoutEv]+0xb): riferimento non definito a "PyMem_Free"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::type_record::type_record()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_recordC2Ev[_ZN8pybind116detail11type_recordC2Ev]+0x24): riferimento non definito a "PyList_New"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::generic_type::initialize(pybind11::detail::type_record const&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE[_ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE]+0x21): riferimento non definito a "PyObject_HasAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE[_ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE]+0x252): riferimento non definito a "PyList_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE[_ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE]+0x270): riferimento non definito a "PyList_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE[_ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE]+0x341): riferimento non definito a "PyList_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE[_ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE]+0x361): riferimento non definito a "PyList_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE[_ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE]+0x3a9): riferimento non definito a "PyCapsule_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE[_ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE]+0x3c5): riferimento non definito a "PyObject_SetAttrString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::make_new_python_type(pybind11::detail::type_record const&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x19): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x40): riferimento non definito a "PyModule_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x4e): riferimento non definito a "PyModule_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x53): riferimento non definito a "PyType_IsSubtype"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x6c): riferimento non definito a "PyObject_HasAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0xaf): riferimento non definito a "PyUnicode_FromFormat"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x128): riferimento non definito a "PyObject_HasAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x1a9): riferimento non definito a "PyObject_HasAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x72b): riferimento non definito a "PyObject_Malloc"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x75f): riferimento non definito a "PyTuple_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x80d): riferimento non definito a "PyTuple_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x8bb): riferimento non definito a "PyType_Ready"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x8dd): riferimento non definito a "PyObject_SetAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x986): riferimento non definito a "PyObject_SetAttrString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::str::str(pybind11::object const&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind113strC2ERKNS_6objectE[_ZN8pybind113strC2ERKNS_6objectE]+0x2b): riferimento non definito a "PyObject_Str"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::tuple::tuple(pybind11::object const&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind115tupleC2ERKNS_6objectE[_ZN8pybind115tupleC2ERKNS_6objectE]+0x1e): riferimento non definito a "PySequence_Tuple"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_traverse":
+    yocto_pathtrace.cpp:(.text.pybind11_traverse[pybind11_traverse]+0xb): riferimento non definito a "_PyObject_GetDictPtr"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_clear":
+    yocto_pathtrace.cpp:(.text.pybind11_clear[pybind11_clear]+0x2): riferimento non definito a "_PyObject_GetDictPtr"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_get_dict":
+    yocto_pathtrace.cpp:(.text.pybind11_get_dict[pybind11_get_dict]+0x2): riferimento non definito a "_PyObject_GetDictPtr"
+    yocto_pathtrace.cpp:(.text.pybind11_get_dict[pybind11_get_dict]+0x12): riferimento non definito a "PyDict_New"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_set_dict":
+    yocto_pathtrace.cpp:(.text.pybind11_set_dict[pybind11_set_dict]+0x14): riferimento non definito a "PyExc_TypeError"
+    yocto_pathtrace.cpp:(.text.pybind11_set_dict[pybind11_set_dict]+0x24): riferimento non definito a "PyErr_Format"
+    yocto_pathtrace.cpp:(.text.pybind11_set_dict[pybind11_set_dict]+0x39): riferimento non definito a "_PyObject_GetDictPtr"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_getbuffer":
+    yocto_pathtrace.cpp:(.text.pybind11_getbuffer[pybind11_getbuffer]+0x1e1): riferimento non definito a "PyExc_BufferError"
+    yocto_pathtrace.cpp:(.text.pybind11_getbuffer[pybind11_getbuffer]+0x1fc): riferimento non definito a "PyExc_BufferError"
+    yocto_pathtrace.cpp:(.text.pybind11_getbuffer[pybind11_getbuffer]+0x206): riferimento non definito a "PyErr_SetString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::buffer_info::~buffer_info()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1111buffer_infoD2Ev[_ZN8pybind1111buffer_infoD2Ev]+0x1a): riferimento non definito a "PyBuffer_Release"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::accessor<pybind11::detail::accessor_policies::list_item>::get_cache() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail8accessorINS0_17accessor_policies9list_itemEE9get_cacheEv[_ZNK8pybind116detail8accessorINS0_17accessor_policies9list_itemEE9get_cacheEv]+0x26): riferimento non definito a "PyList_GetItem"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "bool pybind11::detail::type_caster_generic::load_impl<pybind11::detail::type_caster_generic>(pybind11::handle, bool)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19type_caster_generic9load_implIS1_EEbNS_6handleEb[_ZN8pybind116detail19type_caster_generic9load_implIS1_EEbNS_6handleEb]+0x2d): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19type_caster_generic9load_implIS1_EEbNS_6handleEb[_ZN8pybind116detail19type_caster_generic9load_implIS1_EEbNS_6handleEb]+0x52): riferimento non definito a "PyType_IsSubtype"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19type_caster_generic9load_implIS1_EEbNS_6handleEb[_ZN8pybind116detail19type_caster_generic9load_implIS1_EEbNS_6handleEb]+0x1a8): riferimento non definito a "PyType_IsSubtype"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::type_caster_generic::try_load_foreign_module_local(pybind11::handle)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE[_ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE]+0x1b): riferimento non definito a "PyObject_HasAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE[_ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE]+0x31): riferimento non definito a "PyObject_GetAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE[_ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE]+0x49): riferimento non definito a "PyCapsule_GetName"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE[_ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE]+0x54): riferimento non definito a "PyCapsule_GetPointer"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::loader_life_support::add_patient(pybind11::handle)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19loader_life_support11add_patientENS_6handleE[_ZN8pybind116detail19loader_life_support11add_patientENS_6handleE]+0x29): riferimento non definito a "PyList_Append"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19loader_life_support11add_patientENS_6handleE[_ZN8pybind116detail19loader_life_support11add_patientENS_6handleE]+0x40): riferimento non definito a "PyList_New"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::cpp_function::initialize<pybind11::class_<yocto::pathtrace::trace_params>::def_readwrite<yocto::pathtrace::trace_params, int>(char const*, int yocto::pathtrace::trace_params::*)::{lambda(yocto::pathtrace::trace_params const&)#1}, int const&, yocto::pathtrace::trace_params const&, pybind11::is_method>(pybind11::class_<yocto::pathtrace::trace_params>::def_readwrite<yocto::pathtrace::trace_params, int>(char const*, int yocto::pathtrace::trace_params::*)::{lambda(yocto::pathtrace::trace_params const&)#1}&&, int const& (*)(yocto::pathtrace::trace_params const&), pybind11::is_method const&)::{lambda(pybind11::detail::function_call&)#1}::__invoke(pybind11::detail::function_call)":
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRKS5_E_RKiJSJ_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENUlRNS_6detail13function_callEE_8__invokeESY_[_ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRKS5_E_RKiJSJ_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENUlRNS_6detail13function_callEE_8__invokeESY_]+0x63): riferimento non definito a "PyLong_FromSsize_t"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::reference_cast_error::set_error() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind1120reference_cast_error9set_errorEv[_ZNK8pybind1120reference_cast_error9set_errorEv]+0x4): riferimento non definito a "PyExc_RuntimeError"
+    yocto_pathtrace.cpp:(.text._ZNK8pybind1120reference_cast_error9set_errorEv[_ZNK8pybind1120reference_cast_error9set_errorEv]+0x16): riferimento non definito a "PyErr_SetString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::cpp_function::initialize<pybind11::class_<yocto::pathtrace::trace_params>::def_readwrite<yocto::pathtrace::trace_params, int>(char const*, int yocto::pathtrace::trace_params::*)::{lambda(yocto::pathtrace::trace_params&, int const&)#1}, void, yocto::pathtrace::trace_params&, int const&, pybind11::is_method>(pybind11::class_<yocto::pathtrace::trace_params>::def_readwrite<yocto::pathtrace::trace_params, int>(char const*, int yocto::pathtrace::trace_params::*)::{lambda(yocto::pathtrace::trace_params&, int const&)#1}&&, void (*)(yocto::pathtrace::trace_params&, int const&), pybind11::is_method const&)::{lambda(pybind11::detail::function_call&)#1}::operator()(pybind11::detail::function_call) const":
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_[_ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_]+0x94): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_[_ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_]+0x9b): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_[_ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_]+0xa4): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_[_ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_]+0xab): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_[_ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_]+0xb0): riferimento non definito a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::type_caster<int, void>::load(pybind11::handle, bool)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x18): riferimento non definito a "PyFloat_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x25): riferimento non definito a "PyFloat_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x2a): riferimento non definito a "PyType_IsSubtype"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x43): riferimento non definito a "PyLong_AsLong"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x5d): riferimento non definito a "PyErr_Clear"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x66): riferimento non definito a "PyErr_Occurred"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x72): riferimento non definito a "PyExc_TypeError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x77): riferimento non definito a "PyErr_ExceptionMatches"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x7f): riferimento non definito a "PyErr_Clear"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x93): riferimento non definito a "PyNumber_Check"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x9f): riferimento non definito a "PyNumber_Long"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0xa7): riferimento non definito a "PyErr_Clear"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::class_<yocto::pathtrace::trace_params>::get_function_record(pybind11::handle)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE[_ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE]+0xe): riferimento non definito a "PyInstanceMethod_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE[_ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE]+0x18): riferimento non definito a "PyMethod_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE[_ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE]+0x4f): riferimento non definito a "PyCapsule_GetName"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE[_ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE]+0x5a): riferimento non definito a "PyCapsule_GetPointer"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::generic_type::def_property_static_impl(char const*, pybind11::handle, pybind11::handle, pybind11::detail::function_record*)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x46): riferimento non definito a "PyProperty_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x76): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x7f): riferimento non definito a "PyProperty_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x90): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x97): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0xaf): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0xba): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0xc3): riferimento non definito a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o):yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0xce): seguono ulteriori riferimenti non definiti a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::generic_type::def_property_static_impl(char const*, pybind11::handle, pybind11::handle, pybind11::detail::function_record*)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0xec): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x12d): riferimento non definito a "PyObject_SetAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x185): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x18f): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x194): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x1a5): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x1af): riferimento non definito a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o):yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x1b4): seguono ulteriori riferimenti non definiti a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::generic_type::def_property_static_impl(char const*, pybind11::handle, pybind11::handle, pybind11::detail::function_record*)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x1de): riferimento non definito a "PyProperty_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x310): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x31a): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x31f): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x330): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x33a): riferimento non definito a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o):yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x33f): seguono ulteriori riferimenti non definiti a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::object pybind11::detail::object_api<pybind11::handle>::operator()<(pybind11::return_value_policy)1, pybind11::handle, pybind11::handle, pybind11::none, pybind11::str>(pybind11::handle&&, pybind11::handle&&, pybind11::none&&, pybind11::str&&) const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail10object_apiINS_6handleEEclILNS_19return_value_policyE1EJS2_S2_NS_4noneENS_3strEEEENS_6objectEDpOT0_[_ZNK8pybind116detail10object_apiINS_6handleEEclILNS_19return_value_policyE1EJS2_S2_NS_4noneENS_3strEEEENS_6objectEDpOT0_]+0x26): riferimento non definito a "PyObject_CallObject"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::tuple pybind11::make_tuple<(pybind11::return_value_policy)1, pybind11::handle, pybind11::handle, pybind11::none, pybind11::str>(pybind11::handle&&, pybind11::handle&&, pybind11::none&&, pybind11::str&&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1110make_tupleILNS_19return_value_policyE1EJNS_6handleES2_NS_4noneENS_3strEEEENS_5tupleEDpOT0_[_ZN8pybind1110make_tupleILNS_19return_value_policyE1EJNS_6handleES2_NS_4noneENS_3strEEEENS_5tupleEDpOT0_]+0x64): riferimento non definito a "PyTuple_New"
+    clang: error: linker command failed with exit code 1 (use -v to see invocation)
+    apps/yscenetrace/CMakeFiles/yscenetrace.dir/build.make:103: recipe for target '../../bin/yscenetrace' failed
+    make[2]: *** [../../bin/yscenetrace] Error 1
+    CMakeFiles/Makefile2:534: recipe for target 'apps/yscenetrace/CMakeFiles/yscenetrace.dir/all' failed
+    make[1]: *** [apps/yscenetrace/CMakeFiles/yscenetrace.dir/all] Error 2
+    make[1]: *** Attesa per i processi non terminati....
+    [100%] Linking CXX executable ../../../../bin/ysceneitraces
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "PyInit_py_pathtrace":
+    yocto_pathtrace.cpp:(.text+0x85ba): riferimento non definito a "Py_GetVersion"
+    yocto_pathtrace.cpp:(.text+0x85e3): riferimento non definito a "PyExc_ImportError"
+    yocto_pathtrace.cpp:(.text+0x85fa): riferimento non definito a "PyErr_Format"
+    yocto_pathtrace.cpp:(.text+0x8658): riferimento non definito a "PyModule_Create2"
+    yocto_pathtrace.cpp:(.text+0x8709): riferimento non definito a "PyExc_ImportError"
+    yocto_pathtrace.cpp:(.text+0x871d): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text+0x8771): riferimento non definito a "PyExc_ImportError"
+    yocto_pathtrace.cpp:(.text+0x8785): riferimento non definito a "PyErr_SetString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::get_internals()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x25): riferimento non definito a "PyGILState_Ensure"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x36): riferimento non definito a "PyEval_GetBuiltins"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x5d): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x90): riferimento non definito a "PyCapsule_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0xf6): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x131): riferimento non definito a "PyCapsule_GetName"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x13c): riferimento non definito a "PyCapsule_GetPointer"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x349): riferimento non definito a "PyEval_InitThreads"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x34e): riferimento non definito a "PyThreadState_Get"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x356): riferimento non definito a "PyThread_create_key"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x373): riferimento non definito a "PyThread_set_key_value"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x392): riferimento non definito a "PyCapsule_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x3ac): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x3c6): riferimento non definito a "PyObject_SetItem"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x463): riferimento non definito a "PyGILState_Release"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13get_internalsEv[_ZN8pybind116detail13get_internalsEv]+0x651): riferimento non definito a "PyGILState_Release"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::translate_exception(std::__exception_ptr::exception_ptr)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x5f): riferimento non definito a "PyErr_Restore"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x8d): riferimento non definito a "PyExc_MemoryError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0xa1): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0xb7): riferimento non definito a "PyExc_ValueError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0xcb): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0xe1): riferimento non definito a "PyExc_ValueError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0xf5): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x10b): riferimento non definito a "PyExc_ValueError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x11f): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x135): riferimento non definito a "PyExc_IndexError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x149): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x15f): riferimento non definito a "PyExc_ValueError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x173): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x186): riferimento non definito a "PyExc_OverflowError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x19a): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x1ad): riferimento non definito a "PyExc_RuntimeError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x1c1): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x1ca): riferimento non definito a "PyExc_RuntimeError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE[_ZN8pybind116detail19translate_exceptionENSt15__exception_ptr13exception_ptrE]+0x1d4): riferimento non definito a "PyErr_SetString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::make_static_property_type()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0xe): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0x16): riferimento non definito a "PyType_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0x1e): riferimento non definito a "PyType_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0x63): riferimento non definito a "PyProperty_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0x6f): riferimento non definito a "PyProperty_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0x98): riferimento non definito a "PyType_Ready"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0xa6): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail25make_static_property_typeEv[_ZN8pybind116detail25make_static_property_typeEv]+0xbe): riferimento non definito a "PyObject_SetAttrString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::make_default_metaclass()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0xe): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0x16): riferimento non definito a "PyType_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0x1e): riferimento non definito a "PyType_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0x63): riferimento non definito a "PyType_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0x6f): riferimento non definito a "PyType_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0x98): riferimento non definito a "PyType_Ready"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0xa6): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail22make_default_metaclassEv[_ZN8pybind116detail22make_default_metaclassEv]+0xbe): riferimento non definito a "PyObject_SetAttrString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::make_object_base_type(_typeobject*)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail21make_object_base_typeEP11_typeobject[_ZN8pybind116detail21make_object_base_typeEP11_typeobject]+0x14): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail21make_object_base_typeEP11_typeobject[_ZN8pybind116detail21make_object_base_typeEP11_typeobject]+0x67): riferimento non definito a "PyBaseObject_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail21make_object_base_typeEP11_typeobject[_ZN8pybind116detail21make_object_base_typeEP11_typeobject]+0x73): riferimento non definito a "PyBaseObject_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail21make_object_base_typeEP11_typeobject[_ZN8pybind116detail21make_object_base_typeEP11_typeobject]+0xb7): riferimento non definito a "PyType_Ready"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail21make_object_base_typeEP11_typeobject[_ZN8pybind116detail21make_object_base_typeEP11_typeobject]+0xc5): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail21make_object_base_typeEP11_typeobject[_ZN8pybind116detail21make_object_base_typeEP11_typeobject]+0xe1): riferimento non definito a "PyObject_SetAttrString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::object pybind11::detail::object_api<pybind11::detail::accessor<pybind11::detail::accessor_policies::str_attr> >::operator()<(pybind11::return_value_policy)1, char const* const&>(char const* const&) const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJRKPKcEEENS_6objectEDpOT0_[_ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJRKPKcEEENS_6objectEDpOT0_]+0x25): riferimento non definito a "PyObject_CallObject"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::tuple pybind11::make_tuple<(pybind11::return_value_policy)1, char const* const&>(char const* const&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1110make_tupleILNS_19return_value_policyE1EJRKPKcEEENS_5tupleEDpOT0_[_ZN8pybind1110make_tupleILNS_19return_value_policyE1EJRKPKcEEENS_5tupleEDpOT0_]+0x25): riferimento non definito a "PyTuple_New"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::type_caster<char, void>::cast(char const*, pybind11::return_value_policy, pybind11::handle)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE[_ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE]+0x61): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE[_ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE]+0x68): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE[_ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE]+0x70): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE[_ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE]+0x77): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE[_ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE]+0x7c): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE[_ZN8pybind116detail11type_casterIcvE4castEPKcNS_19return_value_policyENS_6handleE]+0xaa): riferimento non definito a "PyUnicode_DecodeUTF8"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::error_already_set::error_already_set()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1117error_already_setC2Ev[_ZN8pybind1117error_already_setC2Ev]+0x65): riferimento non definito a "PyErr_Fetch"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::error_already_set::~error_already_set()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1117error_already_setD2Ev[_ZN8pybind1117error_already_setD2Ev]+0x3c): riferimento non definito a "PyErr_Fetch"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1117error_already_setD2Ev[_ZN8pybind1117error_already_setD2Ev]+0xa8): riferimento non definito a "PyErr_Restore"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1117error_already_setD2Ev[_ZN8pybind1117error_already_setD2Ev]+0x120): riferimento non definito a "PyErr_Restore"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::error_string[abi:cxx11]()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x15): riferimento non definito a "PyErr_Occurred"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x3d): riferimento non definito a "PyErr_Fetch"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x15f): riferimento non definito a "PyExc_RuntimeError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x169): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x329): riferimento non definito a "PyObject_Str"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x490): riferimento non definito a "PyErr_NormalizeException"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x4b0): riferimento non definito a "PyException_SetTraceback"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x601): riferimento non definito a "PyFrame_GetLineNumber"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x1128): riferimento non definito a "PyErr_Restore"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12error_stringB5cxx11Ev[_ZN8pybind116detail12error_stringB5cxx11Ev]+0x1499): riferimento non definito a "PyErr_Restore"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::str::operator std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind113strcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv[_ZNK8pybind113strcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv]+0x33): riferimento non definito a "PyUnicode_AsUTF8String"
+    yocto_pathtrace.cpp:(.text._ZNK8pybind113strcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv[_ZNK8pybind113strcvNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEv]+0x69): riferimento non definito a "PyBytes_AsStringAndSize"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::accessor<pybind11::detail::accessor_policies::str_attr>::get_cache() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail8accessorINS0_17accessor_policies8str_attrEE9get_cacheEv[_ZNK8pybind116detail8accessorINS0_17accessor_policies8str_attrEE9get_cacheEv]+0x26): riferimento non definito a "PyObject_GetAttrString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::string_caster<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, false>::load(pybind11::handle, bool)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb[_ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb]+0x4e): riferimento non definito a "PyUnicode_AsEncodedString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb[_ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb]+0x5e): riferimento non definito a "PyBytes_AsString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb[_ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb]+0x69): riferimento non definito a "PyBytes_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb[_ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE4loadENS_6handleEb]+0xc5): riferimento non definito a "PyErr_Clear"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "_ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE10load_bytesIcEEbNSt9enable_ifIXsr3std7is_sameIT_cEE5valueENS_6handleEE4typeE":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE10load_bytesIcEEbNSt9enable_ifIXsr3std7is_sameIT_cEE5valueENS_6handleEE4typeE[_ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE10load_bytesIcEEbNSt9enable_ifIXsr3std7is_sameIT_cEE5valueENS_6handleEE4typeE]+0x24): riferimento non definito a "PyBytes_AsString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE10load_bytesIcEEbNSt9enable_ifIXsr3std7is_sameIT_cEE5valueENS_6handleEE4typeE[_ZN8pybind116detail13string_casterINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EE10load_bytesIcEEbNSt9enable_ifIXsr3std7is_sameIT_cEE5valueENS_6handleEE4typeE]+0x34): riferimento non definito a "PyBytes_Size"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::gil_scoped_acquire::gil_scoped_acquire()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquireC2Ev[_ZN8pybind1118gil_scoped_acquireC2Ev]+0x21): riferimento non definito a "PyThread_get_key_value"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquireC2Ev[_ZN8pybind1118gil_scoped_acquireC2Ev]+0x33): riferimento non definito a "_PyThreadState_UncheckedGet"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquireC2Ev[_ZN8pybind1118gil_scoped_acquireC2Ev]+0x49): riferimento non definito a "PyEval_AcquireThread"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquireC2Ev[_ZN8pybind1118gil_scoped_acquireC2Ev]+0x60): riferimento non definito a "PyGILState_GetThisThreadState"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquireC2Ev[_ZN8pybind1118gil_scoped_acquireC2Ev]+0x74): riferimento non definito a "PyThreadState_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquireC2Ev[_ZN8pybind1118gil_scoped_acquireC2Ev]+0x90): riferimento non definito a "PyThread_set_key_value"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::gil_scoped_acquire::~gil_scoped_acquire()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquireD2Ev[_ZN8pybind1118gil_scoped_acquireD2Ev]+0x10): riferimento non definito a "PyEval_SaveThread"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::gil_scoped_acquire::dec_ref()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquire7dec_refEv[_ZN8pybind1118gil_scoped_acquire7dec_refEv]+0x13): riferimento non definito a "PyThreadState_Clear"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquire7dec_refEv[_ZN8pybind1118gil_scoped_acquire7dec_refEv]+0x18): riferimento non definito a "PyThreadState_DeleteCurrent"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1118gil_scoped_acquire7dec_refEv[_ZN8pybind1118gil_scoped_acquire7dec_refEv]+0x2a): riferimento non definito a "PyThread_set_key_value"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::cast_error::set_error() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind1110cast_error9set_errorEv[_ZNK8pybind1110cast_error9set_errorEv]+0x4): riferimento non definito a "PyExc_RuntimeError"
+    yocto_pathtrace.cpp:(.text._ZNK8pybind1110cast_error9set_errorEv[_ZNK8pybind1110cast_error9set_errorEv]+0x16): riferimento non definito a "PyErr_SetString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::type_caster<bool, void>& pybind11::detail::load_type<bool, void>(pybind11::detail::type_caster<bool, void>&, pybind11::handle const&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE[_ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE]+0x10): riferimento non definito a "_Py_TrueStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE[_ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE]+0x1a): riferimento non definito a "_Py_FalseStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE[_ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE]+0x24): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE[_ZN8pybind116detail9load_typeIbvEERNS0_11type_casterIT_T0_EES6_RKNS_6handleE]+0x6c): riferimento non definito a "PyErr_Clear"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::accessor<pybind11::detail::accessor_policies::generic_item>::get_cache() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail8accessorINS0_17accessor_policies12generic_itemEE9get_cacheEv[_ZNK8pybind116detail8accessorINS0_17accessor_policies12generic_itemEE9get_cacheEv]+0x26): riferimento non definito a "PyObject_GetItem"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_static_get":
+    yocto_pathtrace.cpp:(.text.pybind11_static_get[pybind11_static_get]+0x3): riferimento non definito a "PyProperty_Type"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_static_set":
+    yocto_pathtrace.cpp:(.text.pybind11_static_set[pybind11_static_set]+0x12): riferimento non definito a "PyProperty_Type"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_meta_setattro":
+    yocto_pathtrace.cpp:(.text.pybind11_meta_setattro[pybind11_meta_setattro]+0x13): riferimento non definito a "_PyType_Lookup"
+    yocto_pathtrace.cpp:(.text.pybind11_meta_setattro[pybind11_meta_setattro]+0x32): riferimento non definito a "PyObject_IsInstance"
+    yocto_pathtrace.cpp:(.text.pybind11_meta_setattro[pybind11_meta_setattro]+0x41): riferimento non definito a "PyObject_IsInstance"
+    yocto_pathtrace.cpp:(.text.pybind11_meta_setattro[pybind11_meta_setattro]+0x4c): riferimento non definito a "PyType_Type"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_meta_getattro":
+    yocto_pathtrace.cpp:(.text.pybind11_meta_getattro[pybind11_meta_getattro]+0xb): riferimento non definito a "_PyType_Lookup"
+    yocto_pathtrace.cpp:(.text.pybind11_meta_getattro[pybind11_meta_getattro]+0x15): riferimento non definito a "PyInstanceMethod_Type"
+    yocto_pathtrace.cpp:(.text.pybind11_meta_getattro[pybind11_meta_getattro]+0x22): riferimento non definito a "PyType_Type"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_object_init":
+    yocto_pathtrace.cpp:(.text.pybind11_object_init[pybind11_object_init]+0x197): riferimento non definito a "PyExc_TypeError"
+    yocto_pathtrace.cpp:(.text.pybind11_object_init[pybind11_object_init]+0x1a0): riferimento non definito a "PyErr_SetString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::instance::allocate_layout()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail8instance15allocate_layoutEv[_ZN8pybind116detail8instance15allocate_layoutEv]+0x12e): riferimento non definito a "PyMem_Calloc"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::all_type_info_get_cache(_typeobject*)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail23all_type_info_get_cacheEP11_typeobject[_ZN8pybind116detail23all_type_info_get_cacheEP11_typeobject]+0x6f): riferimento non definito a "PyWeakref_NewRef"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::cpp_function::initialize_generic(pybind11::detail::function_record*, char const*, std::type_info const* const*, unsigned long)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x1830): riferimento non definito a "PyInstanceMethod_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x1851): riferimento non definito a "PyCFunction_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x185c): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x18e3): riferimento non definito a "PyCapsule_GetName"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x18ee): riferimento non definito a "PyCapsule_GetPointer"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x19f1): riferimento non definito a "PyObject_HasAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x1a59): riferimento non definito a "PyObject_HasAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x1ac6): riferimento non definito a "PyCFunction_NewEx"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom[_ZN8pybind1112cpp_function18initialize_genericEPNS_6detail15function_recordEPKcPKPKSt9type_infom]+0x296b): riferimento non definito a "PyInstanceMethod_New"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::cpp_function::initialize<pybind11::detail::all_type_info_get_cache(_typeobject*)::{lambda(pybind11::handle)#1}, void, pybind11::handle>(pybind11::detail::all_type_info_get_cache(_typeobject*)::{lambda(pybind11::handle)#1}&&, void (*)(pybind11::handle))::{lambda(pybind11::detail::function_call&)#1}::__invoke(pybind11::detail::function_call)":
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_[_ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_]+0x1a): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_[_ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_]+0x21): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_[_ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_]+0x29): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_[_ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_]+0x30): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_[_ZZN8pybind1112cpp_function10initializeIZNS_6detail23all_type_info_get_cacheEP11_typeobjectEUlNS_6handleEE_vJS5_EJEEEvOT_PFT0_DpT1_EDpRKT2_ENUlRNS2_13function_callEE_8__invokeESJ_]+0x35): riferimento non definito a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::object pybind11::detail::object_api<pybind11::detail::accessor<pybind11::detail::accessor_policies::str_attr> >::operator()<(pybind11::return_value_policy)1>() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJEEENS_6objectEDpOT0_[_ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJEEENS_6objectEDpOT0_]+0x11): riferimento non definito a "PyTuple_New"
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJEEENS_6objectEDpOT0_[_ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJEEENS_6objectEDpOT0_]+0x2c): riferimento non definito a "PyObject_CallObject"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::cpp_function::dispatcher(_object*, _object*, _object*)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x21): riferimento non definito a "PyCapsule_GetPointer"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x298): riferimento non definito a "PyDict_GetItemString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x2ba): riferimento non definito a "PyDict_Copy"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x472): riferimento non definito a "PyDict_DelItemString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x943): riferimento non definito a "PyDict_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x987): riferimento non definito a "PyTuple_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x9bb): riferimento non definito a "PyTuple_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0xa14): riferimento non definito a "PyTuple_SetItem"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0xae3): riferimento non definito a "PyTuple_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x1112): riferimento non definito a "PyDict_GetItemString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x1138): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x1b10): riferimento non definito a "PyDict_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x260a): riferimento non definito a "PyExc_TypeError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x2614): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x2636): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x263d): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x2859): riferimento non definito a "_Py_NotImplementedStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x2860): riferimento non definito a "_Py_NotImplementedStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x2b14): riferimento non definito a "PyExc_TypeError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x2b1e): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x3d12): riferimento non definito a "PyTuple_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x3e3e): riferimento non definito a "PyObject_Repr"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x403f): riferimento non definito a "PyDict_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x423d): riferimento non definito a "PyDict_Next"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x4372): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x4547): riferimento non definito a "PyDict_Next"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x46a3): riferimento non definito a "PyExc_TypeError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x46ad): riferimento non definito a "PyErr_SetString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x5033): riferimento non definito a "PyErr_Restore"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x50eb): riferimento non definito a "PyExc_SystemError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_[_ZN8pybind1112cpp_function10dispatcherEP7_objectS2_S2_]+0x50f5): riferimento non definito a "PyErr_SetString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::capsule::capsule(void const*, void (*)(void*))":
+    yocto_pathtrace.cpp:(.text._ZN8pybind117capsuleC2EPKvPFvPvE[_ZN8pybind117capsuleC2EPKvPFvPvE]+0x1d): riferimento non definito a "PyCapsule_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind117capsuleC2EPKvPFvPvE[_ZN8pybind117capsuleC2EPKvPFvPvE]+0x30): riferimento non definito a "PyCapsule_SetContext"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::accessor<pybind11::detail::accessor_policies::tuple_item>::get_cache() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail8accessorINS0_17accessor_policies10tuple_itemEE9get_cacheEv[_ZNK8pybind116detail8accessorINS0_17accessor_policies10tuple_itemEE9get_cacheEv]+0x26): riferimento non definito a "PyTuple_GetItem"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::object pybind11::detail::object_api<pybind11::detail::accessor<pybind11::detail::accessor_policies::str_attr> >::operator()<(pybind11::return_value_policy)1, pybind11::handle&, pybind11::handle&>(pybind11::handle&, pybind11::handle&) const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJRNS_6handleESA_EEENS_6objectEDpOT0_[_ZNK8pybind116detail10object_apiINS0_8accessorINS0_17accessor_policies8str_attrEEEEclILNS_19return_value_policyE1EJRNS_6handleESA_EEENS_6objectEDpOT0_]+0x28): riferimento non definito a "PyObject_CallObject"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::str::str(pybind11::object&&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind113strC2EONS_6objectE[_ZN8pybind113strC2EONS_6objectE]+0x2e): riferimento non definito a "PyObject_Str"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::tuple pybind11::make_tuple<(pybind11::return_value_policy)1, pybind11::handle&, pybind11::handle&>(pybind11::handle&, pybind11::handle&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1110make_tupleILNS_19return_value_policyE1EJRNS_6handleES3_EEENS_5tupleEDpOT0_[_ZN8pybind1110make_tupleILNS_19return_value_policyE1EJRNS_6handleES3_EEENS_5tupleEDpOT0_]+0x39): riferimento non definito a "PyTuple_New"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::capsule::capsule(void const*, void (*)(void*))::{lambda(_object*)#1}::__invoke(_object*)":
+    yocto_pathtrace.cpp:(.text._ZZN8pybind117capsuleC1EPKvPFvPvEENUlP7_objectE_8__invokeES7_[_ZZN8pybind117capsuleC1EPKvPFvPvEENUlP7_objectE_8__invokeES7_]+0x8): riferimento non definito a "PyCapsule_GetContext"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind117capsuleC1EPKvPFvPvEENUlP7_objectE_8__invokeES7_[_ZZN8pybind117capsuleC1EPKvPFvPvEENUlP7_objectE_8__invokeES7_]+0x15): riferimento non definito a "PyCapsule_GetPointer"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::clear_instance(_object*)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail14clear_instanceEP7_object[_ZN8pybind116detail14clear_instanceEP7_object]+0x1f6): riferimento non definito a "PyObject_ClearWeakRefs"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail14clear_instanceEP7_object[_ZN8pybind116detail14clear_instanceEP7_object]+0x1fe): riferimento non definito a "_PyObject_GetDictPtr"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::instance::deallocate_layout()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail8instance17deallocate_layoutEv[_ZN8pybind116detail8instance17deallocate_layoutEv]+0xb): riferimento non definito a "PyMem_Free"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::type_record::type_record()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_recordC2Ev[_ZN8pybind116detail11type_recordC2Ev]+0x24): riferimento non definito a "PyList_New"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::generic_type::initialize(pybind11::detail::type_record const&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE[_ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE]+0x21): riferimento non definito a "PyObject_HasAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE[_ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE]+0x252): riferimento non definito a "PyList_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE[_ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE]+0x270): riferimento non definito a "PyList_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE[_ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE]+0x341): riferimento non definito a "PyList_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE[_ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE]+0x361): riferimento non definito a "PyList_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE[_ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE]+0x3a9): riferimento non definito a "PyCapsule_New"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE[_ZN8pybind116detail12generic_type10initializeERKNS0_11type_recordE]+0x3c5): riferimento non definito a "PyObject_SetAttrString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::make_new_python_type(pybind11::detail::type_record const&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x19): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x40): riferimento non definito a "PyModule_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x4e): riferimento non definito a "PyModule_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x53): riferimento non definito a "PyType_IsSubtype"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x6c): riferimento non definito a "PyObject_HasAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0xaf): riferimento non definito a "PyUnicode_FromFormat"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x128): riferimento non definito a "PyObject_HasAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x1a9): riferimento non definito a "PyObject_HasAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x72b): riferimento non definito a "PyObject_Malloc"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x75f): riferimento non definito a "PyTuple_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x80d): riferimento non definito a "PyTuple_Size"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x8bb): riferimento non definito a "PyType_Ready"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x8dd): riferimento non definito a "PyObject_SetAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE[_ZN8pybind116detail20make_new_python_typeERKNS0_11type_recordE]+0x986): riferimento non definito a "PyObject_SetAttrString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::str::str(pybind11::object const&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind113strC2ERKNS_6objectE[_ZN8pybind113strC2ERKNS_6objectE]+0x2b): riferimento non definito a "PyObject_Str"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::tuple::tuple(pybind11::object const&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind115tupleC2ERKNS_6objectE[_ZN8pybind115tupleC2ERKNS_6objectE]+0x1e): riferimento non definito a "PySequence_Tuple"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_traverse":
+    yocto_pathtrace.cpp:(.text.pybind11_traverse[pybind11_traverse]+0xb): riferimento non definito a "_PyObject_GetDictPtr"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_clear":
+    yocto_pathtrace.cpp:(.text.pybind11_clear[pybind11_clear]+0x2): riferimento non definito a "_PyObject_GetDictPtr"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_get_dict":
+    yocto_pathtrace.cpp:(.text.pybind11_get_dict[pybind11_get_dict]+0x2): riferimento non definito a "_PyObject_GetDictPtr"
+    yocto_pathtrace.cpp:(.text.pybind11_get_dict[pybind11_get_dict]+0x12): riferimento non definito a "PyDict_New"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_set_dict":
+    yocto_pathtrace.cpp:(.text.pybind11_set_dict[pybind11_set_dict]+0x14): riferimento non definito a "PyExc_TypeError"
+    yocto_pathtrace.cpp:(.text.pybind11_set_dict[pybind11_set_dict]+0x24): riferimento non definito a "PyErr_Format"
+    yocto_pathtrace.cpp:(.text.pybind11_set_dict[pybind11_set_dict]+0x39): riferimento non definito a "_PyObject_GetDictPtr"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11_getbuffer":
+    yocto_pathtrace.cpp:(.text.pybind11_getbuffer[pybind11_getbuffer]+0x1e1): riferimento non definito a "PyExc_BufferError"
+    yocto_pathtrace.cpp:(.text.pybind11_getbuffer[pybind11_getbuffer]+0x1fc): riferimento non definito a "PyExc_BufferError"
+    yocto_pathtrace.cpp:(.text.pybind11_getbuffer[pybind11_getbuffer]+0x206): riferimento non definito a "PyErr_SetString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::buffer_info::~buffer_info()":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1111buffer_infoD2Ev[_ZN8pybind1111buffer_infoD2Ev]+0x1a): riferimento non definito a "PyBuffer_Release"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::accessor<pybind11::detail::accessor_policies::list_item>::get_cache() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail8accessorINS0_17accessor_policies9list_itemEE9get_cacheEv[_ZNK8pybind116detail8accessorINS0_17accessor_policies9list_itemEE9get_cacheEv]+0x26): riferimento non definito a "PyList_GetItem"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "bool pybind11::detail::type_caster_generic::load_impl<pybind11::detail::type_caster_generic>(pybind11::handle, bool)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19type_caster_generic9load_implIS1_EEbNS_6handleEb[_ZN8pybind116detail19type_caster_generic9load_implIS1_EEbNS_6handleEb]+0x2d): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19type_caster_generic9load_implIS1_EEbNS_6handleEb[_ZN8pybind116detail19type_caster_generic9load_implIS1_EEbNS_6handleEb]+0x52): riferimento non definito a "PyType_IsSubtype"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19type_caster_generic9load_implIS1_EEbNS_6handleEb[_ZN8pybind116detail19type_caster_generic9load_implIS1_EEbNS_6handleEb]+0x1a8): riferimento non definito a "PyType_IsSubtype"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::type_caster_generic::try_load_foreign_module_local(pybind11::handle)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE[_ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE]+0x1b): riferimento non definito a "PyObject_HasAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE[_ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE]+0x31): riferimento non definito a "PyObject_GetAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE[_ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE]+0x49): riferimento non definito a "PyCapsule_GetName"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE[_ZN8pybind116detail19type_caster_generic29try_load_foreign_module_localENS_6handleE]+0x54): riferimento non definito a "PyCapsule_GetPointer"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::loader_life_support::add_patient(pybind11::handle)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19loader_life_support11add_patientENS_6handleE[_ZN8pybind116detail19loader_life_support11add_patientENS_6handleE]+0x29): riferimento non definito a "PyList_Append"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail19loader_life_support11add_patientENS_6handleE[_ZN8pybind116detail19loader_life_support11add_patientENS_6handleE]+0x40): riferimento non definito a "PyList_New"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::cpp_function::initialize<pybind11::class_<yocto::pathtrace::trace_params>::def_readwrite<yocto::pathtrace::trace_params, int>(char const*, int yocto::pathtrace::trace_params::*)::{lambda(yocto::pathtrace::trace_params const&)#1}, int const&, yocto::pathtrace::trace_params const&, pybind11::is_method>(pybind11::class_<yocto::pathtrace::trace_params>::def_readwrite<yocto::pathtrace::trace_params, int>(char const*, int yocto::pathtrace::trace_params::*)::{lambda(yocto::pathtrace::trace_params const&)#1}&&, int const& (*)(yocto::pathtrace::trace_params const&), pybind11::is_method const&)::{lambda(pybind11::detail::function_call&)#1}::__invoke(pybind11::detail::function_call)":
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRKS5_E_RKiJSJ_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENUlRNS_6detail13function_callEE_8__invokeESY_[_ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRKS5_E_RKiJSJ_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENUlRNS_6detail13function_callEE_8__invokeESY_]+0x63): riferimento non definito a "PyLong_FromSsize_t"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::reference_cast_error::set_error() const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind1120reference_cast_error9set_errorEv[_ZNK8pybind1120reference_cast_error9set_errorEv]+0x4): riferimento non definito a "PyExc_RuntimeError"
+    yocto_pathtrace.cpp:(.text._ZNK8pybind1120reference_cast_error9set_errorEv[_ZNK8pybind1120reference_cast_error9set_errorEv]+0x16): riferimento non definito a "PyErr_SetString"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::cpp_function::initialize<pybind11::class_<yocto::pathtrace::trace_params>::def_readwrite<yocto::pathtrace::trace_params, int>(char const*, int yocto::pathtrace::trace_params::*)::{lambda(yocto::pathtrace::trace_params&, int const&)#1}, void, yocto::pathtrace::trace_params&, int const&, pybind11::is_method>(pybind11::class_<yocto::pathtrace::trace_params>::def_readwrite<yocto::pathtrace::trace_params, int>(char const*, int yocto::pathtrace::trace_params::*)::{lambda(yocto::pathtrace::trace_params&, int const&)#1}&&, void (*)(yocto::pathtrace::trace_params&, int const&), pybind11::is_method const&)::{lambda(pybind11::detail::function_call&)#1}::operator()(pybind11::detail::function_call) const":
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_[_ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_]+0x94): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_[_ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_]+0x9b): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_[_ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_]+0xa4): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_[_ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_]+0xab): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_[_ZZN8pybind1112cpp_function10initializeIZNS_6class_IN5yocto9pathtrace12trace_paramsEJEE13def_readwriteIS5_iJEEERS6_PKcMT_T0_DpRKT1_EUlRS5_RKiE_vJSI_SK_EJNS_9is_methodEEEEvOSB_PFSC_DpSE_EDpRKT2_ENKUlRNS_6detail13function_callEE_clESX_]+0xb0): riferimento non definito a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::type_caster<int, void>::load(pybind11::handle, bool)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x18): riferimento non definito a "PyFloat_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x25): riferimento non definito a "PyFloat_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x2a): riferimento non definito a "PyType_IsSubtype"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x43): riferimento non definito a "PyLong_AsLong"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x5d): riferimento non definito a "PyErr_Clear"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x66): riferimento non definito a "PyErr_Occurred"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x72): riferimento non definito a "PyExc_TypeError"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x77): riferimento non definito a "PyErr_ExceptionMatches"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x7f): riferimento non definito a "PyErr_Clear"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x93): riferimento non definito a "PyNumber_Check"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0x9f): riferimento non definito a "PyNumber_Long"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail11type_casterIivE4loadENS_6handleEb[_ZN8pybind116detail11type_casterIivE4loadENS_6handleEb]+0xa7): riferimento non definito a "PyErr_Clear"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::class_<yocto::pathtrace::trace_params>::get_function_record(pybind11::handle)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE[_ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE]+0xe): riferimento non definito a "PyInstanceMethod_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE[_ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE]+0x18): riferimento non definito a "PyMethod_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE[_ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE]+0x4f): riferimento non definito a "PyCapsule_GetName"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE[_ZN8pybind116class_IN5yocto9pathtrace12trace_paramsEJEE19get_function_recordENS_6handleE]+0x5a): riferimento non definito a "PyCapsule_GetPointer"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::generic_type::def_property_static_impl(char const*, pybind11::handle, pybind11::handle, pybind11::detail::function_record*)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x46): riferimento non definito a "PyProperty_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x76): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x7f): riferimento non definito a "PyProperty_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x90): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x97): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0xaf): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0xba): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0xc3): riferimento non definito a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o):yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0xce): seguono ulteriori riferimenti non definiti a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::generic_type::def_property_static_impl(char const*, pybind11::handle, pybind11::handle, pybind11::detail::function_record*)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0xec): riferimento non definito a "PyUnicode_FromString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x12d): riferimento non definito a "PyObject_SetAttrString"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x185): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x18f): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x194): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x1a5): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x1af): riferimento non definito a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o):yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x1b4): seguono ulteriori riferimenti non definiti a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::detail::generic_type::def_property_static_impl(char const*, pybind11::handle, pybind11::handle, pybind11::detail::function_record*)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x1de): riferimento non definito a "PyProperty_Type"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x310): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x31a): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x31f): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x330): riferimento non definito a "_Py_NoneStruct"
+    yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x33a): riferimento non definito a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o):yocto_pathtrace.cpp:(.text._ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE[_ZN8pybind116detail12generic_type24def_property_static_implEPKcNS_6handleES4_PNS0_15function_recordE]+0x33f): seguono ulteriori riferimenti non definiti a "_Py_NoneStruct"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::object pybind11::detail::object_api<pybind11::handle>::operator()<(pybind11::return_value_policy)1, pybind11::handle, pybind11::handle, pybind11::none, pybind11::str>(pybind11::handle&&, pybind11::handle&&, pybind11::none&&, pybind11::str&&) const":
+    yocto_pathtrace.cpp:(.text._ZNK8pybind116detail10object_apiINS_6handleEEclILNS_19return_value_policyE1EJS2_S2_NS_4noneENS_3strEEEENS_6objectEDpOT0_[_ZNK8pybind116detail10object_apiINS_6handleEEclILNS_19return_value_policyE1EJS2_S2_NS_4noneENS_3strEEEENS_6objectEDpOT0_]+0x26): riferimento non definito a "PyObject_CallObject"
+    ../../../../bin/libyocto_pathtrace.a(yocto_pathtrace.cpp.o): nella funzione "pybind11::tuple pybind11::make_tuple<(pybind11::return_value_policy)1, pybind11::handle, pybind11::handle, pybind11::none, pybind11::str>(pybind11::handle&&, pybind11::handle&&, pybind11::none&&, pybind11::str&&)":
+    yocto_pathtrace.cpp:(.text._ZN8pybind1110make_tupleILNS_19return_value_policyE1EJNS_6handleES2_NS_4noneENS_3strEEEENS_5tupleEDpOT0_[_ZN8pybind1110make_tupleILNS_19return_value_policyE1EJNS_6handleES2_NS_4noneENS_3strEEEENS_5tupleEDpOT0_]+0x64): riferimento non definito a "PyTuple_New"
+    clang: error: linker command failed with exit code 1 (use -v to see invocation)
+    apps/ysceneitraces/CMakeFiles/ysceneitraces.dir/build.make:108: recipe for target '../../bin/ysceneitraces' failed
+    make[2]: *** [../../bin/ysceneitraces] Error 1
+    CMakeFiles/Makefile2:564: recipe for target 'apps/ysceneitraces/CMakeFiles/ysceneitraces.dir/all' failed
+    make[1]: *** [apps/ysceneitraces/CMakeFiles/ysceneitraces.dir/all] Error 2
+    Makefile:100: recipe for target 'all' failed
+    make: *** [all] Error 2
+    Traceback (most recent call last):
+      File "<string>", line 1, in <module>
+      File "/tmp/pip-cn0s04w4-build/setup.py", line 72, in <module>
+        zip_safe=False,
+      File "/usr/lib/python3/dist-packages/setuptools/__init__.py", line 129, in setup
+        return distutils.core.setup(**attrs)
+      File "/usr/lib/python3.6/distutils/core.py", line 148, in setup
+        dist.run_commands()
+      File "/usr/lib/python3.6/distutils/dist.py", line 955, in run_commands
+        self.run_command(cmd)
+      File "/usr/lib/python3.6/distutils/dist.py", line 974, in run_command
+        cmd_obj.run()
+      File "/usr/lib/python3/dist-packages/setuptools/command/install.py", line 61, in run
+        return orig.install.run(self)
+      File "/usr/lib/python3.6/distutils/command/install.py", line 589, in run
+        self.run_command('build')
+      File "/usr/lib/python3.6/distutils/cmd.py", line 313, in run_command
+        self.distribution.run_command(command)
+      File "/usr/lib/python3.6/distutils/dist.py", line 974, in run_command
+        cmd_obj.run()
+      File "/usr/lib/python3.6/distutils/command/build.py", line 135, in run
+        self.run_command(cmd_name)
+      File "/usr/lib/python3.6/distutils/cmd.py", line 313, in run_command
+        self.distribution.run_command(command)
+      File "/usr/lib/python3.6/distutils/dist.py", line 974, in run_command
+        cmd_obj.run()
+      File "/tmp/pip-cn0s04w4-build/setup.py", line 32, in run
+        self.build_extension(ext)
+      File "/tmp/pip-cn0s04w4-build/setup.py", line 61, in build_extension
+        subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=self.build_temp)
+      File "/usr/lib/python3.6/subprocess.py", line 311, in check_call
+        raise CalledProcessError(retcode, cmd)
+    subprocess.CalledProcessError: Command '['cmake', '--build', '.', '--config', 'Release', '--', '-j2']' returned non-zero exit status 2.
+    
+    ----------------------------------------
