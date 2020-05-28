@@ -28,7 +28,6 @@
 
 #include "yocto_extension.h"
 
-#include <pybind11/pybind11.h>
 
 #include <atomic>
 #include <deque>
@@ -98,7 +97,7 @@ PYBIND11_MODULE(py_pathtrace, m) {
   py::object default_seed = py::cast(pathtrace::default_seed);
   m.attr("default_seed")  = default_seed;
 
-  py::class_<trace_params>(m, "trace_params")
+  py::class_<pathtrace::trace_params>(m, "trace_params")
     .def(py::init<int, pathtrace::shader_type, int, int, float, uint64_t, bool, int>(), 
         py::arg("resolution") = 720,
         py::arg("shader") = pathtrace::shader_type::path,
@@ -109,14 +108,39 @@ PYBIND11_MODULE(py_pathtrace, m) {
         py::arg("noparallel") = false,
         py::arg("pratio") = 8
       )
-    .def_readwrite("resolution", &trace_params::resolution)
-    .def_readwrite("shader", &trace_params::shader)
-    .def_readwrite("samples", &trace_params::samples)
-    .def_readwrite("bounces", &trace_params::bounces)
-    .def_readwrite("clamp", &trace_params::clamp)
-    .def_readwrite("seed", &trace_params::seed)
-    .def_readwrite("noparallel", &trace_params::noparallel)
-    .def_readwrite("pratio", &trace_params::pratio);
+    .def_readwrite("resolution", &pathtrace::trace_params::resolution)
+    .def_readwrite("shader", &pathtrace::trace_params::shader)
+    .def_readwrite("samples", &pathtrace::trace_params::samples)
+    .def_readwrite("bounces", &pathtrace::trace_params::bounces)
+    .def_readwrite("clamp", &pathtrace::trace_params::clamp)
+    .def_readwrite("seed", &pathtrace::trace_params::seed)
+    .def_readwrite("noparallel", &pathtrace::trace_params::noparallel)
+    .def_readwrite("pratio", &pathtrace::trace_params::pratio);
+
+}
+
+
+PYBIND11_MODULE(py_commonio, m) {
+
+  py::class_<commonio::cli_state>(m, "cli_state")
+    .def(py::init<std::string, std::string, std::vector<commonio::cmdline_option>, std::string, std::string, bool>(), 
+        py::arg("name") = "",
+        py::arg("usage") = "",
+        py::arg("options") = NULL, //It should be = {}
+        py::arg("usage_options") = "",
+        py::arg("usage_arguments") = "",
+        py::arg("help") = false
+      )
+    .def_readwrite("name", &commonio::cli_state::name)
+    .def_readwrite("usage", &commonio::cli_state::usage)
+    .def_readwrite("options", &commonio::cli_state::options)
+    .def_readwrite("usage_options", &commonio::cli_state::usage_options)
+    .def_readwrite("usage_arguments", &commonio::cli_state::usage_arguments)
+    .def_readwrite("help", &commonio::cli_state::help);
+
+  m.def("make_cli", &commonio::make_cli, "initialize a command line parser",
+        py::arg("cmd"), py::arg("usage"));
+
 }
 
 }  // namespace yocto::extension

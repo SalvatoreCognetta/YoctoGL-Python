@@ -7,3 +7,7 @@ target_link_libraries(yocto_extension yocto yocto_pathtrace)
 # pybind11
 target_include_directories(py_pathtrace PUBLIC ${CMAKE_SOURCE_DIR}/libs)
 target_link_libraries(py_pathtrace PRIVATE yocto yocto_pathtrace)
+
+
+target_include_directories(py_commonio PUBLIC ${CMAKE_SOURCE_DIR}/libs)
+target_link_libraries(py_commonio PRIVATE yocto yocto_pathtrace)

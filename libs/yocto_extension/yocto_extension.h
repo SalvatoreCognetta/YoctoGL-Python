@@ -35,9 +35,12 @@
 // INCLUDES
 // -----------------------------------------------------------------------------
 
-// #include <yocto/yocto_trace.h>
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+
 #include <yocto/yocto_image.h>
 #include <yocto/yocto_math.h>
+#include <yocto/yocto_commonio.h>
 #include <yocto_pathtrace/yocto_pathtrace.h>
 
 #include <atomic>
@@ -53,6 +56,7 @@ namespace yocto::extension {
 namespace ext = yocto::extension;
 namespace img = yocto::image;
 namespace pathtrace = yocto::pathtrace;
+namespace commonio = yocto::commonio;
 
 // Math defitions
 using math::bbox3f;
@@ -71,7 +75,6 @@ using math::vec4i;
 using math::zero2f;
 using math::zero3f;
 
-using pathtrace::trace_params;
 }  // namespace yocto::pathtrace
 
 // -----------------------------------------------------------------------------
