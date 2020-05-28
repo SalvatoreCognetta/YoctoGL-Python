@@ -12,6 +12,7 @@ add_library(yocto
 )
 
 set_target_properties(yocto PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED YES)
+# set_target_properties(yocto PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
 
 if(UNIX AND NOT APPLE)
   find_package(Threads REQUIRED)

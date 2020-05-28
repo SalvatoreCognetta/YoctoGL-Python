@@ -23,3 +23,6 @@ cd build
 cmake ..
 make install
 ```
+
+# How to create a module
+1. Insert the pybindmodule in the principal cmakelists.txt, and the libs in the cmakelist of yoctoextension (otherwise it will blow up)

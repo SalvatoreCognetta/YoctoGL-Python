@@ -5,4 +5,5 @@ target_include_directories(yocto_extension PUBLIC ${CMAKE_SOURCE_DIR}/libs)
 target_link_libraries(yocto_extension yocto yocto_pathtrace)
 
 # pybind11
-# pybind11_add_module(test_yscene libs/yocto/yocto_trace.cpp)
+target_include_directories(py_yocto PUBLIC ${CMAKE_SOURCE_DIR}/libs)
+target_link_libraries(py_yocto PRIVATE yocto yocto_pathtrace)

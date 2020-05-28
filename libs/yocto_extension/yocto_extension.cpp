@@ -80,19 +80,25 @@ using math::zero4i;
 // IMPLEMENTATION FOR EXTENSION
 // -----------------------------------------------------------------------------
 namespace yocto::extension {
-    // namespace py = pybind11;
+    namespace py = pybind11;
 
-    // PYBIND11_MODULE(example, m) {
-    //     py::class_<vec2f>(m, "vec2f")
-    //         .def(py::init<>())
-    //         .def_readwrite("x", &vec2f::x)
-    //         .def_readwrite("y", &vec2f::y);
-    // }
+    PYBIND11_MODULE(py_yocto, m) {
+        py::class_<vec2i>(m, "vec2i")
+            .def(py::init<>())
+            .def_readwrite("x", &vec2i::x)
+            .def_readwrite("y", &vec2i::y);
+
+        py::object default_seed = py::cast(pathtrace::default_seed);
+        m.attr("default_seed") = default_seed;
+
+        py::class_<trace_params>(m, "trace_params")
+            .def(py::init<int>(), py::arg("resolution") = 720)
+            .def_readwrite("resolution", &trace_params::resolution)
+            .def_readwrite("samples", &trace_params::samples)
+            .def_readwrite("bounces", &trace_params::bounces)
+            .def_readwrite("clamp", &trace_params::clamp);
+    }
 
 
-    // PYBIND11_MODULE(test_yscene, m) {
-    //     m.doc() = "pybind11 example plugin"; // optional module docstring
-    //     m.def("add", &add);
-    // }
 
 }  // namespace yocto::pathtrace

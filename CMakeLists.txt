@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.12)
+cmake_minimum_required (VERSION 3.13)
 
 project (yocto_pathextension VERSION 2.0)
 
@@ -9,8 +9,9 @@ project (yocto_pathextension VERSION 2.0)
 # GCC/clang:
 set(PYBIND11_CPP_STANDARD -std=c++1z) # Experimental C++17 support
 add_subdirectory(libs/pybind11) 
-pybind11_add_module(test_yscene libs/yocto/yocto_trace.cpp)
-pybind11_add_module(example libs/yocto/yocto_trace.cpp)
+# pybind11_add_module(test_yscene libs/yocto/yocto_trace.cpp)
+# pybind11_add_module(example libs/yocto/yocto_trace.cpp)
+pybind11_add_module(py_yocto libs/yocto_extension/yocto_extension.cpp)
 
 
 option(YOCTO_OPENGL "Build OpenGL apps" ON)
@@ -53,3 +54,7 @@ add_subdirectory(apps)
 # target_link_libraries(test_yscene PRIVATE yocto)
 # set_target_properties(yocto PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
 # target_link_libraries(test_yscene PUBLIC yocto)
+# pybind11_add_module(py_pathtrace SHARED libs/yocto_pathtrace/yocto_pathtrace.cpp)
+# target_include_directories(py_pathtrace PUBLIC libs)
+# set_target_properties(yocto PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+# target_link_libraries(py_pathtrace PRIVATE yocto)
