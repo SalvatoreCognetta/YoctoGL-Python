@@ -122,6 +122,9 @@ PYBIND11_MODULE(py_pathtrace, m) {
     .def_readwrite("pratio", &pathtrace::trace_params::pratio);
   
 
+  const py::object shader_names = py::cast(pathtrace::shader_names);
+  m.attr("shader_names") = shader_names; 
+
 }
 
 
@@ -131,7 +134,7 @@ PYBIND11_MODULE(py_commonio, m) {
     .def(py::init<std::string, std::string, std::vector<commonio::cmdline_option>, std::string, std::string, bool>(), 
         py::arg("name") = "",
         py::arg("usage") = "",
-        py::arg("options") = std::vector<commonio::cmdline_option>{}, //It should be = {}
+        py::arg("options") = std::vector<commonio::cmdline_option>{},
         py::arg("usage_options") = "",
         py::arg("usage_arguments") = "",
         py::arg("help") = false
@@ -155,6 +158,31 @@ PYBIND11_MODULE(py_commonio, m) {
   m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
         std::vector<std::string>&, const std::string&, bool))&commonio::add_option);
 
+  // https://github.com/pybind/pybind11/issues/1153 
+  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
+        std::string&, const std::string&, bool))&commonio::add_option);
+  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
+        int&, const std::string&, bool))&commonio::add_option);
+  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
+        float&, const std::string&, bool))&commonio::add_option);
+  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
+        bool&, const std::string&, bool))&commonio::add_option);
+  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
+        std::vector<std::string>&, const std::string&, bool))&commonio::add_option);
+  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
+        int&, const std::string&, const std::vector<std::string>&, bool))&commonio::add_option);
+  
+  // m.def("parse_cli", (void (*)(commonio::cli_state&, int, const char**))&commonio::parse_cli);
+  // m.def("parse_cli", py::overload_cast<commonio::cli_state&, int, const char**>(&commonio::parse_cli));
+  // https://stackoverflow.com/questions/49195418/pybind11-binding-a-function-that-uses-double-pointers
+  m.def("parse_cli", [](commonio::cli_state& cli, std::vector<std::string> argv) {
+    std::vector<const char *> cstrs;
+    cstrs.reserve(argv.size());
+    for (auto &s : argv) cstrs.push_back((char *)(s.c_str()));
+    // Delete the first element which is " ./apps/yscenetrace/yscentrace.py"
+    cstrs.erase(cstrs.begin());
+    return commonio::parse_cli(cli, cstrs.size(), cstrs.data());
+  });
 }
 
 
