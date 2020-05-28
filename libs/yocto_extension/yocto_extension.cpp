@@ -82,6 +82,10 @@ namespace yocto::extension {
 namespace py = pybind11;
 
 PYBIND11_MODULE(py_pathtrace, m) {
+  
+  const py::object shader_names = py::cast(pathtrace::shader_names);
+  m.attr("shader_names") = shader_names;  
+
   py::class_<vec2i>(m, "vec2i")
     .def(py::init<>())
     .def_readwrite("x", &vec2i::x)
@@ -116,6 +120,7 @@ PYBIND11_MODULE(py_pathtrace, m) {
     .def_readwrite("seed", &pathtrace::trace_params::seed)
     .def_readwrite("noparallel", &pathtrace::trace_params::noparallel)
     .def_readwrite("pratio", &pathtrace::trace_params::pratio);
+  
 
 }
 
@@ -126,7 +131,7 @@ PYBIND11_MODULE(py_commonio, m) {
     .def(py::init<std::string, std::string, std::vector<commonio::cmdline_option>, std::string, std::string, bool>(), 
         py::arg("name") = "",
         py::arg("usage") = "",
-        py::arg("options") = NULL, //It should be = {}
+        py::arg("options") = std::vector<commonio::cmdline_option>{}, //It should be = {}
         py::arg("usage_options") = "",
         py::arg("usage_arguments") = "",
         py::arg("help") = false
@@ -140,7 +145,24 @@ PYBIND11_MODULE(py_commonio, m) {
 
   m.def("make_cli", &commonio::make_cli, "initialize a command line parser",
         py::arg("cmd"), py::arg("usage"));
+  
+  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
+        std::string&, const std::string&, bool))&commonio::add_option);
+  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
+        int&, const std::string&, bool))&commonio::add_option);
+
+
+  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
+        std::vector<std::string>&, const std::string&, bool))&commonio::add_option);
 
 }
 
+
+PYBIND11_MODULE(py_sceneio, m) {
+
+   m.def("load_scene", &ysceneio::load_scene, py::arg("filename"), py::arg("scene"), py::arg("error"),
+        py::arg("progress_cb"), py::arg("noparallel")); 
+
+}
+  
 }  // namespace yocto::extension

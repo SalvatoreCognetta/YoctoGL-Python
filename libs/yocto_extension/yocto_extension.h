@@ -42,6 +42,7 @@
 #include <yocto/yocto_math.h>
 #include <yocto/yocto_commonio.h>
 #include <yocto_pathtrace/yocto_pathtrace.h>
+#include <yocto/yocto_sceneio.h>
 
 #include <atomic>
 #include <future>
@@ -57,6 +58,7 @@ namespace ext = yocto::extension;
 namespace img = yocto::image;
 namespace pathtrace = yocto::pathtrace;
 namespace commonio = yocto::commonio;
+namespace ysceneio = yocto::sceneio;
 
 // Math defitions
 using math::bbox3f;
