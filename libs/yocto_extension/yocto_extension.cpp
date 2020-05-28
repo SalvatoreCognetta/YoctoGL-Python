@@ -74,31 +74,49 @@ using math::zero3i;
 using math::zero4f;
 using math::zero4i;
 
-}  // namespace yocto::pathtrace
+}  // namespace yocto::extension
 
 // -----------------------------------------------------------------------------
 // IMPLEMENTATION FOR EXTENSION
 // -----------------------------------------------------------------------------
 namespace yocto::extension {
-    namespace py = pybind11;
+namespace py = pybind11;
 
-    PYBIND11_MODULE(py_yocto, m) {
-        py::class_<vec2i>(m, "vec2i")
-            .def(py::init<>())
-            .def_readwrite("x", &vec2i::x)
-            .def_readwrite("y", &vec2i::y);
+PYBIND11_MODULE(py_pathtrace, m) {
+  py::class_<vec2i>(m, "vec2i")
+    .def(py::init<>())
+    .def_readwrite("x", &vec2i::x)
+    .def_readwrite("y", &vec2i::y);
 
-        py::object default_seed = py::cast(pathtrace::default_seed);
-        m.attr("default_seed") = default_seed;
+  py::enum_<pathtrace::shader_type>(m, "shader_type")
+    .value("naive", pathtrace::shader_type::naive)
+    .value("path", pathtrace::shader_type::path)
+    .value("eyelight", pathtrace::shader_type::eyelight)
+    .value("normal", pathtrace::shader_type::normal)
+    .export_values();
 
-        py::class_<trace_params>(m, "trace_params")
-            .def(py::init<int>(), py::arg("resolution") = 720)
-            .def_readwrite("resolution", &trace_params::resolution)
-            .def_readwrite("samples", &trace_params::samples)
-            .def_readwrite("bounces", &trace_params::bounces)
-            .def_readwrite("clamp", &trace_params::clamp);
-    }
+  py::object default_seed = py::cast(pathtrace::default_seed);
+  m.attr("default_seed")  = default_seed;
 
+  py::class_<trace_params>(m, "trace_params")
+    .def(py::init<int, pathtrace::shader_type, int, int, float, uint64_t, bool, int>(), 
+        py::arg("resolution") = 720,
+        py::arg("shader") = pathtrace::shader_type::path,
+        py::arg("samples") = 512,
+        py::arg("bounces") = 8,
+        py::arg("clamp") = 100,
+        py::arg("seed") = default_seed,
+        py::arg("noparallel") = false,
+        py::arg("pratio") = 8
+      )
+    .def_readwrite("resolution", &trace_params::resolution)
+    .def_readwrite("shader", &trace_params::shader)
+    .def_readwrite("samples", &trace_params::samples)
+    .def_readwrite("bounces", &trace_params::bounces)
+    .def_readwrite("clamp", &trace_params::clamp)
+    .def_readwrite("seed", &trace_params::seed)
+    .def_readwrite("noparallel", &trace_params::noparallel)
+    .def_readwrite("pratio", &trace_params::pratio);
+}
 
-
-}  // namespace yocto::pathtrace
+}  // namespace yocto::extension
