@@ -82,9 +82,6 @@ namespace yocto::extension {
 namespace py = pybind11;
 
 PYBIND11_MODULE(py_pathtrace, m) {
-  
-  const py::object shader_names = py::cast(pathtrace::shader_names);
-  m.attr("shader_names") = shader_names;  
 
   py::class_<vec2i>(m, "vec2i")
     .def(py::init<>())
@@ -148,15 +145,6 @@ PYBIND11_MODULE(py_commonio, m) {
 
   m.def("make_cli", &commonio::make_cli, "initialize a command line parser",
         py::arg("cmd"), py::arg("usage"));
-  
-  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
-        std::string&, const std::string&, bool))&commonio::add_option);
-  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
-        int&, const std::string&, bool))&commonio::add_option);
-
-
-  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
-        std::vector<std::string>&, const std::string&, bool))&commonio::add_option);
 
   // https://github.com/pybind/pybind11/issues/1153 
   m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
