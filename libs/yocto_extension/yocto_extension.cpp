@@ -177,6 +177,11 @@ PYBIND11_MODULE(py_commonio, m) {
     // cstrs.erase(cstrs.begin());
     return cli::parse_cli(cli, cstrs.size(), cstrs.data());
   });
+
+  m.def("print_progress", &cli::print_progress, py::arg("message"), py::arg("current"), py::arg("total"));
+  m.def("print_fatal", &cli::print_fatal, py::arg("msg"));
+
+  
 }
 
 
@@ -185,8 +190,8 @@ PYBIND11_MODULE(py_commonio, m) {
 // -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_sceneio, m) {
 
-  // m.def("load_scene", &sio::load_scene, py::arg("filename"), py::arg("scene"), py::arg("error"),
-  //     py::arg("progress_cb"), py::arg("noparallel")); 
+  m.def("load_scene", &sio::load_scene, py::arg("filename"), py::arg("scene"), py::arg("error"),
+      py::arg("progress_cb"), py::arg("noparallel")); 
   m.def("make_cornellbox", &sio::make_cornellbox);
 
 }
