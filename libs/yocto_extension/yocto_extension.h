@@ -60,6 +60,7 @@
 
 
 #include <yocto_pathtrace/yocto_pathtrace.h>
+#include <yocto_pathtrace/yocto_pathtrace.cpp>
 
 #include <atomic>
 #include <future>

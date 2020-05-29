@@ -126,6 +126,36 @@ PYBIND11_MODULE(py_pathtrace, m) {
   const py::object shader_names = py::cast(ptr::shader_names);
   m.attr("shader_names") = shader_names;
 
+  py::class_<ptr::scene>(m, "scene")
+    .def(py::init<std::vector<ptr::camera*>,
+                  std::vector<ptr::object*>,
+                  std::vector<ptr::shape*>,
+                  std::vector<ptr::material*>,
+                  std::vector<ptr::texture*>,
+                  std::vector<ptr::environment*>,
+                  std::vector<ptr::light*>,
+                  ptr::bvh_tree*>(), 
+          py::arg("cameras") = std::vector<ptr::camera*>{},
+          py::arg("objects") = std::vector<ptr::object*>{},
+          py::arg("shapes") = std::vector<ptr::shape*>{},
+          py::arg("materials") = std::vector<ptr::material*>{},
+          py::arg("textures") = std::vector<ptr::texture*>{},
+          py::arg("environments") = std::vector<ptr::environment*>{},
+          py::arg("lights") = std::vector<ptr::light*>{},
+          py::arg("bvh") = nullptr
+      )
+    .def_readwrite("cameras", &ptr::scene::cameras)
+    .def_readwrite("objects", &ptr::scene::objects)
+    .def_readwrite("shapes", &ptr::scene::shapes)
+    .def_readwrite("materials", &ptr::scene::materials)
+    .def_readwrite("textures", &ptr::scene::textures)
+    .def_readwrite("environments", &ptr::scene::environments)
+    .def_readwrite("lights", &ptr::scene::lights)
+    .def_readwrite("bvh", &ptr::scene::bvh)
+    .def("get", [](){
+      return std::make_unique<ptr::scene>().get();
+    });
+
 }
 
 // -----------------------------------------------------------------------------
@@ -133,11 +163,39 @@ PYBIND11_MODULE(py_pathtrace, m) {
 // -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_commonio, m) {
 
+  py::enum_<cli::cli_type>(m, "cli_type")
+    .value("string_", cli::cli_type::string_)
+    .value("int_", cli::cli_type::int_)
+    .value("float_", cli::cli_type::float_)
+    .value("bool_", cli::cli_type::bool_)
+    .value("flag_", cli::cli_type::flag_)
+    .value("string_vector_", cli::cli_type::string_vector_)
+    .value("enum_", cli::cli_type::enum_)
+    .export_values(); 
+
+  py::class_<cli::cmdline_option>(m, "cmdline_option")
+    .def(py::init<std::string, std::string, cli::cli_type, void*, bool, bool, std::vector<std::string>>(), 
+        py::arg("name") = "",
+        py::arg("usage") = "",
+        py::arg("type") = cli::cli_type::string_,
+        py::arg("value") = nullptr,
+        py::arg("req") = false,
+        py::arg("set") = false,
+        py::arg("choices") = std::vector<std::string>()
+      )
+    .def_readwrite("name", &cli::cmdline_option::name)
+    .def_readwrite("usage", &cli::cmdline_option::usage)
+    .def_readwrite("type", &cli::cmdline_option::type)
+    .def_readwrite("value", &cli::cmdline_option::value)
+    .def_readwrite("req", &cli::cmdline_option::req)
+    .def_readwrite("set", &cli::cmdline_option::set)
+    .def_readwrite("choices", &cli::cmdline_option::choices);
+
   py::class_<cli::cli_state>(m, "cli_state")
     .def(py::init<std::string, std::string, std::vector<cli::cmdline_option>, std::string, std::string, bool>(), 
         py::arg("name") = "",
         py::arg("usage") = "",
-        py::arg("options") = std::vector<cli::cmdline_option>{},
+        py::arg("options") = std::vector<cli::cmdline_option>(),
         py::arg("usage_options") = "",
         py::arg("usage_arguments") = "",
         py::arg("help") = false
@@ -168,14 +226,25 @@ PYBIND11_MODULE(py_commonio, m) {
   
   // m.def("parse_cli", (void (*)(cli::cli_state&, int, const char**))&cli::parse_cli);
   // m.def("parse_cli", py::overload_cast<cli::cli_state&, int, const char**>(&cli::parse_cli));
+  
   // https://stackoverflow.com/questions/49195418/pybind11-binding-a-function-that-uses-double-pointers
   m.def("parse_cli", [](cli::cli_state& cli, std::vector<std::string> argv) {
-    std::vector<const char *> cstrs;
-    // cstrs.reserve(argv.size()-1);
+    std::vector<const char *> cstrs; //(argv.size() + 1);
+
+    // make the pointers point to the C strings in the std::strings in the
+    // std::vector
+    // for(size_t i = 0; i < argv.size(); ++i) {
+    //     cstrs[i] = argv[i].data();
+    // }
+
     for (auto &s : argv) cstrs.push_back((char *)(s.c_str()));
-    // Delete the first element which is " ./apps/yscenetrace/yscentrace.py"
-    // cstrs.erase(cstrs.begin());
-    return cli::parse_cli(cli, cstrs.size(), cstrs.data());
+    
+    // add a terminating nullptr (main wants that, so perhaps the closed source
+    // function wants it too)
+    // cstrs[argv.size()] = nullptr;
+
+    // call the closed source function
+    return cli::parse_cli(cli, static_cast<int>(cstrs.size()), cstrs.data());
   });
 
   m.def("print_progress", &cli::print_progress, py::arg("message"), py::arg("current"), py::arg("total"));
@@ -215,8 +284,9 @@ PYBIND11_MODULE(py_sceneio, m) {
     .def_readwrite("cameras", &sio::model::cameras)
     .def_readwrite("objects", &sio::model::objects)
     .def_readwrite("environments", &sio::model::environments)
+    .def_readwrite("shapes", &sio::model::shapes)
     .def_readwrite("subdivs", &sio::model::subdivs)
-    .def_readwrite("textures", &sio::model::subdivs)
+    .def_readwrite("textures", &sio::model::textures)
     .def_readwrite("materials", &sio::model::materials)
     .def_readwrite("instances", &sio::model::instances)
     .def_readwrite("name", &sio::model::name)
@@ -228,6 +298,26 @@ PYBIND11_MODULE(py_sceneio, m) {
   m.def("load_scene", &sio::load_scene, py::arg("filename"), py::arg("scene"), py::arg("error"),
       py::arg("progress_cb"), py::arg("noparallel")); 
   m.def("make_cornellbox", &sio::make_cornellbox);
+
+  // py::class_<sio::camera> (m, "camera")
+  //   .def(py::init<std::string, math::frame3f, bool, float, float, float, float, float>(),
+  //       py::arg("name") = "",
+  //       py::arg("frame") = math::identity3x4f,
+  //       py::arg("orthographic") = false,
+  //       py::arg("lens") = 0.050,
+  //       py::arg("film") = 0.036, 
+  //       py::arg("aspect") = 1.500,
+  //       py::arg("focus") = 10000,
+  //       py::arg("aperture") = 0)
+  //   .def_readwrite("name", &sio::camera::name)
+  //   .def_readwrite("frame", &sio::camera::frame)
+  //   .def_readwrite("orthographic", &sio::camera::orthographic)
+  //   .def_readwrite("lens", &sio::camera::lens)
+  //   .def_readwrite("film", &sio::camera::film)
+  //   .def_readwrite("aspect", &sio::camera::aspect)
+  //   .def_readwrite("focus", &sio::camera::focus)
+  //   .def_readwrite("aperture", &sio::camera::aperture);
+  // m.def("get_camera", &sio::get_camera, py::arg("scene"), py::arg("name"), py::return_value_policy::reference);
 
 }
 

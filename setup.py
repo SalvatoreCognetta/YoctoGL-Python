@@ -67,7 +67,12 @@ setup(
     author_email='salvatore.cognetta@gmail.com',
     description='',
     long_description='',
-    ext_modules=[CMakeExtension('test_yscene')],
+    ext_modules=[
+        CMakeExtension('py_pathtrace'), 
+        CMakeExtension('py_commonio'), 
+        CMakeExtension('py_sceneio'),
+        CMakeExtension('py_trace')
+    ],
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
 )
