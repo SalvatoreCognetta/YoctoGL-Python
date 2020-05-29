@@ -1,5 +1,6 @@
 import py_pathtrace as pathtrace
 import py_commonio  as commonio
+import py_sceneio   as sceneio
 import sys
 
 def main(*argv):
@@ -23,9 +24,9 @@ def main(*argv):
   commonio.add_option(cli, "--save-batch", save_batch, "Save images progressively", False)
   commonio.add_option(cli, "--output-image,-o", imfilename, "Image filename", False)
   commonio.add_option(cli, "scene", filename, "Scene filename", True)
-  print(cli.name)
-  # *argv.pop(0)
   commonio.parse_cli(cli, *argv)
+
+
 
 if __name__ == "__main__":
   main(sys.argv)

@@ -181,7 +181,7 @@ PYBIND11_MODULE(py_commonio, m) {
   m.def("print_progress", &cli::print_progress, py::arg("message"), py::arg("current"), py::arg("total"));
   m.def("print_fatal", &cli::print_fatal, py::arg("msg"));
 
-  
+
 }
 
 
@@ -189,6 +189,38 @@ PYBIND11_MODULE(py_commonio, m) {
 // YOCTO SCENEIO
 // -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_sceneio, m) {
+
+  py::class_<sio::model>(m, "model")
+    .def(py::init<std::vector<sio::camera*>,
+                  std::vector<sio::object*>,
+                  std::vector<sio::environment*>,
+                  std::vector<sio::shape*>,
+                  std::vector<sio::subdiv*>,
+                  std::vector<sio::texture*>,
+                  std::vector<sio::material*>,
+                  std::vector<sio::instance*>,
+                  std::string,
+                  std::string>(), 
+          py::arg("cameras") = std::vector<sio::camera*>{},
+          py::arg("objects") = std::vector<sio::object*>{},
+          py::arg("environments") = std::vector<sio::environment*>{},
+          py::arg("shapes") = std::vector<sio::shape*>{},
+          py::arg("subdivs") = std::vector<sio::subdiv*>{},
+          py::arg("textures") = std::vector<sio::texture*>{},
+          py::arg("materials") = std::vector<sio::material*>{},
+          py::arg("instances") = std::vector<sio::instance*>{},
+          py::arg("name") = "",
+          py::arg("copyright") = ""
+      )
+    .def_readwrite("cameras", &sio::model::cameras)
+    .def_readwrite("objects", &sio::model::objects)
+    .def_readwrite("environments", &sio::model::environments)
+    .def_readwrite("subdivs", &sio::model::subdivs)
+    .def_readwrite("textures", &sio::model::subdivs)
+    .def_readwrite("materials", &sio::model::materials)
+    .def_readwrite("instances", &sio::model::instances)
+    .def_readwrite("name", &sio::model::name)
+    .def_readwrite("copyright", &sio::model::copyright);
 
   m.def("load_scene", &sio::load_scene, py::arg("filename"), py::arg("scene"), py::arg("error"),
       py::arg("progress_cb"), py::arg("noparallel")); 
