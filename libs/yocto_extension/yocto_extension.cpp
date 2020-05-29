@@ -81,6 +81,10 @@ using math::zero4i;
 namespace yocto::extension {
 namespace py = pybind11;
 
+
+// -----------------------------------------------------------------------------
+// YOCTO-PATHTRACE
+// -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_pathtrace, m) {
 
   py::class_<vec2i>(m, "vec2i")
@@ -88,20 +92,20 @@ PYBIND11_MODULE(py_pathtrace, m) {
     .def_readwrite("x", &vec2i::x)
     .def_readwrite("y", &vec2i::y);
 
-  py::enum_<pathtrace::shader_type>(m, "shader_type")
-    .value("naive", pathtrace::shader_type::naive)
-    .value("path", pathtrace::shader_type::path)
-    .value("eyelight", pathtrace::shader_type::eyelight)
-    .value("normal", pathtrace::shader_type::normal)
+  py::enum_<ptr::shader_type>(m, "shader_type")
+    .value("naive", ptr::shader_type::naive)
+    .value("path", ptr::shader_type::path)
+    .value("eyelight", ptr::shader_type::eyelight)
+    .value("normal", ptr::shader_type::normal)
     .export_values();
 
-  py::object default_seed = py::cast(pathtrace::default_seed);
+  py::object default_seed = py::cast(ptr::default_seed);
   m.attr("default_seed")  = default_seed;
 
-  py::class_<pathtrace::trace_params>(m, "trace_params")
-    .def(py::init<int, pathtrace::shader_type, int, int, float, uint64_t, bool, int>(), 
+  py::class_<ptr::trace_params>(m, "trace_params")
+    .def(py::init<int, ptr::shader_type, int, int, float, uint64_t, bool, int>(), 
         py::arg("resolution") = 720,
-        py::arg("shader") = pathtrace::shader_type::path,
+        py::arg("shader") = ptr::shader_type::path,
         py::arg("samples") = 512,
         py::arg("bounces") = 8,
         py::arg("clamp") = 100,
@@ -109,75 +113,80 @@ PYBIND11_MODULE(py_pathtrace, m) {
         py::arg("noparallel") = false,
         py::arg("pratio") = 8
       )
-    .def_readwrite("resolution", &pathtrace::trace_params::resolution)
-    .def_readwrite("shader", &pathtrace::trace_params::shader)
-    .def_readwrite("samples", &pathtrace::trace_params::samples)
-    .def_readwrite("bounces", &pathtrace::trace_params::bounces)
-    .def_readwrite("clamp", &pathtrace::trace_params::clamp)
-    .def_readwrite("seed", &pathtrace::trace_params::seed)
-    .def_readwrite("noparallel", &pathtrace::trace_params::noparallel)
-    .def_readwrite("pratio", &pathtrace::trace_params::pratio);
+    .def_readwrite("resolution", &ptr::trace_params::resolution)
+    .def_readwrite("shader", &ptr::trace_params::shader)
+    .def_readwrite("samples", &ptr::trace_params::samples)
+    .def_readwrite("bounces", &ptr::trace_params::bounces)
+    .def_readwrite("clamp", &ptr::trace_params::clamp)
+    .def_readwrite("seed", &ptr::trace_params::seed)
+    .def_readwrite("noparallel", &ptr::trace_params::noparallel)
+    .def_readwrite("pratio", &ptr::trace_params::pratio);
   
 
-  const py::object shader_names = py::cast(pathtrace::shader_names);
+  const py::object shader_names = py::cast(ptr::shader_names);
   m.attr("shader_names") = shader_names; 
 
 }
 
-
+// -----------------------------------------------------------------------------
+// YOCTO COMMONIO
+// -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_commonio, m) {
 
-  py::class_<commonio::cli_state>(m, "cli_state")
-    .def(py::init<std::string, std::string, std::vector<commonio::cmdline_option>, std::string, std::string, bool>(), 
+  py::class_<cli::cli_state>(m, "cli_state")
+    .def(py::init<std::string, std::string, std::vector<cli::cmdline_option>, std::string, std::string, bool>(), 
         py::arg("name") = "",
         py::arg("usage") = "",
-        py::arg("options") = std::vector<commonio::cmdline_option>{},
+        py::arg("options") = std::vector<cli::cmdline_option>{},
         py::arg("usage_options") = "",
         py::arg("usage_arguments") = "",
         py::arg("help") = false
       )
-    .def_readwrite("name", &commonio::cli_state::name)
-    .def_readwrite("usage", &commonio::cli_state::usage)
-    .def_readwrite("options", &commonio::cli_state::options)
-    .def_readwrite("usage_options", &commonio::cli_state::usage_options)
-    .def_readwrite("usage_arguments", &commonio::cli_state::usage_arguments)
-    .def_readwrite("help", &commonio::cli_state::help);
+    .def_readwrite("name", &cli::cli_state::name)
+    .def_readwrite("usage", &cli::cli_state::usage)
+    .def_readwrite("options", &cli::cli_state::options)
+    .def_readwrite("usage_options", &cli::cli_state::usage_options)
+    .def_readwrite("usage_arguments", &cli::cli_state::usage_arguments)
+    .def_readwrite("help", &cli::cli_state::help);
 
-  m.def("make_cli", &commonio::make_cli, "initialize a command line parser",
+  m.def("make_cli", &cli::make_cli, "initialize a command line parser",
         py::arg("cmd"), py::arg("usage"));
 
   // https://github.com/pybind/pybind11/issues/1153 
-  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
-        std::string&, const std::string&, bool))&commonio::add_option);
-  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
-        int&, const std::string&, bool))&commonio::add_option);
-  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
-        float&, const std::string&, bool))&commonio::add_option);
-  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
-        bool&, const std::string&, bool))&commonio::add_option);
-  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
-        std::vector<std::string>&, const std::string&, bool))&commonio::add_option);
-  m.def("add_option", (void (*)(commonio::cli_state&, const std::string&,
-        int&, const std::string&, const std::vector<std::string>&, bool))&commonio::add_option);
+  m.def("add_option", (void (*)(cli::cli_state&, const std::string&,
+        std::string&, const std::string&, bool))&cli::add_option);
+  m.def("add_option", (void (*)(cli::cli_state&, const std::string&,
+        int&, const std::string&, bool))&cli::add_option);
+  m.def("add_option", (void (*)(cli::cli_state&, const std::string&,
+        float&, const std::string&, bool))&cli::add_option);
+  m.def("add_option", (void (*)(cli::cli_state&, const std::string&,
+        bool&, const std::string&, bool))&cli::add_option);
+  m.def("add_option", (void (*)(cli::cli_state&, const std::string&,
+        std::vector<std::string>&, const std::string&, bool))&cli::add_option);
+  m.def("add_option", (void (*)(cli::cli_state&, const std::string&,
+        int&, const std::string&, const std::vector<std::string>&, bool))&cli::add_option);
   
-  // m.def("parse_cli", (void (*)(commonio::cli_state&, int, const char**))&commonio::parse_cli);
-  // m.def("parse_cli", py::overload_cast<commonio::cli_state&, int, const char**>(&commonio::parse_cli));
+  // m.def("parse_cli", (void (*)(cli::cli_state&, int, const char**))&cli::parse_cli);
+  // m.def("parse_cli", py::overload_cast<cli::cli_state&, int, const char**>(&cli::parse_cli));
   // https://stackoverflow.com/questions/49195418/pybind11-binding-a-function-that-uses-double-pointers
-  m.def("parse_cli", [](commonio::cli_state& cli, std::vector<std::string> argv) {
+  m.def("parse_cli", [](cli::cli_state& cli, std::vector<std::string> argv) {
     std::vector<const char *> cstrs;
     // cstrs.reserve(argv.size()-1);
     for (auto &s : argv) cstrs.push_back((char *)(s.c_str()));
     // Delete the first element which is " ./apps/yscenetrace/yscentrace.py"
     // cstrs.erase(cstrs.begin());
-    return commonio::parse_cli(cli, cstrs.size(), cstrs.data());
+    return cli::parse_cli(cli, cstrs.size(), cstrs.data());
   });
 }
 
 
+// -----------------------------------------------------------------------------
+// YOCTO SCENEIO
+// -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_sceneio, m) {
 
-   m.def("load_scene", &ysceneio::load_scene, py::arg("filename"), py::arg("scene"), py::arg("error"),
-        py::arg("progress_cb"), py::arg("noparallel")); 
+  m.def("load_scene", &sio::load_scene, py::arg("filename"), py::arg("scene"), py::arg("error"),
+      py::arg("progress_cb"), py::arg("noparallel")); 
 
 }
   

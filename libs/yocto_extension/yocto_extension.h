@@ -56,9 +56,9 @@ namespace yocto::extension {
 // Namespace aliases
 namespace ext = yocto::extension;
 namespace img = yocto::image;
-namespace pathtrace = yocto::pathtrace;
-namespace commonio = yocto::commonio;
-namespace ysceneio = yocto::sceneio;
+namespace ptr = yocto::pathtrace;
+namespace cli = yocto::commonio;
+namespace sio = yocto::sceneio;
 
 // Math defitions
 using math::bbox3f;

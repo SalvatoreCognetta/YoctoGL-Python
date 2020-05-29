@@ -14,4 +14,4 @@ target_link_libraries(py_commonio PRIVATE yocto yocto_pathtrace)
 
 
 target_include_directories(py_sceneio PUBLIC ${CMAKE_SOURCE_DIR}/libs)
-target_link_libraries(py_sceneio PRIVATE yocto yocto_sceneio)
+target_link_libraries(py_sceneio PRIVATE yocto yocto_pathtrace)
