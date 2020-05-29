@@ -163,10 +163,10 @@ PYBIND11_MODULE(py_commonio, m) {
   // https://stackoverflow.com/questions/49195418/pybind11-binding-a-function-that-uses-double-pointers
   m.def("parse_cli", [](commonio::cli_state& cli, std::vector<std::string> argv) {
     std::vector<const char *> cstrs;
-    cstrs.reserve(argv.size());
+    // cstrs.reserve(argv.size()-1);
     for (auto &s : argv) cstrs.push_back((char *)(s.c_str()));
     // Delete the first element which is " ./apps/yscenetrace/yscentrace.py"
-    cstrs.erase(cstrs.begin());
+    // cstrs.erase(cstrs.begin());
     return commonio::parse_cli(cli, cstrs.size(), cstrs.data());
   });
 }
