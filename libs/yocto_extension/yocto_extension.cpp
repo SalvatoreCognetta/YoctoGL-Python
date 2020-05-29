@@ -81,17 +81,72 @@ using math::zero4i;
 namespace yocto::extension {
 namespace py = pybind11;
 
+// -----------------------------------------------------------------------------
+// YOCTO-MATH
+// -----------------------------------------------------------------------------
+PYBIND11_MODULE(py_math, m) {
+
+  // -----------------------------------------------------------------------------
+  // VECTORS
+  // -----------------------------------------------------------------------------
+  py::class_<vec2f>(m, "vec2f")
+    .def(py::init<float, float>(), py::arg("x") = 0, py::arg("y") = 0)
+    .def_readwrite("x", &vec2f::x)
+    .def_readwrite("y", &vec2f::y);
+
+  py::class_<vec3f>(m, "vec3f")
+    .def(py::init<float, float, float>(), py::arg("x") = 0, py::arg("y") = 0, py::arg("z") = 0)
+    .def_readwrite("x", &vec3f::x)
+    .def_readwrite("y", &vec3f::y)
+    .def_readwrite("z", &vec3f::z);
+  // -----------------------------------------------------------------------------
+  // VECTORS
+  // -----------------------------------------------------------------------------
+
+
+  // -----------------------------------------------------------------------------
+  // INTEGER VECTORS
+  // -----------------------------------------------------------------------------
+  py::class_<vec2i>(m, "vec2i")
+    .def(py::init<int, int>(), py::arg("x") = 0, py::arg("y") = 0)
+    .def_readwrite("x", &vec2i::x)
+    .def_readwrite("y", &vec2i::y);
+  // -----------------------------------------------------------------------------
+  // INTEGER VECTORS
+  // -----------------------------------------------------------------------------
+
+
+  // -----------------------------------------------------------------------------
+  // RIGID BODY TRANSFORMS/FRAMES
+  // -----------------------------------------------------------------------------
+  py::class_<frame3f>(m, "frame3f")
+    .def(py::init<vec3f, vec3f, vec3f, vec3f>(), 
+        py::arg("x") = vec3f(1,0,0),
+        py::arg("y") = vec3f(0,1,0),
+        py::arg("z") = vec3f(0,0,1),
+        py::arg("o") = vec3f(0,0,0))
+    .def_readwrite("x", &frame3f::x)
+    .def_readwrite("y", &frame3f::y)
+    .def_readwrite("z", &frame3f::z)
+    .def_readwrite("o", &frame3f::o);
+
+  py::object py_identity3x4f = py::cast(identity3x4f);
+  m.attr("identity3x4f")  = py_identity3x4f;
+  // -----------------------------------------------------------------------------
+  // RIGID BODY TRANSFORMS/FRAMES
+  // -----------------------------------------------------------------------------
+
+}
+
 
 // -----------------------------------------------------------------------------
 // YOCTO-PATHTRACE
 // -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_pathtrace, m) {
 
-  py::class_<vec2i>(m, "vec2i")
-    .def(py::init<>())
-    .def_readwrite("x", &vec2i::x)
-    .def_readwrite("y", &vec2i::y);
-
+  // -----------------------------------------------------------------------------
+  // HIGH LEVEL API
+  // -----------------------------------------------------------------------------
   py::enum_<ptr::shader_type>(m, "shader_type")
     .value("naive", ptr::shader_type::naive)
     .value("path", ptr::shader_type::path)
@@ -111,8 +166,7 @@ PYBIND11_MODULE(py_pathtrace, m) {
         py::arg("clamp") = 100,
         py::arg("seed") = default_seed,
         py::arg("noparallel") = false,
-        py::arg("pratio") = 8
-      )
+        py::arg("pratio") = 8)
     .def_readwrite("resolution", &ptr::trace_params::resolution)
     .def_readwrite("shader", &ptr::trace_params::shader)
     .def_readwrite("samples", &ptr::trace_params::samples)
@@ -125,6 +179,29 @@ PYBIND11_MODULE(py_pathtrace, m) {
 
   const py::object shader_names = py::cast(ptr::shader_names);
   m.attr("shader_names") = shader_names;
+  // -----------------------------------------------------------------------------
+  // HIGH LEVEL API
+  // -----------------------------------------------------------------------------
+
+
+  // -----------------------------------------------------------------------------
+  // SCENE AND RENDERING DATA
+  // -----------------------------------------------------------------------------
+  py::class_<ptr::camera> (m, "camera")
+    .def(py::init<frame3f, float, vec2f, float, float>(),
+        py::arg("frame") = identity3x4f,
+        py::arg("lens") = 0.050,
+        py::arg("film") = vec2f(0.036, 0.024),
+        py::arg("focus") = 10000,
+        py::arg("aperture") = 0)
+    .def_readwrite("frame", &ptr::camera::frame)
+    .def_readwrite("lens", &ptr::camera::lens)
+    .def_readwrite("film", &ptr::camera::film)
+    .def_readwrite("focus", &ptr::camera::focus)
+    .def_readwrite("aperture", &ptr::camera::aperture)
+    .def("nullptr", [](){
+      return (ptr::camera*)nullptr;
+    });
 
   py::class_<ptr::scene>(m, "scene")
     .def(py::init<std::vector<ptr::camera*>,
@@ -142,8 +219,7 @@ PYBIND11_MODULE(py_pathtrace, m) {
           py::arg("textures") = std::vector<ptr::texture*>{},
           py::arg("environments") = std::vector<ptr::environment*>{},
           py::arg("lights") = std::vector<ptr::light*>{},
-          py::arg("bvh") = nullptr
-      )
+          py::arg("bvh") = nullptr)
     .def_readwrite("cameras", &ptr::scene::cameras)
     .def_readwrite("objects", &ptr::scene::objects)
     .def_readwrite("shapes", &ptr::scene::shapes)
@@ -155,6 +231,9 @@ PYBIND11_MODULE(py_pathtrace, m) {
     .def("get", [](){
       return std::make_unique<ptr::scene>().get();
     });
+  // -----------------------------------------------------------------------------
+  // SCENE AND RENDERING DATA
+  // -----------------------------------------------------------------------------
 
 }
 
@@ -163,6 +242,9 @@ PYBIND11_MODULE(py_pathtrace, m) {
 // -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_commonio, m) {
 
+  // -----------------------------------------------------------------------------
+  // IMPLEMENTATION OF COMMAND-LINE PARSING
+  // -----------------------------------------------------------------------------
   py::enum_<cli::cli_type>(m, "cli_type")
     .value("string_", cli::cli_type::string_)
     .value("int_", cli::cli_type::int_)
@@ -181,8 +263,7 @@ PYBIND11_MODULE(py_commonio, m) {
         py::arg("value") = nullptr,
         py::arg("req") = false,
         py::arg("set") = false,
-        py::arg("choices") = std::vector<std::string>()
-      )
+        py::arg("choices") = std::vector<std::string>())
     .def_readwrite("name", &cli::cmdline_option::name)
     .def_readwrite("usage", &cli::cmdline_option::usage)
     .def_readwrite("type", &cli::cmdline_option::type)
@@ -198,8 +279,7 @@ PYBIND11_MODULE(py_commonio, m) {
         py::arg("options") = std::vector<cli::cmdline_option>(),
         py::arg("usage_options") = "",
         py::arg("usage_arguments") = "",
-        py::arg("help") = false
-      )
+        py::arg("help") = false)
     .def_readwrite("name", &cli::cli_state::name)
     .def_readwrite("usage", &cli::cli_state::usage)
     .def_readwrite("options", &cli::cli_state::options)
@@ -233,11 +313,10 @@ PYBIND11_MODULE(py_commonio, m) {
 
     // make the pointers point to the C strings in the std::strings in the
     // std::vector
+    for (auto &s : argv) cstrs.push_back((char *)(s.c_str()));
     // for(size_t i = 0; i < argv.size(); ++i) {
     //     cstrs[i] = argv[i].data();
     // }
-
-    for (auto &s : argv) cstrs.push_back((char *)(s.c_str()));
     
     // add a terminating nullptr (main wants that, so perhaps the closed source
     // function wants it too)
@@ -259,6 +338,32 @@ PYBIND11_MODULE(py_commonio, m) {
 // -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_sceneio, m) {
 
+  // -----------------------------------------------------------------------------
+  // SCENE DATA
+  // -----------------------------------------------------------------------------
+  // camera gives problem
+  // py::class_<sio::camera> (m, "camera")
+  //   .def(py::init<std::string, frame3f, bool, float, float, float, float, float>(),
+  //       py::arg("name") = "",
+  //       py::arg("frame") = identity3x4f,
+  //       py::arg("orthographic") = false,
+  //       py::arg("lens") = 0.050,
+  //       py::arg("film") = 0.036, 
+  //       py::arg("aspect") = 1.500,
+  //       py::arg("focus") = 10000,
+  //       py::arg("aperture") = 0)
+  //   .def_readwrite("name", &sio::camera::name)
+  //   .def_readwrite("frame", &sio::camera::frame)
+  //   .def_readwrite("orthographic", &sio::camera::orthographic)
+  //   .def_readwrite("lens", &sio::camera::lens)
+  //   .def_readwrite("film", &sio::camera::film)
+  //   .def_readwrite("aspect", &sio::camera::aspect)
+  //   .def_readwrite("focus", &sio::camera::focus)
+  //   .def_readwrite("aperture", &sio::camera::aperture)
+  //   .def("nullptr", [](){
+  //     return (sio::camera*)nullptr;
+  //   });
+
   py::class_<sio::model>(m, "model")
     .def(py::init<std::vector<sio::camera*>,
                   std::vector<sio::object*>,
@@ -279,8 +384,7 @@ PYBIND11_MODULE(py_sceneio, m) {
           py::arg("materials") = std::vector<sio::material*>{},
           py::arg("instances") = std::vector<sio::instance*>{},
           py::arg("name") = "",
-          py::arg("copyright") = ""
-      )
+          py::arg("copyright") = "")
     .def_readwrite("cameras", &sio::model::cameras)
     .def_readwrite("objects", &sio::model::objects)
     .def_readwrite("environments", &sio::model::environments)
@@ -294,30 +398,34 @@ PYBIND11_MODULE(py_sceneio, m) {
     .def("get", [](){
       return std::make_unique<sio::model>().get();
     });
+  // -----------------------------------------------------------------------------
+  // SCENE DATA
+  // -----------------------------------------------------------------------------
+
+
+  // -----------------------------------------------------------------------------
+  // SCENE IO FUNCTIONS
+  // -----------------------------------------------------------------------------
+
+  // const py::object progress_callback = py::cast(sio::progress_callback);
+  // m.attr("progress_callback") = progress_callback;
+
+  // m.def("get_camera", &sio::get_camera, py::arg("scene"), py::arg("name") = "", py::return_value_policy::reference);
 
   m.def("load_scene", &sio::load_scene, py::arg("filename"), py::arg("scene"), py::arg("error"),
-      py::arg("progress_cb"), py::arg("noparallel")); 
-  m.def("make_cornellbox", &sio::make_cornellbox);
+      py::arg("progress_cb") = std::function<void(const std::string&, int, int)>(), py::arg("noparallel") = false);
+  // -----------------------------------------------------------------------------
+  // SCENE IO FUNCTIONS
+  // -----------------------------------------------------------------------------
 
-  // py::class_<sio::camera> (m, "camera")
-  //   .def(py::init<std::string, math::frame3f, bool, float, float, float, float, float>(),
-  //       py::arg("name") = "",
-  //       py::arg("frame") = math::identity3x4f,
-  //       py::arg("orthographic") = false,
-  //       py::arg("lens") = 0.050,
-  //       py::arg("film") = 0.036, 
-  //       py::arg("aspect") = 1.500,
-  //       py::arg("focus") = 10000,
-  //       py::arg("aperture") = 0)
-  //   .def_readwrite("name", &sio::camera::name)
-  //   .def_readwrite("frame", &sio::camera::frame)
-  //   .def_readwrite("orthographic", &sio::camera::orthographic)
-  //   .def_readwrite("lens", &sio::camera::lens)
-  //   .def_readwrite("film", &sio::camera::film)
-  //   .def_readwrite("aspect", &sio::camera::aspect)
-  //   .def_readwrite("focus", &sio::camera::focus)
-  //   .def_readwrite("aperture", &sio::camera::aperture);
-  // m.def("get_camera", &sio::get_camera, py::arg("scene"), py::arg("name"), py::return_value_policy::reference);
+
+  // -----------------------------------------------------------------------------
+  // EXAMPLE SCENES
+  // -----------------------------------------------------------------------------
+  m.def("make_cornellbox", &sio::make_cornellbox);
+  // -----------------------------------------------------------------------------
+  // EXAMPLE SCENES
+  // -----------------------------------------------------------------------------
 
 }
 

@@ -708,35 +708,48 @@ inline bool parse_cli(
   auto args = std::vector<std::string>{argv + 1, argv + argc};
   // parse options
   for (auto& option : cli.options) {
+    print_info(option.name);
     if (option.name[0] != '-') continue;
     for (auto& name : split_cli_names(option.name)) {
       auto pos = std::find(args.begin(), args.end(), name) - args.begin();
       if (pos >= args.size()) continue;
+      print_info(option.name + "Test 0");
       if (option.type == cli_type::flag_) {
         *(bool*)option.value = name.find("--no-") == std::string::npos;
         option.set           = true;
         args.erase(args.begin() + pos);
+        print_info(option.name + "Test 1");
       } else {
         if (pos + 1 >= args.size())
           return cli_error("missing value for " + name);
         auto value = args[pos + 1];
         args.erase(args.begin() + pos, args.begin() + pos + 2);
+        print_info(option.name + "Test 2");
         if (option.type == cli_type::string_) {
-          *(std::string*)option.value = value;
+          print_info(option.name + "Test 3-1");
+          *(std::string*)option.value = value; //This create the problem
           option.set                  = true;
+          print_info(option.name + "Test 3-2");
         } else if (option.type == cli_type::int_) {
+          print_info(option.name + "Test 4-1");
           if (!parse_cli_value(value, *(int*)option.value))
             return cli_error("incorrect value for " + name);
           option.set = true;
+          print_info(option.name + "Test 4-2");
         } else if (option.type == cli_type::float_) {
+          print_info(option.name + "Test 5-1");
           if (!parse_cli_value(value, *(float*)option.value))
             return cli_error("incorrect value for " + name);
           option.set = true;
+          print_info(option.name + "Test 5-2");
         } else if (option.type == cli_type::bool_) {
+          print_info(option.name + "Test 6-1");
           if (!parse_cli_value(value, *(bool*)option.value))
             return cli_error("incorrect value for " + name);
           option.set = true;
+          print_info(option.name + "Test 6-2");
         } else if (option.type == cli_type::enum_) {
+          print_info(option.name + "Test 7-1");
           auto pos = std::find(
               option.choices.begin(), option.choices.end(), value);
           if (pos == option.choices.end())
@@ -744,18 +757,23 @@ inline bool parse_cli(
           else
             *(int*)option.value = (int)(pos - option.choices.begin());
           option.set = true;
+          print_info(option.name + "Test 7-2");
         } else {
           throw std::runtime_error("unsupported type");
         }
+        print_info(option.name + "Test n");
+
       }
     }
     if (option.req && !option.set)
       return cli_error("missing value for " + option.name);
   }
+  print_info("Test 1");
   // check unknown options
   for (auto& arg : args) {
     if (arg.find("-") == 0) return cli_error("unknown option " + arg);
   }
+  print_info("Test 2");
   // parse positional
   for (auto& option : cli.options) {
     if (option.name[0] == '-') continue;
@@ -788,6 +806,7 @@ inline bool parse_cli(
       }
     }
   }
+  print_info("Test 3");
   // check remaining
   if (!args.empty()) return cli_error("mismatched value for " + args.front());
   // done

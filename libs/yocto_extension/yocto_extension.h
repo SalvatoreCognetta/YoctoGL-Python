@@ -36,7 +36,8 @@
 // -----------------------------------------------------------------------------
 
 #include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
+#include <pybind11/stl.h> //For stl container
+#include <pybind11/functional.h> //For callback and anonymous function    
 
 #include <yocto/yocto_commonio.h>
 #include <yocto/yocto_image.h>

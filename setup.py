@@ -68,6 +68,7 @@ setup(
     description='',
     long_description='',
     ext_modules=[
+        CMakeExtension('py_math'), 
         CMakeExtension('py_pathtrace'), 
         CMakeExtension('py_commonio'), 
         CMakeExtension('py_sceneio'),
