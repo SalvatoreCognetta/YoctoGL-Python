@@ -14,6 +14,7 @@ add_subdirectory(libs/pybind11)
 # pybind11_add_module(example libs/yocto/yocto_trace.cpp)
 pybind11_add_module(py_pathtrace libs/yocto_extension/yocto_extension.cpp)
 pybind11_add_module(py_commonio libs/yocto_extension/yocto_extension.cpp)
+pybind11_add_module(py_sceneio libs/yocto_extension/yocto_extension.cpp)
 
 
 option(YOCTO_OPENGL "Build OpenGL apps" ON)
