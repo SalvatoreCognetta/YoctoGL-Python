@@ -215,7 +215,10 @@ PYBIND11_MODULE(py_sceneio, m) {
     .def_readwrite("materials", &sio::model::materials)
     .def_readwrite("instances", &sio::model::instances)
     .def_readwrite("name", &sio::model::name)
-    .def_readwrite("copyright", &sio::model::copyright);
+    .def_readwrite("copyright", &sio::model::copyright)
+    .def("get", [](){
+      return std::make_unique<sio::model>().get();
+    });
 
   m.def("load_scene", &sio::load_scene, py::arg("filename"), py::arg("scene"), py::arg("error"),
       py::arg("progress_cb"), py::arg("noparallel")); 

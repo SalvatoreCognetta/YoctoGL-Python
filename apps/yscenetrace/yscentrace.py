@@ -26,6 +26,14 @@ def main(*argv):
   commonio.add_option(cli, "scene", filename, "Scene filename", True)
   commonio.parse_cli(cli, *argv)
 
+  # scene loading
+  # ioscene_guard = sceneio.model()
+  ioscene = sceneio.model.get()
+  ioerror = ""
+  if not sceneio.load_scene(filename, ioscene, ioerror, commonio.print_progress):
+    commonio.print_fatal(ioerror)
+
+
 
 
 if __name__ == "__main__":
