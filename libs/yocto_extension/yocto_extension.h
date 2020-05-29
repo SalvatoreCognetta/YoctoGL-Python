@@ -38,11 +38,28 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-#include <yocto/yocto_image.h>
-#include <yocto/yocto_math.h>
 #include <yocto/yocto_commonio.h>
+#include <yocto/yocto_image.h>
+#include <yocto/yocto_image.cpp>
+#include <yocto/ext/stb_image.h>
+#include <yocto/ext/stb_image.cpp>
+
+// #include <yocto/yocto_sceneio.h>
+#include <yocto/yocto_sceneio.cpp>
+#include <yocto/yocto_trace.h>
+// #include <yocto/yocto_trace.cpp>
+// #include <yocto/ext/cgltf.h>
+#include <yocto/ext/cgltf.cpp>
+// #include <yocto/ext/tinyexr.h>
+#include <yocto/ext/tinyexr.cpp>
+
+#include <yocto/yocto_shape.h>
+#include <yocto/yocto_shape.cpp>
+
+#include <yocto/yocto_math.h>
+
+
 #include <yocto_pathtrace/yocto_pathtrace.h>
-#include <yocto/yocto_sceneio.h>
 
 #include <atomic>
 #include <future>
@@ -59,6 +76,7 @@ namespace img = yocto::image;
 namespace ptr = yocto::pathtrace;
 namespace cli = yocto::commonio;
 namespace sio = yocto::sceneio;
+namespace trace = yocto::trace;
 
 // Math defitions
 using math::bbox3f;

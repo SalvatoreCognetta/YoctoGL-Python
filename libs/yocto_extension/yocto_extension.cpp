@@ -124,7 +124,7 @@ PYBIND11_MODULE(py_pathtrace, m) {
   
 
   const py::object shader_names = py::cast(ptr::shader_names);
-  m.attr("shader_names") = shader_names; 
+  m.attr("shader_names") = shader_names;
 
 }
 
@@ -185,8 +185,22 @@ PYBIND11_MODULE(py_commonio, m) {
 // -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_sceneio, m) {
 
-  m.def("load_scene", &sio::load_scene, py::arg("filename"), py::arg("scene"), py::arg("error"),
-      py::arg("progress_cb"), py::arg("noparallel")); 
+  // m.def("load_scene", &sio::load_scene, py::arg("filename"), py::arg("scene"), py::arg("error"),
+  //     py::arg("progress_cb"), py::arg("noparallel")); 
+  m.def("make_cornellbox", &sio::make_cornellbox);
+
+}
+
+
+// -----------------------------------------------------------------------------
+// YOCTO TRACE
+// -----------------------------------------------------------------------------
+PYBIND11_MODULE(py_trace, m) {
+
+  // const py::object coat_ior = py::cast(trace::coat_ior);
+  // m.attr("coat_ior") = coat_ior; 
+
+  // m.def("eval_normal", &trace::eval_normal);
 
 }
   

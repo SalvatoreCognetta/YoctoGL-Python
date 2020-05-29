@@ -705,9 +705,7 @@ inline bool parse_cli(
     }
   }
   // prepare args
-  throw std::runtime_error("Test ");
   auto args = std::vector<std::string>{argv + 1, argv + argc};
-  throw std::runtime_error("Test 1");
   // parse options
   for (auto& option : cli.options) {
     if (option.name[0] != '-') continue;

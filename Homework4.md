@@ -39,3 +39,10 @@ CMake Error at libs/yocto_extension/CMakeLists.txt:13 (target_link_libraries):
 we have setted:
 `cmake_policy(SET CMP0079 NEW)`  
 See: [link to issue](https://gitlab.kitware.com/cmake/cmake/issues/19693)
+
+
+# Error with yocto_sceneio
+To avoid the error below, while creating a new module for yocto_sceneio:  
+![Error yocto_sceneio](report/img/error_yoctosceneio.png)  
+we had to include all the yocto cpp file:  
+![Error yocto_sceneio](report/img/solved_error_yoctosceneio.png)  

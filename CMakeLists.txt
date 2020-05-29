@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.12)
-cmake_policy(SET CMP0079 NEW)
+cmake_policy(SET CMP0079 NEW) # https://gitlab.kitware.com/cmake/cmake/issues/19693
 
 project (yocto_pathextension VERSION 2.0)
 
@@ -15,6 +15,7 @@ add_subdirectory(libs/pybind11)
 pybind11_add_module(py_pathtrace libs/yocto_extension/yocto_extension.cpp)
 pybind11_add_module(py_commonio libs/yocto_extension/yocto_extension.cpp)
 pybind11_add_module(py_sceneio libs/yocto_extension/yocto_extension.cpp)
+pybind11_add_module(py_trace libs/yocto_extension/yocto_extension.cpp libs/yocto/yocto_trace.cpp)
 
 
 option(YOCTO_OPENGL "Build OpenGL apps" ON)
