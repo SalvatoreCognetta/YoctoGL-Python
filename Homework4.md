@@ -27,7 +27,7 @@ make install
 # How to create a module
 1. Insert the pybindmodule in the principal cmakelists.txt, and the libs in the cmakelist of yoctoextension (otherwise it will blow up)
 
-# Cmake changes
+## Cmake changes
 To allow
 ```
 CMake Error at libs/yocto_extension/CMakeLists.txt:13 (target_link_libraries):
@@ -46,3 +46,8 @@ To avoid the error below, while creating a new module for yocto_sceneio:
 ![Error yocto_sceneio](report/img/error_yoctosceneio.png)  
 we had to include all the yocto cpp file:  
 ![Error yocto_sceneio](report/img/solved_error_yoctosceneio.png)  
+
+# How to build yocto
+```bash
+pip install . --no-cache-dir
+```

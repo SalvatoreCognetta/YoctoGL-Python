@@ -140,6 +140,40 @@ PYBIND11_MODULE(py_math, m) {
 
 
 // -----------------------------------------------------------------------------
+// YOCTO-IMAGE
+// -----------------------------------------------------------------------------
+PYBIND11_MODULE(py_image, m) {
+
+  // -----------------------------------------------------------------------------
+  // IMAGE DATA AND UTILITIES
+  // -----------------------------------------------------------------------------
+
+  // py::class_<img::image>(m, "image")
+  //   .def(py::init<int, img::shader_type, int, int, float, uint64_t, bool, int>(), 
+  //       py::arg("resolution") = 720,
+  //       py::arg("shader") = img::shader_type::path,
+  //       py::arg("samples") = 512,
+  //       py::arg("bounces") = 8,
+  //       py::arg("clamp") = 100,
+  //       py::arg("seed") = default_seed,
+  //       py::arg("noparallel") = false,
+  //       py::arg("pratio") = 8)
+  //   .def_readwrite("resolution", &img::image::resolution)
+  //   .def_readwrite("shader", &img::image::shader)
+  //   .def_readwrite("samples", &img::image::samples)
+  //   .def_readwrite("bounces", &img::image::bounces)
+  //   .def_readwrite("clamp", &img::image::clamp)
+  //   .def_readwrite("seed", &img::image::seed)
+  //   .def_readwrite("noparallel", &img::image::noparallel)
+  //   .def_readwrite("pratio", &img::image::pratio);
+
+  // -----------------------------------------------------------------------------
+  // IMAGE DATA AND UTILITIES
+  // -----------------------------------------------------------------------------
+}
+
+
+// -----------------------------------------------------------------------------
 // YOCTO-PATHTRACE
 // -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_pathtrace, m) {
@@ -201,21 +235,21 @@ PYBIND11_MODULE(py_pathtrace, m) {
     .def_readwrite("aperture", &ptr::camera::aperture)
     .def("nullptr", [](){
       return (ptr::camera*)nullptr;
-    });
+    }, py::return_value_policy::reference);
 
-  py::class_<ptr::texture> (m, "texture")
-    .def(py::init<img::image<vec3f>, img::image<vec3b>, img::image<float>, img::image<byte>>(),
-        py::arg("colorf") = img::image<vec3f>(),
-        py::arg("colorb") = img::image<vec3b>(),
-        py::arg("scalarf") = img::image<float>(),
-        py::arg("scalarb") = img::image<byte>())
-    .def_readwrite("colorf", &ptr::texture::colorf)
-    .def_readwrite("colorb", &ptr::texture::colorb)
-    .def_readwrite("scalarf", &ptr::texture::scalarf)
-    .def_readwrite("scalarb", &ptr::texture::scalarb)
-    .def("nullptr", [](){
-      return (ptr::texture*)nullptr;
-    });
+  // py::class_<ptr::texture> (m, "texture")
+  //   .def(py::init<img::image<vec3f>, img::image<vec3b>, img::image<float>, img::image<unsigned char>>(),
+  //       py::arg("colorf") = img::image<vec3f>(),
+  //       py::arg("colorb") = img::image<vec3b>(),
+  //       py::arg("scalarf") = img::image<float>(),
+  //       py::arg("scalarb") = img::image<unsigned char>())
+  //   .def_readwrite("colorf", &ptr::texture::colorf)
+  //   .def_readwrite("colorb", &ptr::texture::colorb)
+  //   .def_readwrite("scalarf", &ptr::texture::scalarf)
+  //   .def_readwrite("scalarb", &ptr::texture::scalarb)
+  //   .def("nullptr", [](){
+  //     return (ptr::texture*)nullptr;
+  //   }, py::return_value_policy::reference);
 
   py::class_<ptr::scene>(m, "scene")
     .def(py::init<std::vector<ptr::camera*>,
@@ -226,13 +260,13 @@ PYBIND11_MODULE(py_pathtrace, m) {
                   std::vector<ptr::environment*>,
                   std::vector<ptr::light*>,
                   ptr::bvh_tree*>(), 
-          py::arg("cameras") = std::vector<ptr::camera*>{},
-          py::arg("objects") = std::vector<ptr::object*>{},
-          py::arg("shapes") = std::vector<ptr::shape*>{},
-          py::arg("materials") = std::vector<ptr::material*>{},
-          py::arg("textures") = std::vector<ptr::texture*>{},
-          py::arg("environments") = std::vector<ptr::environment*>{},
-          py::arg("lights") = std::vector<ptr::light*>{},
+          py::arg("cameras") = std::vector<ptr::camera*>(),
+          py::arg("objects") = std::vector<ptr::object*>(),
+          py::arg("shapes") = std::vector<ptr::shape*>(),
+          py::arg("materials") = std::vector<ptr::material*>(),
+          py::arg("textures") = std::vector<ptr::texture*>(),
+          py::arg("environments") = std::vector<ptr::environment*>(),
+          py::arg("lights") = std::vector<ptr::light*>(),
           py::arg("bvh") = nullptr)
     .def_readwrite("cameras", &ptr::scene::cameras)
     .def_readwrite("objects", &ptr::scene::objects)
@@ -244,7 +278,7 @@ PYBIND11_MODULE(py_pathtrace, m) {
     .def_readwrite("bvh", &ptr::scene::bvh)
     .def("get", [](){
       return std::make_unique<ptr::scene>().get();
-    });
+    }, py::return_value_policy::reference);
   // -----------------------------------------------------------------------------
   // SCENE AND RENDERING DATA
   // -----------------------------------------------------------------------------
@@ -266,12 +300,13 @@ PYBIND11_MODULE(py_pathtrace, m) {
   // texture properties
   m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3b>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
   m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3f>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
-  m.def("set_texture", (void (*)(ptr::texture*, const img::image<byte>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  m.def("set_texture", (void (*)(ptr::texture*, const img::image<unsigned char>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
   m.def("set_texture", (void (*)(ptr::texture*, const img::image<float>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
   // -----------------------------------------------------------------------------
   // SCENE CREATION
   // -----------------------------------------------------------------------------
 }
+
 
 // -----------------------------------------------------------------------------
 // YOCTO COMMONIO
@@ -296,7 +331,7 @@ PYBIND11_MODULE(py_commonio, m) {
         py::arg("name") = "",
         py::arg("usage") = "",
         py::arg("type") = cli::cli_type::string_,
-        py::arg("value") = nullptr,
+        py::arg("value") = py::cast<void *>(nullptr), // py::cast<void *>(nullptr),
         py::arg("req") = false,
         py::arg("set") = false,
         py::arg("choices") = std::vector<std::string>())
@@ -397,7 +432,7 @@ PYBIND11_MODULE(py_sceneio, m) {
     .def_readwrite("aperture", &sio::camera::aperture)
     .def("nullptr", [](){
       return (sio::camera*)nullptr;
-    });
+    }, py::return_value_policy::reference);
 
   py::class_<sio::model>(m, "model")
     .def(py::init<std::vector<sio::camera*>,
@@ -410,14 +445,14 @@ PYBIND11_MODULE(py_sceneio, m) {
                   std::vector<sio::instance*>,
                   std::string,
                   std::string>(), 
-          py::arg("cameras") = std::vector<sio::camera*>{},
-          py::arg("objects") = std::vector<sio::object*>{},
-          py::arg("environments") = std::vector<sio::environment*>{},
-          py::arg("shapes") = std::vector<sio::shape*>{},
-          py::arg("subdivs") = std::vector<sio::subdiv*>{},
-          py::arg("textures") = std::vector<sio::texture*>{},
-          py::arg("materials") = std::vector<sio::material*>{},
-          py::arg("instances") = std::vector<sio::instance*>{},
+          py::arg("cameras") = std::vector<sio::camera*>(),
+          py::arg("objects") = std::vector<sio::object*>(),
+          py::arg("environments") = std::vector<sio::environment*>(),
+          py::arg("shapes") = std::vector<sio::shape*>(),
+          py::arg("subdivs") = std::vector<sio::subdiv*>(),
+          py::arg("textures") = std::vector<sio::texture*>(),
+          py::arg("materials") = std::vector<sio::material*>(),
+          py::arg("instances") = std::vector<sio::instance*>(),
           py::arg("name") = "",
           py::arg("copyright") = "")
     .def_readwrite("cameras", &sio::model::cameras)
@@ -432,7 +467,7 @@ PYBIND11_MODULE(py_sceneio, m) {
     .def_readwrite("copyright", &sio::model::copyright)
     .def("get", [](){
       return std::make_unique<sio::model>().get();
-    });
+    }, py::return_value_policy::reference);
   // -----------------------------------------------------------------------------
   // SCENE DATA
   // -----------------------------------------------------------------------------
