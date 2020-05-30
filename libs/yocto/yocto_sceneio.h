@@ -50,6 +50,7 @@
 
 #include "yocto_image.h"
 #include "yocto_math.h"
+// #include "yocto_commonio.h"
 
 // -----------------------------------------------------------------------------
 // ALIASES
@@ -59,6 +60,7 @@ namespace yocto::sceneio {
 // Namespace aliases
 namespace scn = yocto::sceneio;
 namespace img = yocto::image;
+// namespace cli = yocto::commonio;
 
 // Math defitions
 using math::bbox3f;

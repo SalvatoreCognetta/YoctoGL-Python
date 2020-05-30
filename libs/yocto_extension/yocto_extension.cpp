@@ -203,6 +203,20 @@ PYBIND11_MODULE(py_pathtrace, m) {
       return (ptr::camera*)nullptr;
     });
 
+  py::class_<ptr::texture> (m, "texture")
+    .def(py::init<img::image<vec3f>, img::image<vec3b>, img::image<float>, img::image<byte>>(),
+        py::arg("colorf") = img::image<vec3f>(),
+        py::arg("colorb") = img::image<vec3b>(),
+        py::arg("scalarf") = img::image<float>(),
+        py::arg("scalarb") = img::image<byte>())
+    .def_readwrite("colorf", &ptr::texture::colorf)
+    .def_readwrite("colorb", &ptr::texture::colorb)
+    .def_readwrite("scalarf", &ptr::texture::scalarf)
+    .def_readwrite("scalarb", &ptr::texture::scalarb)
+    .def("nullptr", [](){
+      return (ptr::texture*)nullptr;
+    });
+
   py::class_<ptr::scene>(m, "scene")
     .def(py::init<std::vector<ptr::camera*>,
                   std::vector<ptr::object*>,
@@ -235,6 +249,28 @@ PYBIND11_MODULE(py_pathtrace, m) {
   // SCENE AND RENDERING DATA
   // -----------------------------------------------------------------------------
 
+
+
+  // -----------------------------------------------------------------------------
+  // SCENE CREATION
+  // -----------------------------------------------------------------------------
+  // Add scene elements
+  m.def("add_camera", &ptr::add_camera, py::arg("scene"), py::return_value_policy::reference);
+  m.def("add_texture", &ptr::add_texture, py::arg("scene"), py::return_value_policy::reference);
+
+  // camera properties
+  m.def("set_frame", (void (*)(ptr::camera*, const frame3f&))&ptr::set_frame, py::arg("camera"), py::arg("frame"));
+  m.def("set_lens", (void (*)(ptr::camera*, float, float, float))&ptr::set_lens, py::arg("camera"), py::arg("lens"), py::arg("aspect"), py::arg("film"));
+  m.def("set_focus", (void (*)(ptr::camera*, float, float))&ptr::set_focus, py::arg("camera"), py::arg("aperture"), py::arg("focus"));
+
+  // texture properties
+  m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3b>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3f>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  m.def("set_texture", (void (*)(ptr::texture*, const img::image<byte>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  m.def("set_texture", (void (*)(ptr::texture*, const img::image<float>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  // -----------------------------------------------------------------------------
+  // SCENE CREATION
+  // -----------------------------------------------------------------------------
 }
 
 // -----------------------------------------------------------------------------
@@ -341,28 +377,27 @@ PYBIND11_MODULE(py_sceneio, m) {
   // -----------------------------------------------------------------------------
   // SCENE DATA
   // -----------------------------------------------------------------------------
-  // camera gives problem
-  // py::class_<sio::camera> (m, "camera")
-  //   .def(py::init<std::string, frame3f, bool, float, float, float, float, float>(),
-  //       py::arg("name") = "",
-  //       py::arg("frame") = identity3x4f,
-  //       py::arg("orthographic") = false,
-  //       py::arg("lens") = 0.050,
-  //       py::arg("film") = 0.036, 
-  //       py::arg("aspect") = 1.500,
-  //       py::arg("focus") = 10000,
-  //       py::arg("aperture") = 0)
-  //   .def_readwrite("name", &sio::camera::name)
-  //   .def_readwrite("frame", &sio::camera::frame)
-  //   .def_readwrite("orthographic", &sio::camera::orthographic)
-  //   .def_readwrite("lens", &sio::camera::lens)
-  //   .def_readwrite("film", &sio::camera::film)
-  //   .def_readwrite("aspect", &sio::camera::aspect)
-  //   .def_readwrite("focus", &sio::camera::focus)
-  //   .def_readwrite("aperture", &sio::camera::aperture)
-  //   .def("nullptr", [](){
-  //     return (sio::camera*)nullptr;
-  //   });
+  py::class_<sio::camera> (m, "camera")
+    .def(py::init<std::string, frame3f, bool, float, float, float, float, float>(),
+        py::arg("name") = "",
+        py::arg("frame") = identity3x4f,
+        py::arg("orthographic") = false,
+        py::arg("lens") = 0.050,
+        py::arg("film") = 0.036, 
+        py::arg("aspect") = 1.500,
+        py::arg("focus") = 10000,
+        py::arg("aperture") = 0)
+    .def_readwrite("name", &sio::camera::name)
+    .def_readwrite("frame", &sio::camera::frame)
+    .def_readwrite("orthographic", &sio::camera::orthographic)
+    .def_readwrite("lens", &sio::camera::lens)
+    .def_readwrite("film", &sio::camera::film)
+    .def_readwrite("aspect", &sio::camera::aspect)
+    .def_readwrite("focus", &sio::camera::focus)
+    .def_readwrite("aperture", &sio::camera::aperture)
+    .def("nullptr", [](){
+      return (sio::camera*)nullptr;
+    });
 
   py::class_<sio::model>(m, "model")
     .def(py::init<std::vector<sio::camera*>,
@@ -410,7 +445,7 @@ PYBIND11_MODULE(py_sceneio, m) {
   // const py::object progress_callback = py::cast(sio::progress_callback);
   // m.attr("progress_callback") = progress_callback;
 
-  // m.def("get_camera", &sio::get_camera, py::arg("scene"), py::arg("name") = "", py::return_value_policy::reference);
+  m.def("get_camera", &sio::get_camera, py::arg("scene"), py::arg("name") = "", py::return_value_policy::reference);
 
   m.def("load_scene", &sio::load_scene, py::arg("filename"), py::arg("scene"), py::arg("error"),
       py::arg("progress_cb") = std::function<void(const std::string&, int, int)>(), py::arg("noparallel") = false);

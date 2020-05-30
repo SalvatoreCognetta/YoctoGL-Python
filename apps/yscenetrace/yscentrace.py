@@ -1,8 +1,42 @@
-# import py_math
+import py_math
 import py_pathtrace as ptr
 import py_commonio  as commonio
 import py_sceneio   as sio
 import sys
+
+def init_scene(scene, ioscene, camera, iocamera, progress_cb):
+  progress = py_math.vec2i(0, len(ioscene.cameras) + len(ioscene.environments) +
+              len(ioscene.materials) + len(ioscene.textures) +
+              len(ioscene.shapes) + len(ioscene.subdivs) +
+              len(ioscene.objects))
+  
+  camera_map = {}
+  for iocamera in ioscene.camera:
+    if progress_cb:
+      progress.x += 1
+      progress_cb("convert camera", progress.x, progress.y)
+    camera = ptr.add_camera(scene)
+    ptr.set_frame(camera, iocamera.frame)
+    ptr.set_lens(camera, iocamera.lens, iocamera.lens, iocamera.film)
+    ptr.set_focus(camera, iocamera.aperture, iocamera.focus)
+    camera_map[iocamera] = camera
+
+  texture_map = {}
+  for iotexture in ioscene.textures:
+    if progress_cb:
+      progress.x += 1
+      progress_cb("convert texture", progress.x, progress.y)
+    texture = ptr.add_texture(scene)
+    if texture.colorf: # check if a list is empty by its type flexibility.
+      ptr.set_texture(texture, iotexture.colorf)
+    else if iotexture.colorb:
+      ptr.set_texture(texture, iotexture.colorb)
+    else if iotexture.scalarf:
+      ptr.set_texture(texture, iotexture.scalarf)
+    else if iotexture.scalarb:
+      ptr.set_texture(texture, iotexture.scalarb)
+    texture_map[iotexture] = texture
+    
 
 def main(*argv):
   print(*argv)
@@ -25,22 +59,20 @@ def main(*argv):
   commonio.add_option(cli, "--save-batch", save_batch, "Save images progressively", False)
   commonio.add_option(cli, "--output-image,-o", imfilename, "Image filename", False)
   commonio.add_option(cli, "scene", filename, "Scene filename", True)
-  print(cli.options[1].value)
+  print(cli.options[1].value) # If I remove this everything blow up with segmentation-fault
   commonio.parse_cli(cli, *argv)
-  # print(cli.options[1].value)
+  print("cli argument parse")
 
   # scene loading
   # ioscene_guard = sio.model()
-  print("test")
   ioscene = sio.model.get()
-  print("test")
+  print("ioscene created")
   ioerror = ""
   if not sio.load_scene(filename, ioscene, ioerror, commonio.print_progress):
-    print("Test")
     commonio.print_fatal(ioerror)
 
   # get camera
-  iocamera = commonio.get_camera
+  iocamera = commonio.get_camera()
 
   # convert scene
   scene_guard = ptr.scene()

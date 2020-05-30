@@ -768,12 +768,12 @@ inline bool parse_cli(
     if (option.req && !option.set)
       return cli_error("missing value for " + option.name);
   }
-  print_info("Test 1");
+  // print_info("Test 1");
   // check unknown options
   for (auto& arg : args) {
     if (arg.find("-") == 0) return cli_error("unknown option " + arg);
   }
-  print_info("Test 2");
+  // print_info("Test 2");
   // parse positional
   for (auto& option : cli.options) {
     if (option.name[0] == '-') continue;
@@ -806,7 +806,7 @@ inline bool parse_cli(
       }
     }
   }
-  print_info("Test 3");
+  // print_info("Test 3");
   // check remaining
   if (!args.empty()) return cli_error("mismatched value for " + args.front());
   // done

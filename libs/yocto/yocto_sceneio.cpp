@@ -750,8 +750,11 @@ static bool save_pbrt_scene(const std::string& filename,
 // Load a scene
 bool load_scene(const std::string& filename, scn::model* scene,
     std::string& error, progress_callback progress_cb, bool noparallel) {
+  // cli::print_info("test0");
   auto ext = sfs::path(filename).extension();
+  // cli::print_info("test1");
   if (ext == ".json" || ext == ".JSON") {
+    // cli::print_info("test0");
     return load_json_scene(filename, scene, error, progress_cb, noparallel);
   } else if (ext == ".obj" || ext == ".OBJ") {
     return load_obj_scene(filename, scene, error, progress_cb, noparallel);
