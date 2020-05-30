@@ -96,7 +96,6 @@ using math::vec4f;
 using math::vec4i;
 using math::zero2f;
 using math::zero3f;
-using math::byte;
 
 }  // namespace yocto::pathtrace
 
