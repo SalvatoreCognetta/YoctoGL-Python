@@ -29,13 +29,20 @@ def init_scene(scene, ioscene, camera, iocamera, progress_cb):
     texture = ptr.add_texture(scene)
     if texture.colorf: # check if a list is empty by its type flexibility.
       ptr.set_texture(texture, iotexture.colorf)
-    else if iotexture.colorb:
+    elif iotexture.colorb:
       ptr.set_texture(texture, iotexture.colorb)
-    else if iotexture.scalarf:
+    elif iotexture.scalarf:
       ptr.set_texture(texture, iotexture.scalarf)
-    else if iotexture.scalarb:
+    elif iotexture.scalarb:
       ptr.set_texture(texture, iotexture.scalarb)
     texture_map[iotexture] = texture
+  
+  material_map = {}
+  for iomaterial in ioscene.materials:
+    if progress_cb:
+      progress.x += 1
+      progress_cb("convert material", progress.x, progress.y)
+    material = ptr.add_material
     
 
 def main(*argv):
@@ -72,7 +79,7 @@ def main(*argv):
     commonio.print_fatal(ioerror)
 
   # get camera
-  iocamera = commonio.get_camera()
+  iocamera = sio.get_camera(ioscene, camera_name)
 
   # convert scene
   scene_guard = ptr.scene()
