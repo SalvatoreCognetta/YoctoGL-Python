@@ -257,6 +257,11 @@ PYBIND11_MODULE(py_pathtrace, m) {
   // Add scene elements
   m.def("add_camera", &ptr::add_camera, py::arg("scene"), py::return_value_policy::reference);
   m.def("add_texture", &ptr::add_texture, py::arg("scene"), py::return_value_policy::reference);
+  m.def("add_shape", &ptr::add_shape, py::arg("scene"), py::return_value_policy::reference);
+  m.def("add_material", &ptr::add_material, py::arg("scene"), py::return_value_policy::reference);
+  m.def("add_object", &ptr::add_object, py::arg("scene"), py::return_value_policy::reference);
+  m.def("add_environment", &ptr::add_environment, py::arg("scene"), py::return_value_policy::reference);
+  
 
   // camera properties
   m.def("set_frame", (void (*)(ptr::camera*, const frame3f&))&ptr::set_frame, py::arg("camera"), py::arg("frame"));
@@ -264,10 +269,42 @@ PYBIND11_MODULE(py_pathtrace, m) {
   m.def("set_focus", (void (*)(ptr::camera*, float, float))&ptr::set_focus, py::arg("camera"), py::arg("aperture"), py::arg("focus"));
 
   // texture properties
-  m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3b>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
-  m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3f>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
-  m.def("set_texture", (void (*)(ptr::texture*, const img::image<byte>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
-  m.def("set_texture", (void (*)(ptr::texture*, const img::image<float>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  // m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3b>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  // m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3f>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  // m.def("set_texture", (void (*)(ptr::texture*, const img::image<byte>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  // m.def("set_texture", (void (*)(ptr::texture*, const img::image<float>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  
+  // shape properties
+  m.def("set_points", &ptr::set_points, py::arg("shape"), py::arg("points"));
+  m.def("set_lines", &ptr::set_lines, py::arg("shape"), py::arg("lines"));
+  m.def("set_triangles", &ptr::set_triangles, py::arg("shape"), py::arg("triangles"));
+  m.def("set_positions", &ptr::set_positions, py::arg("shape"), py::arg("positions"));
+  m.def("set_normals", &ptr::set_normals, py::arg("shape"), py::arg("normals"));
+  m.def("set_texcoords", &ptr::set_texcoords, py::arg("shape"), py::arg("texcoords"));
+  m.def("set_radius", &ptr::set_radius, py::arg("shape"), py::arg("radius"));
+  m.def("set_subdiv_quadspos", &ptr::set_subdiv_quadspos, py::arg("shape"), py::arg("quadspos"));
+  m.def("set_subdiv_quadstexcoord", &ptr::set_subdiv_quadstexcoord, py::arg("shape"), py::arg("quadstexcoords"));
+  m.def("set_subdiv_positions", &ptr::set_subdiv_positions, py::arg("shape"), py::arg("positions"));
+  m.def("set_subdiv_texcoords", &ptr::set_subdiv_texcoords, py::arg("shape"), py::arg("texcoords"));
+  m.def("set_subdiv_subdivision", &ptr::set_subdiv_subdivision, py::arg("shape"), py::arg("level"), py::arg("smooth"));
+  m.def("set_subdiv_displacement", &ptr::set_subdiv_displacement, py::arg("shape"), py::arg("displacement"), py::arg("displacement_tex"));
+
+  // material properties
+  m.def("set_emission", (void (*)(ptr::material*, const vec3f&, ptr::texture*))&ptr::set_emission, py::arg("material"), py::arg("emission"), py::arg("emission_tex"));
+  m.def("set_color", &ptr::set_color, py::arg("material"), py::arg("color"), py::arg("color_tex"));
+  m.def("set_specular", &ptr::set_specular, py::arg("material"), py::arg("specular"), py::arg("specular_tex"));
+  m.def("set_metallic", &ptr::set_metallic, py::arg("material"), py::arg("metallic"), py::arg("metallic_tex"));
+  m.def("set_ior", &ptr::set_ior, py::arg("material"), py::arg("ior"));
+  m.def("set_transmission", &ptr::set_transmission, py::arg("material"), py::arg("transmission"), py::arg("thin"), py::arg("trdepth"), py::arg("transmission_tex"));
+  m.def("set_thin", &ptr::set_thin, py::arg("material"), py::arg("thin"));
+  m.def("set_roughness", &ptr::set_roughness, py::arg("material"), py::arg("roughness"), py::arg("roughness_tex"));
+  m.def("set_opacity", &ptr::set_opacity, py::arg("material"), py::arg("opacity"), py::arg("opacity_tex"));
+  m.def("set_scattering", &ptr::set_scattering, py::arg("material"), py::arg("scattering"), py::arg("scanisotropy"), py::arg("scattering_tex"));
+  m.def("set_normalmap", &ptr::set_normalmap, py::arg("material"), py::arg("normal_tex"));
+  
+
+  // add environment
+  m.def("set_emission", (void (*)(ptr::environment*, const vec3f&, ptr::texture*))&ptr::set_emission, py::arg("environment"), py::arg("emission"), py::arg("emission_tex"));
   // -----------------------------------------------------------------------------
   // SCENE CREATION
   // -----------------------------------------------------------------------------
