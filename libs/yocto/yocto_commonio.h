@@ -683,6 +683,11 @@ inline bool parse_cli_value(const std::string& str, bool& value) {
   }
 }
 
+inline bool parse_cli_value(const std::string& str, std::string& value) {
+  value    = str;
+  return true;
+}
+
 inline bool parse_cli(
     cli_state& cli, int argc, const char** argv, std::string& error) {
   auto cli_error = [&error](const std::string& message) {
@@ -714,6 +719,30 @@ inline bool parse_cli(
       auto pos = std::find(args.begin(), args.end(), name) - args.begin();
       if (pos >= args.size()) continue;
       print_info(option.name + "Test 0");
+      switch(option.type) {
+        case cli_type::flag_:
+          print_info("option.type: flag_");
+          break;
+        case cli_type::bool_:
+          print_info("option.type: bool_");
+          break;
+        case cli_type::enum_:
+          print_info("option.type: enum_");
+          break;
+        case cli_type::float_:
+          print_info("option.type: float_");
+          break;
+        case cli_type::int_:
+          print_info("option.type: int_");
+          break;
+        case cli_type::string_:
+          print_info("option.type: string_");
+          break;
+        case cli_type::string_vector_:
+          print_info("option.type: string_vector_");
+          break;
+      }
+      
       if (option.type == cli_type::flag_) {
         *(bool*)option.value = name.find("--no-") == std::string::npos;
         option.set           = true;
@@ -726,8 +755,14 @@ inline bool parse_cli(
         args.erase(args.begin() + pos, args.begin() + pos + 2);
         print_info(option.name + "Test 2");
         if (option.type == cli_type::string_) {
-          print_info(option.name + "Test 3-1");
-          *(std::string*)option.value = value; //This create the problem
+          print_info(option.name + " Test 3-1 + value:" + value);
+          print_info(typeid(option.value).name());
+          *(std::string*)option.value = value; //*(std::string*) create the problem
+          // Tried also with *(std::string*)option.value = "out/lowres/05_head1ss_720_256.jpg"; but segfault
+          // if (!parse_cli_value(value, *(std::string*)option.value))
+          //   return cli_error("incorrect value for " + name);
+          // std::string str("out/lowres/05_head1ss_720_256.jpg");
+          // *(std::string*)option.value = str;
           option.set                  = true;
           print_info(option.name + "Test 3-2");
         } else if (option.type == cli_type::int_) {
