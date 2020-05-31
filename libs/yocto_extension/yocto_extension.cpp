@@ -221,6 +221,20 @@ PYBIND11_MODULE(py_pathtrace, m) {
   // -----------------------------------------------------------------------------
   // SCENE AND RENDERING DATA
   // -----------------------------------------------------------------------------
+  py::class_<ptr::bvh_node> (m, "bvh_node")
+    .def_readwrite("bbox", &ptr::bvh_node::bbox)
+    .def_readwrite("start", &ptr::bvh_node::start)
+    .def_readwrite("num", &ptr::bvh_node::num)
+    .def_readwrite("internal", &ptr::bvh_node::internal)
+    .def_readwrite("axis", &ptr::bvh_node::axis);
+
+  py::class_<ptr::bvh_tree> (m, "bvh_tree")
+    .def(py::init<std::vector<ptr::bvh_node>, std::vector<int>>(),
+        py::arg("nodes") = std::vector<ptr::bvh_node>(),
+        py::arg("primitives") = std::vector<int>())
+    .def_readwrite("nodes", &ptr::bvh_tree::nodes)
+    .def_readwrite("primitives", &ptr::bvh_tree::primitives);
+
   py::class_<ptr::camera> (m, "camera")
     .def(py::init<frame3f, float, vec2f, float, float>(),
         py::arg("frame") = identity3x4f,
@@ -267,7 +281,7 @@ PYBIND11_MODULE(py_pathtrace, m) {
           py::arg("textures") = std::vector<ptr::texture*>(),
           py::arg("environments") = std::vector<ptr::environment*>(),
           py::arg("lights") = std::vector<ptr::light*>(),
-          py::arg("bvh") = nullptr)
+          py::arg("bvh") = py::cast<ptr::bvh_tree *>(nullptr))
     .def_readwrite("cameras", &ptr::scene::cameras)
     .def_readwrite("objects", &ptr::scene::objects)
     .def_readwrite("shapes", &ptr::scene::shapes)
@@ -276,8 +290,10 @@ PYBIND11_MODULE(py_pathtrace, m) {
     .def_readwrite("environments", &ptr::scene::environments)
     .def_readwrite("lights", &ptr::scene::lights)
     .def_readwrite("bvh", &ptr::scene::bvh)
-    .def("get", [](){
-      return std::make_unique<ptr::scene>().get();
+    .def("get", []() -> ptr::scene* {
+      auto scene_guard =  std::unique_ptr<ptr::scene>(new ptr::scene());
+      // auto scene_guard = std::make_unique<ptr::scene>().get()
+      return scene_guard.get();
     }, py::return_value_policy::reference);
   // -----------------------------------------------------------------------------
   // SCENE AND RENDERING DATA
@@ -508,7 +524,7 @@ PYBIND11_MODULE(py_sceneio, m) {
     .def_readwrite("copyright", &sio::model::copyright)
     .def("get", []() -> sio::model* {
       auto ioscene_guard =  std::unique_ptr<sio::model>(new sio::model());
-      // auto ioscene_guard =  std::unique_ptr<sio::model>(new sio::model());
+      // auto ioscene_guard = std::make_unique<sio::model>().get();
       return ioscene_guard.get();
     }, py::return_value_policy::reference);
   // -----------------------------------------------------------------------------

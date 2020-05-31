@@ -103,7 +103,7 @@ def main(*argv):
 
   # convert scene
   # scene_guard = ptr.scene()
-  scene       = ptr.scene.get()
+  scene       = ptr.scene()
   camera      = None # ptr.camera.nullprt()
   init_scene(scene, ioscene, camera, iocamera, commonio.print_progress)
 
