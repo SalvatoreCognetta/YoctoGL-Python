@@ -9,9 +9,11 @@ def init_scene(scene, ioscene, camera, iocamera, progress_cb):
               len(ioscene.materials) + len(ioscene.textures) +
               len(ioscene.shapes) + len(ioscene.subdivs) +
               len(ioscene.objects))
-  
+              
   camera_map = {}
-  for iocamera in ioscene.camera:
+  print("Test init_scene")
+  for iocamera in ioscene.cameras:
+    print("Test init_scene")
     if progress_cb:
       progress.x += 1
       progress_cb("convert camera", progress.x, progress.y)
@@ -43,17 +45,23 @@ def init_scene(scene, ioscene, camera, iocamera, progress_cb):
       progress.x += 1
       progress_cb("convert material", progress.x, progress.y)
     material = ptr.add_material
-    
+    # ptr.set_emission(material, iomaterial.emission)
+
 
 def main(*argv):
-  print(*argv)
+  print(argv[0])
 
   # options
   params = ptr.trace_params()
   save_batch  = False
   camera_name = ""
   imfilename  = "out.hdr"
-  filename    = "scene.json"
+  filename    = "surface.json"
+  # imfilename  = "out/lowres/01_surface_720_256.jpg"
+  if len(argv) > 0 and len(argv[0]) > 1:
+    if (argv[0][1]).startswith('tests/'):
+      filename    = argv[0][1]
+  print(filename)
 
   # parse command line
   cli = commonio.make_cli("yscntrace", "Offline path tracing")
@@ -66,15 +74,25 @@ def main(*argv):
   commonio.add_option(cli, "--save-batch", save_batch, "Save images progressively", False)
   commonio.add_option(cli, "--output-image,-o", imfilename, "Image filename", False)
   commonio.add_option(cli, "scene", filename, "Scene filename", True)
-  print(cli.options[1].value) # If I remove this everything blow up with segmentation-fault
-  commonio.parse_cli(cli, *argv)
+
+  # args = [["./apps/yscenetrace/yscentrace.py"], ["tests/01_surface/surface.json"], ["-t"], ["path"], ["-s"], ["256"], ["-r"], ["720"]]
+  print(cli.options[9].value) # If I remove this everything blow up with segmentation-fault
+  # commonio.parse_cli(cli, *argv)
+
+  for option in cli.options:
+    print("Name: ", option.name)
+    print("Usage: ", option.usage)
+    print("Type: ", option.type)
+    print("Value: ", option.value)
+
+  
   print("cli argument parse")
 
   filename = "tests/01_surface/surface.json"
 
   # scene loading
   # ioscene_guard = sio.model()
-  ioscene = sio.model.get()
+  ioscene = sio.model()
   print("ioscene created")
   ioerror = ""
   #if not sio.load_scene(filename, ioscene, ioerror, commonio.print_progress):
@@ -82,17 +100,16 @@ def main(*argv):
   if not sio.load_scene(filename, ioscene, ioerror, commonio.print_progress):
     print("error loading_scene")
     commonio.print_fatal(ioerror)
-  else:
+  else:  
     print("python: scene loaded correctly")
-
   # get camera
   iocamera = sio.get_camera(ioscene, camera_name)
 
   # convert scene
-  scene_guard = ptr.scene()
+  # scene_guard = ptr.scene()
   scene       = ptr.scene.get()
-  camera      = ptr.camera.nullprt()
-  # init_scene(scene, ioscene, camera, iocamera, cli::print_progress);
+  camera      = None # ptr.camera.nullprt()
+  init_scene(scene, ioscene, camera, iocamera, commonio.print_progress)
 
 
 if __name__ == "__main__":

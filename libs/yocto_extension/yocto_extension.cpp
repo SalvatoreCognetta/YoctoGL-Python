@@ -304,10 +304,10 @@ PYBIND11_MODULE(py_pathtrace, m) {
   m.def("set_focus", (void (*)(ptr::camera*, float, float))&ptr::set_focus, py::arg("camera"), py::arg("aperture"), py::arg("focus"));
 
   // texture properties
-  // m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3b>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
-  // m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3f>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
-  // m.def("set_texture", (void (*)(ptr::texture*, const img::image<byte>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
-  // m.def("set_texture", (void (*)(ptr::texture*, const img::image<float>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3b>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3f>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  m.def("set_texture", (void (*)(ptr::texture*, const img::image<byte>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  m.def("set_texture", (void (*)(ptr::texture*, const img::image<float>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
   
   // object properties
   m.def("set_frame", (void (*)(ptr::object*, const frame3f&))&ptr::set_frame, py::arg("object"), py::arg("frame"));
@@ -378,7 +378,7 @@ PYBIND11_MODULE(py_commonio, m) {
         py::arg("name") = "",
         py::arg("usage") = "",
         py::arg("type") = cli::cli_type::string_,
-        py::arg("value") = py::cast<void *>(nullptr), // py::cast<void *>(nullptr),
+        py::arg("value") = py::cast<void *>(nullptr), // py::arg("value").none(false) = py::cast<void *>(nullptr),
         py::arg("req") = false,
         py::arg("set") = false,
         py::arg("choices") = std::vector<std::string>())
@@ -512,8 +512,10 @@ PYBIND11_MODULE(py_sceneio, m) {
     .def_readwrite("instances", &sio::model::instances)
     .def_readwrite("name", &sio::model::name)
     .def_readwrite("copyright", &sio::model::copyright)
-    .def("get", [](){
-      return std::make_unique<sio::model>().get();
+    .def("get", []() -> sio::model* {
+      auto ioscene_guard =  std::unique_ptr<sio::model>(new sio::model());
+      // auto ioscene_guard =  std::unique_ptr<sio::model>(new sio::model());
+      return ioscene_guard.get();
     }, py::return_value_policy::reference);
   // -----------------------------------------------------------------------------
   // SCENE DATA
