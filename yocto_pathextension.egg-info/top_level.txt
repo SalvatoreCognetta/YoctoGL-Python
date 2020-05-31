@@ -1,1 +1,5 @@
-test_yscene
+py_commonio
+py_math
+py_pathtrace
+py_sceneio
+py_trace

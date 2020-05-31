@@ -40,6 +40,13 @@ we have setted:
 `cmake_policy(SET CMP0079 NEW)`  
 See: [link to issue](https://gitlab.kitware.com/cmake/cmake/issues/19693)
 
+# Error with parce_cli and model
+Due to the error shown below:
+![Core dumped error](report/img/error_parce_cli.png)
+we had to create a workaround by creating a simplified parce_cli in python.
+Main problem is in "*(std::string*)option.value = value; //*(std::string*) create the problem" inside 
+"inline bool parse_cli(cli_state& cli, int argc, const char** argv, std::string& error)"; it looks like it cant convert the object into an std::string pointer.
+
 
 # Error with yocto_sceneio
 To avoid the error below, while creating a new module for yocto_sceneio:  

@@ -70,13 +70,20 @@ def main(*argv):
   commonio.parse_cli(cli, *argv)
   print("cli argument parse")
 
+  filename = "tests/01_surface/surface.json"
+
   # scene loading
   # ioscene_guard = sio.model()
   ioscene = sio.model.get()
   print("ioscene created")
   ioerror = ""
+  #if not sio.load_scene(filename, ioscene, ioerror, commonio.print_progress):
+  #  commonio.print_fatal(ioerror)
   if not sio.load_scene(filename, ioscene, ioerror, commonio.print_progress):
+    print("error loading_scene")
     commonio.print_fatal(ioerror)
+  else:
+    print("python: scene loaded correctly")
 
   # get camera
   iocamera = sio.get_camera(ioscene, camera_name)

@@ -296,6 +296,7 @@ PYBIND11_MODULE(py_pathtrace, m) {
   m.def("add_object", &ptr::add_object, py::arg("scene"), py::return_value_policy::reference);
   m.def("add_environment", &ptr::add_environment, py::arg("scene"), py::return_value_policy::reference);
   
+  
 
   // camera properties
   m.def("set_frame", (void (*)(ptr::camera*, const frame3f&))&ptr::set_frame, py::arg("camera"), py::arg("frame"));
@@ -308,6 +309,11 @@ PYBIND11_MODULE(py_pathtrace, m) {
   // m.def("set_texture", (void (*)(ptr::texture*, const img::image<byte>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
   // m.def("set_texture", (void (*)(ptr::texture*, const img::image<float>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
   
+  // object properties
+  m.def("set_frame", (void (*)(ptr::object*, const frame3f&))&ptr::set_frame, py::arg("object"), py::arg("frame"));
+  m.def("set_shape", &ptr::set_shape, py::arg("object"), py::arg("shape"));
+  m.def("set_material", &ptr::set_material, py::arg("object"), py::arg("material"));
+
   // shape properties
   m.def("set_points", &ptr::set_points, py::arg("shape"), py::arg("points"));
   m.def("set_lines", &ptr::set_lines, py::arg("shape"), py::arg("lines"));
