@@ -4,7 +4,7 @@ import py_commonio  as commonio
 import py_sceneio   as sio
 import sys
 
-def init_scene(scene, ioscene, camera, iocamera, progress_cb):
+def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamera: sio.camera, progress_cb):
   progress = py_math.vec2i(0, len(ioscene.cameras) + len(ioscene.environments) +
               len(ioscene.materials) + len(ioscene.textures) +
               len(ioscene.shapes) + len(ioscene.subdivs) +
@@ -13,7 +13,7 @@ def init_scene(scene, ioscene, camera, iocamera, progress_cb):
   camera_map = {}
   print("Test init_scene")
   for iocamera in ioscene.cameras:
-    print("Test init_scene")
+    print("Test iocamera")
     if progress_cb:
       progress.x += 1
       progress_cb("convert camera", progress.x, progress.y)
@@ -29,7 +29,7 @@ def init_scene(scene, ioscene, camera, iocamera, progress_cb):
       progress.x += 1
       progress_cb("convert texture", progress.x, progress.y)
     texture = ptr.add_texture(scene)
-    if texture.colorf: # check if a list is empty by its type flexibility.
+    if texture.colorf: # check if a list is empty by its type flexibility. https://therenegadecoder.com/code/how-to-check-if-a-list-is-empty-in-python/#check-if-a-list-is-empty-by-its-type-flexibility
       ptr.set_texture(texture, iotexture.colorf)
     elif iotexture.colorb:
       ptr.set_texture(texture, iotexture.colorb)
@@ -44,8 +44,43 @@ def init_scene(scene, ioscene, camera, iocamera, progress_cb):
     if progress_cb:
       progress.x += 1
       progress_cb("convert material", progress.x, progress.y)
-    material = ptr.add_material
-    # ptr.set_emission(material, iomaterial.emission)
+    material = ptr.add_material(scene)
+    ptr.set_emission(material, iomaterial.emission, texture_map[iomaterial.emission_tex])
+    ptr.set_color(material, iomaterial.color, texture_map[iomaterial.color_tex])
+    ptr.set_specular(material, iomaterial.specular, texture_map[iomaterial.specular])
+    ptr.set_ior(material, iomaterial.ior)
+    ptr.set_metallic(material, iomaterial.metallic, texture_map[iomaterial.metallic_tex])
+    ptr.set_transmission(material, iomaterial.transmission, iomaterial.thin, iomaterial.trdepth, texture_map[iomaterial.transmission_tex])
+    ptr.set_roughness(material, iomaterial.roughness, texture_map[iomaterial.roughness_tex])
+    ptr.set_opacity(material, iomaterial.opacity, texture_map[iomaterial.opacity_tex])
+    ptr.set_thin(material, iomaterial.thin)
+    ptr.set_scattering(material, iomaterial.scattering, iomaterial.scanisotropy, texture_map[iomaterial.scattering_tex])
+    ptr.set_normalmap(material, texture_map[iomaterial.normal_tex])
+    material_map[iomaterial] = material
+
+  subdiv_map = {}
+  for iosubdiv in ioscene.subdivs:
+    if progress_cb:
+      progress.x += 1
+      progress_cb("convert subdiv", progress.x, progress.y)
+    subdiv = ptr.add_shape(scene)
+    ptr.set_subdiv_quadspos(subdiv, iosubdiv.quadspos)
+    ptr.set_subdiv_quadstexcoord(subdiv, iosubdiv.quadstexcoords)
+    ptr.set_subdiv_positions(subdiv, iosubdiv.positions)
+    ptr.set_subdiv_texcoords(subdiv, iosubdiv.texcoords)
+    subdiv_map[iosubdiv] = subdiv
+
+  shape_map = {}
+  for ioshape in ioscene.shapes:
+    if progress_cb:
+      progress.x += 1
+      progress_cb("convert shape", progress.x, progress.y)
+    shape = ptr.add_shape(scene)
+    ptr.set_points(shape, ioshape.points)
+    ptr.set_lines(shape, ioshape.lines)
+    ptr.set_triangles(shape, ioshape.triangles)
+    # if ioshape.quads:
+    #   ptr.set_triangles(shape, )
 
 
 def main(*argv):
