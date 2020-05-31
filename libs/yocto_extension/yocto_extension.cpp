@@ -303,10 +303,10 @@ PYBIND11_MODULE(py_pathtrace, m) {
   m.def("set_focus", (void (*)(ptr::camera*, float, float))&ptr::set_focus, py::arg("camera"), py::arg("aperture"), py::arg("focus"));
 
   // texture properties
-  // m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3b>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
-  // m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3f>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
-  // m.def("set_texture", (void (*)(ptr::texture*, const img::image<byte>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
-  // m.def("set_texture", (void (*)(ptr::texture*, const img::image<float>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3b>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3f>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  m.def("set_texture", (void (*)(ptr::texture*, const img::image<byte>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
+  m.def("set_texture", (void (*)(ptr::texture*, const img::image<float>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));
   
   // shape properties
   m.def("set_points", &ptr::set_points, py::arg("shape"), py::arg("points"));
@@ -507,7 +507,8 @@ PYBIND11_MODULE(py_sceneio, m) {
     .def_readwrite("name", &sio::model::name)
     .def_readwrite("copyright", &sio::model::copyright)
     .def("get", [](){
-      return std::make_unique<sio::model>().get();
+      auto ioscene_guard =  std::make_unique<sio::model>();
+      return ioscene_guard.get();
     }, py::return_value_policy::reference);
   // -----------------------------------------------------------------------------
   // SCENE DATA

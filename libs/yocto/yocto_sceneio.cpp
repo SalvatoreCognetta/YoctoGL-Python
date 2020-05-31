@@ -1112,7 +1112,7 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
       return false;
     }
   };
-
+  cli::print_info("load_json_scene get_value ok");
   // parse yaml reference
   auto get_ref = [&material_error, &get_value](const json& ejs,
                      const std::string& name, auto& value,
@@ -1128,7 +1128,7 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
     }
     return true;
   };
-
+  cli::print_info("load_json_scene get_ref ok");
   // parse json reference
   auto ctexture_map = std::unordered_map<std::string, scn::texture*>{
       {"", nullptr}};
@@ -1149,7 +1149,7 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
     value              = texture;
     return true;
   };
-
+  cli::print_info("load_json_scene get_ctexture ok");
   // parse json reference
   auto stexture_map = std::unordered_map<std::string, scn::texture*>{
       {"", nullptr}};
@@ -1170,7 +1170,7 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
     value              = texture;
     return true;
   };
-
+  cli::print_info("load_json_scene get_stexture ok");
   // parse json reference
   auto shape_map = std::unordered_map<std::string, scn::shape*>{{"", nullptr}};
   auto get_shape = [scene, &shape_map, &get_value](const json& ejs,
@@ -1190,7 +1190,7 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
     value           = shape;
     return true;
   };
-
+  cli::print_info("load_json_scene get_shape ok");
   // parse json reference
   auto subdiv_map = std::unordered_map<std::string, scn::subdiv*>{
       {"", nullptr}};
@@ -1211,7 +1211,7 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
     value            = subdiv;
     return true;
   };
-
+  cli::print_info("load_json_scene get_subdiv ok");
   // load json instance
   auto instance_map = std::unordered_map<std::string, scn::instance*>{
       {"", nullptr}};
@@ -1232,56 +1232,68 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
     value              = instance;
     return true;
   };
-
+  cli::print_info("load_json_scene get_instance ok");
   // material map
   auto material_map = std::unordered_map<std::string, scn::material*>{
       {"", nullptr}};
 
   // handle progress
   if (progress_cb) progress_cb("load scene", progress.x++, progress.y);
-
+  cli::print_info("load_json_scene progress_cb1 ok");
   // asset
   if (js.contains("asset")) {
     auto& ejs = js.at("asset");
     if (!get_value(ejs, "copyright", scene->copyright)) return false;
   }
-
-  // cameras
-  if (js.contains("cameras")) {
-    for (auto& [name, ejs] : js.at("cameras").items()) {
-      auto camera  = add_camera(scene);
-      camera->name = name;
-      if (!get_value(ejs, "frame", camera->frame)) return false;
-      if (!get_value(ejs, "orthographic", camera->orthographic)) return false;
-      if (!get_value(ejs, "lens", camera->lens)) return false;
-      if (!get_value(ejs, "aspect", camera->aspect)) return false;
-      if (!get_value(ejs, "film", camera->film)) return false;
-      if (!get_value(ejs, "focus", camera->focus)) return false;
-      if (!get_value(ejs, "aperture", camera->aperture)) return false;
-      if (ejs.contains("lookat")) {
-        auto lookat = identity3x3f;
-        if (!get_value(ejs, "lookat", lookat)) return false;
-        camera->frame = lookat_frame(lookat.x, lookat.y, lookat.z);
-        camera->focus = length(lookat.x - lookat.y);
-      }
-    }
-  }
+  cli::print_info("load_json_scene contains asset ok");
+  // // cameras
+  // if (js.contains("cameras")) {
+  //   for (auto& [name, ejs] : js.at("cameras").items()) {
+  //     auto camera  = add_camera(scene);
+  //     camera->name = name;
+  //     if (!get_value(ejs, "frame", camera->frame)) return false;
+  //     if (!get_value(ejs, "orthographic", camera->orthographic)) return false;
+  //     if (!get_value(ejs, "lens", camera->lens)) return false;
+  //     if (!get_value(ejs, "aspect", camera->aspect)) return false;
+  //     if (!get_value(ejs, "film", camera->film)) return false;
+  //     if (!get_value(ejs, "focus", camera->focus)) return false;
+  //     if (!get_value(ejs, "aperture", camera->aperture)) return false;
+  //     if (ejs.contains("lookat")) {
+  //       auto lookat = identity3x3f;
+  //       if (!get_value(ejs, "lookat", lookat)) return false;
+  //       camera->frame = lookat_frame(lookat.x, lookat.y, lookat.z);
+  //       camera->focus = length(lookat.x - lookat.y);
+  //     }
+  //   }
+  // }
+  cli::print_info("load_json_scene contains camera ok");
   if (js.contains("environments")) {
+    cli::print_info("load_json_scene inside envs");
     for (auto& [name, ejs] : js.at("environments").items()) {
+      cli::print_info("load_json_scene inside envs: first for loop");
       auto environment  = add_environment(scene);
+      cli::print_info("load_json_scene inside envs: add_environment ok");
       environment->name = name;
       if (!get_value(ejs, "frame", environment->frame)) return false;
+      cli::print_info("load_json_scene inside envs: get_value0 ok");
       if (!get_value(ejs, "emission", environment->emission)) return false;
+      cli::print_info("load_json_scene inside envs: get_value1 ok");
       if (!get_ctexture(
               ejs, "emission_tex", environment->emission_tex, "environments/"))
         return false;
+      cli::print_info("load_json_scene inside envs: get_ctexture ok");
       if (ejs.contains("lookat")) {
+        cli::print_info("load_json_scene inside envs: inside lookat");
         auto lookat = identity3x3f;
+        cli::print_info("load_json_scene inside envs: inside lookat: identity3x3 ok");
         if (!get_value(ejs, "lookat", lookat)) return false;
+        cli::print_info("load_json_scene inside envs: inside lookat: get_value ok");
         environment->frame = lookat_frame(lookat.x, lookat.y, lookat.z, true);
+        cli::print_info("load_json_scene inside envs: inside lookat: lookat_frame ok");
       }
     }
   }
+  cli::print_info("load_json_scene contains envs ok");
   if (js.contains("materials")) {
     for (auto& [name, ejs] : js.at("materials").items()) {
       auto material  = add_material(scene);
@@ -1329,6 +1341,7 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
       material_map[material->name] = material;
     }
   }
+  cli::print_info("load_json_scene materials envs ok");
   if (js.contains("objects")) {
     for (auto& [name, ejs] : js.at("objects").items()) {
       auto object  = add_object(scene);
@@ -1346,12 +1359,14 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
       if (!get_instance(ejs, "instance", object->instance)) return false;
     }
   }
+  cli::print_info("load_json_scene contains objects ok");
 
   // handle progress
   progress.y += scene->shapes.size();
   progress.y += scene->subdivs.size();
   progress.y += scene->textures.size();
   progress.y += scene->instances.size();
+  cli::print_info("load_json_scene handle progress0 ok");
 
   // get filename from name
   auto get_filename = [filename](const std::string&       name,
@@ -1365,6 +1380,7 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
     return sfs::path(filename).parent_path() / group /
            (name + extensions.front());
   };
+  cli::print_info("load_json_scene get_filename ok");
 
   // load shapes
   shape_map.erase("");
@@ -1376,6 +1392,7 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
             shape->colors, shape->radius, error))
       return dependent_error();
   }
+  cli::print_info("load_json_scene load shapes ok");
   // load subdivs
   subdiv_map.erase("");
   for (auto [name, subdiv] : subdiv_map) {
@@ -1386,6 +1403,7 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
             subdiv->texcoords, error))
       return dependent_error();
   }
+  cli::print_info("load_json_scene load subdivs ok");
   // load textures
   ctexture_map.erase("");
   for (auto [name, texture] : ctexture_map) {
@@ -1395,6 +1413,7 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
     if (!load_image(path, texture->colorf, texture->colorb, error))
       return dependent_error();
   }
+  cli::print_info("load_json_scene load ctexture ok");
   // load textures
   stexture_map.erase("");
   for (auto [name, texture] : stexture_map) {
@@ -1404,6 +1423,7 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
     if (!load_image(path, texture->scalarf, texture->scalarb, error))
       return dependent_error();
   }
+  cli::print_info("load_json_scene load stexture ok");
   // load instances
   instance_map.erase("");
   for (auto [name, instance] : instance_map) {
@@ -1411,16 +1431,17 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
     auto path = get_filename(name, "instances", {".ply"});
     if (!load_instance(path, instance->frames, error)) return dependent_error();
   }
-
+  cli::print_info("load_json_scene load instances ok");
   // fix scene
   if (scene->name == "") scene->name = sfs::path(filename).stem();
   add_cameras(scene);
   add_radius(scene);
   add_materials(scene);
   trim_memory(scene);
-
+  cli::print_info("load_json_scene fix scene ok");
   // done
   if (progress_cb) progress_cb("load scene", progress.x++, progress.y);
+  cli::print_info("load_json_scene all ok");
   return true;
 }
 
