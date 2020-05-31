@@ -295,6 +295,7 @@ scn::camera* add_camera(scn::model* scene, const std::string& name) {
   return add_element(scene->cameras, name, "camera");
 }
 scn::environment* add_environment(scn::model* scene, const std::string& name) {
+  cli::print_info("entered in add_environment");
   return add_element(scene->environments, name, "environment");
 }
 scn::shape* add_shape(scn::model* scene, const std::string& name) {
@@ -1246,26 +1247,26 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
     if (!get_value(ejs, "copyright", scene->copyright)) return false;
   }
   cli::print_info("load_json_scene contains asset ok");
-  // // cameras
-  // if (js.contains("cameras")) {
-  //   for (auto& [name, ejs] : js.at("cameras").items()) {
-  //     auto camera  = add_camera(scene);
-  //     camera->name = name;
-  //     if (!get_value(ejs, "frame", camera->frame)) return false;
-  //     if (!get_value(ejs, "orthographic", camera->orthographic)) return false;
-  //     if (!get_value(ejs, "lens", camera->lens)) return false;
-  //     if (!get_value(ejs, "aspect", camera->aspect)) return false;
-  //     if (!get_value(ejs, "film", camera->film)) return false;
-  //     if (!get_value(ejs, "focus", camera->focus)) return false;
-  //     if (!get_value(ejs, "aperture", camera->aperture)) return false;
-  //     if (ejs.contains("lookat")) {
-  //       auto lookat = identity3x3f;
-  //       if (!get_value(ejs, "lookat", lookat)) return false;
-  //       camera->frame = lookat_frame(lookat.x, lookat.y, lookat.z);
-  //       camera->focus = length(lookat.x - lookat.y);
-  //     }
-  //   }
-  // }
+  // cameras
+  if (js.contains("cameras")) {
+    for (auto& [name, ejs] : js.at("cameras").items()) {
+      auto camera  = add_camera(scene);
+      camera->name = name;
+      if (!get_value(ejs, "frame", camera->frame)) return false;
+      if (!get_value(ejs, "orthographic", camera->orthographic)) return false;
+      if (!get_value(ejs, "lens", camera->lens)) return false;
+      if (!get_value(ejs, "aspect", camera->aspect)) return false;
+      if (!get_value(ejs, "film", camera->film)) return false;
+      if (!get_value(ejs, "focus", camera->focus)) return false;
+      if (!get_value(ejs, "aperture", camera->aperture)) return false;
+      if (ejs.contains("lookat")) {
+        auto lookat = identity3x3f;
+        if (!get_value(ejs, "lookat", lookat)) return false;
+        camera->frame = lookat_frame(lookat.x, lookat.y, lookat.z);
+        camera->focus = length(lookat.x - lookat.y);
+      }
+    }
+  }
   cli::print_info("load_json_scene contains camera ok");
   if (js.contains("environments")) {
     cli::print_info("load_json_scene inside envs");
