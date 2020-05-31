@@ -372,7 +372,7 @@ PYBIND11_MODULE(py_commonio, m) {
         py::arg("name") = "",
         py::arg("usage") = "",
         py::arg("type") = cli::cli_type::string_,
-        py::arg("value") = py::cast<void *>(nullptr), // py::cast<void *>(nullptr),
+        py::arg("value") = py::cast<void *>(nullptr), // py::arg("value").none(false) = py::cast<void *>(nullptr),
         py::arg("req") = false,
         py::arg("set") = false,
         py::arg("choices") = std::vector<std::string>())
@@ -506,8 +506,9 @@ PYBIND11_MODULE(py_sceneio, m) {
     .def_readwrite("instances", &sio::model::instances)
     .def_readwrite("name", &sio::model::name)
     .def_readwrite("copyright", &sio::model::copyright)
-    .def("get", [](){
-      auto ioscene_guard =  std::make_unique<sio::model>();
+    .def("get", []() -> sio::model* {
+      auto ioscene_guard =  std::unique_ptr<sio::model>(new sio::model());
+      // auto ioscene_guard =  std::unique_ptr<sio::model>(new sio::model());
       return ioscene_guard.get();
     }, py::return_value_policy::reference);
   // -----------------------------------------------------------------------------
