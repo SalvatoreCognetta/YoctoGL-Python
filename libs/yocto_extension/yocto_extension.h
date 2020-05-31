@@ -83,13 +83,16 @@ namespace trace = yocto::trace;
 // Math defitions
 using math::bbox3f;
 using math::byte;
+// using math::frame2f;
 using math::frame3f;
+using math::identity2x3f;
 using math::identity3x4f;
 using math::ray3f;
 using math::rng_state;
 using math::vec2f;
 using math::vec2i;
 using math::vec3b;
+using math::vec4b;
 using math::vec3f;
 using math::vec3i;
 using math::vec4f;

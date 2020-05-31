@@ -90,15 +90,25 @@ PYBIND11_MODULE(py_math, m) {
   // VECTORS
   // -----------------------------------------------------------------------------
   py::class_<vec2f>(m, "vec2f")
-    .def(py::init<float, float>(), py::arg("x") = 0, py::arg("y") = 0)
+    .def(py::init<float, float>(), 
+        py::arg("x") = 0, py::arg("y") = 0)
     .def_readwrite("x", &vec2f::x)
     .def_readwrite("y", &vec2f::y);
 
   py::class_<vec3f>(m, "vec3f")
-    .def(py::init<float, float, float>(), py::arg("x") = 0, py::arg("y") = 0, py::arg("z") = 0)
+    .def(py::init<float, float, float>(), 
+        py::arg("x") = 0, py::arg("y") = 0, py::arg("z") = 0)
     .def_readwrite("x", &vec3f::x)
     .def_readwrite("y", &vec3f::y)
     .def_readwrite("z", &vec3f::z);
+
+  py::class_<vec4f>(m, "vec4f")
+    .def(py::init<float, float, float, float>(), 
+        py::arg("x") = 0, py::arg("y") = 0, py::arg("z") = 0, py::arg("w") = 0)
+    .def_readwrite("x", &vec4f::x)
+    .def_readwrite("y", &vec4f::y)
+    .def_readwrite("z", &vec4f::z)
+    .def_readwrite("w", &vec4f::w);
   // -----------------------------------------------------------------------------
   // VECTORS
   // -----------------------------------------------------------------------------
@@ -111,6 +121,36 @@ PYBIND11_MODULE(py_math, m) {
     .def(py::init<int, int>(), py::arg("x") = 0, py::arg("y") = 0)
     .def_readwrite("x", &vec2i::x)
     .def_readwrite("y", &vec2i::y);
+
+  py::class_<vec3i>(m, "vec3i")
+    .def(py::init<int, int, int>(), 
+        py::arg("x") = 0, py::arg("y") = 0, py::arg("z") = 0)
+    .def_readwrite("x", &vec3i::x)
+    .def_readwrite("y", &vec3i::y)
+    .def_readwrite("z", &vec3i::z);
+
+  py::class_<vec4i>(m, "vec4i")
+    .def(py::init<int, int, int, int>(), 
+        py::arg("x") = 0, py::arg("y") = 0, py::arg("z") = 0, py::arg("w") = 0)
+    .def_readwrite("x", &vec4i::x)
+    .def_readwrite("y", &vec4i::y)
+    .def_readwrite("z", &vec4i::z)
+    .def_readwrite("w", &vec4i::w);
+
+  py::class_<vec3b>(m, "vec3b")
+    .def(py::init<unsigned char, unsigned char, unsigned char>(), 
+        py::arg("x") = 0, py::arg("y") = 0, py::arg("z") = 0)
+    .def_readwrite("x", &vec3b::x)
+    .def_readwrite("y", &vec3b::y)
+    .def_readwrite("z", &vec3b::z);
+
+  py::class_<vec4b>(m, "vec4b")
+    .def(py::init<unsigned char, unsigned char, unsigned char, unsigned char>(), 
+        py::arg("x") = 0, py::arg("y") = 0, py::arg("z") = 0, py::arg("w") = 0)
+    .def_readwrite("x", &vec4b::x)
+    .def_readwrite("y", &vec4b::y)
+    .def_readwrite("z", &vec4b::z)
+    .def_readwrite("w", &vec4b::w);
   // -----------------------------------------------------------------------------
   // INTEGER VECTORS
   // -----------------------------------------------------------------------------
@@ -119,6 +159,15 @@ PYBIND11_MODULE(py_math, m) {
   // -----------------------------------------------------------------------------
   // RIGID BODY TRANSFORMS/FRAMES
   // -----------------------------------------------------------------------------
+  // py::class_<frame2f>(m, "frame2f")
+  //   .def(py::init<vec2f, vec2f, vec2f>(), 
+  //       py::arg("x") = vec2f(1,0),
+  //       py::arg("y") = vec2f(0,1),
+  //       py::arg("o") = vec2f(0,0))
+  //   .def_readwrite("x", &frame3f::x)
+  //   .def_readwrite("y", &frame3f::y)
+  //   .def_readwrite("o", &frame3f::o);
+
   py::class_<frame3f>(m, "frame3f")
     .def(py::init<vec3f, vec3f, vec3f, vec3f>(), 
         py::arg("x") = vec3f(1,0,0),
@@ -129,6 +178,10 @@ PYBIND11_MODULE(py_math, m) {
     .def_readwrite("y", &frame3f::y)
     .def_readwrite("z", &frame3f::z)
     .def_readwrite("o", &frame3f::o);
+
+  
+  // py::object py_identity2x3f = py::cast(identity2x3f);
+  // m.attr("identity3x4f")  = py_identity2x3f;
 
   py::object py_identity3x4f = py::cast(identity3x4f);
   m.attr("identity3x4f")  = py_identity3x4f;
@@ -147,25 +200,10 @@ PYBIND11_MODULE(py_image, m) {
   // -----------------------------------------------------------------------------
   // IMAGE DATA AND UTILITIES
   // -----------------------------------------------------------------------------
-
-  // py::class_<img::image>(m, "image")
-  //   .def(py::init<int, img::shader_type, int, int, float, uint64_t, bool, int>(), 
-  //       py::arg("resolution") = 720,
-  //       py::arg("shader") = img::shader_type::path,
-  //       py::arg("samples") = 512,
-  //       py::arg("bounces") = 8,
-  //       py::arg("clamp") = 100,
-  //       py::arg("seed") = default_seed,
-  //       py::arg("noparallel") = false,
-  //       py::arg("pratio") = 8)
-  //   .def_readwrite("resolution", &img::image::resolution)
-  //   .def_readwrite("shader", &img::image::shader)
-  //   .def_readwrite("samples", &img::image::samples)
-  //   .def_readwrite("bounces", &img::image::bounces)
-  //   .def_readwrite("clamp", &img::image::clamp)
-  //   .def_readwrite("seed", &img::image::seed)
-  //   .def_readwrite("noparallel", &img::image::noparallel)
-  //   .def_readwrite("pratio", &img::image::pratio);
+  // py::class_<img::image<typename vec2f>>(m, "image")
+  //   .def(py::init<>())
+  //   .def_property_readonly("extent", &img::image<typename vec2f>::extent)
+  //   .def_property_readonly("pixels", &img::image<typename vec2f>::pixels);
 
   // -----------------------------------------------------------------------------
   // IMAGE DATA AND UTILITIES
@@ -221,6 +259,20 @@ PYBIND11_MODULE(py_pathtrace, m) {
   // -----------------------------------------------------------------------------
   // SCENE AND RENDERING DATA
   // -----------------------------------------------------------------------------
+  py::class_<ptr::bvh_node> (m, "bvh_node")
+    .def_readwrite("bbox", &ptr::bvh_node::bbox)
+    .def_readwrite("start", &ptr::bvh_node::start)
+    .def_readwrite("num", &ptr::bvh_node::num)
+    .def_readwrite("internal", &ptr::bvh_node::internal)
+    .def_readwrite("axis", &ptr::bvh_node::axis);
+
+  py::class_<ptr::bvh_tree> (m, "bvh_tree")
+    .def(py::init<std::vector<ptr::bvh_node>, std::vector<int>>(),
+        py::arg("nodes") = std::vector<ptr::bvh_node>(),
+        py::arg("primitives") = std::vector<int>())
+    .def_readwrite("nodes", &ptr::bvh_tree::nodes)
+    .def_readwrite("primitives", &ptr::bvh_tree::primitives);
+
   py::class_<ptr::camera> (m, "camera")
     .def(py::init<frame3f, float, vec2f, float, float>(),
         py::arg("frame") = identity3x4f,
@@ -267,7 +319,7 @@ PYBIND11_MODULE(py_pathtrace, m) {
           py::arg("textures") = std::vector<ptr::texture*>(),
           py::arg("environments") = std::vector<ptr::environment*>(),
           py::arg("lights") = std::vector<ptr::light*>(),
-          py::arg("bvh") = nullptr)
+          py::arg("bvh") = py::cast<ptr::bvh_tree *>(nullptr))
     .def_readwrite("cameras", &ptr::scene::cameras)
     .def_readwrite("objects", &ptr::scene::objects)
     .def_readwrite("shapes", &ptr::scene::shapes)
@@ -276,8 +328,10 @@ PYBIND11_MODULE(py_pathtrace, m) {
     .def_readwrite("environments", &ptr::scene::environments)
     .def_readwrite("lights", &ptr::scene::lights)
     .def_readwrite("bvh", &ptr::scene::bvh)
-    .def("get", [](){
-      return std::make_unique<ptr::scene>().get();
+    .def("get", []() -> ptr::scene* {
+      auto scene_guard =  std::unique_ptr<ptr::scene>(new ptr::scene());
+      // auto scene_guard = std::make_unique<ptr::scene>().get()
+      return scene_guard.get();
     }, py::return_value_policy::reference);
   // -----------------------------------------------------------------------------
   // SCENE AND RENDERING DATA
@@ -576,6 +630,94 @@ PYBIND11_MODULE(py_sceneio, m) {
   
 
 
+  py::class_<sio::texture> (m, "texture")
+    // .def(py::init<std::string, img::image<vec3f>, img::image<vec3b>, img::image<float>, img::image<unsigned char>>(),
+    //     py::arg("name") = "",
+    //     py::arg("colorf") = img::image<vec3f>(),
+    //     py::arg("colorb") = img::image<vec3b>(),
+    //     py::arg("scalarf") = img::image<float>(),
+    //     py::arg("scalarb") = img::image<unsigned char>())
+    .def_readwrite("name", &sio::texture::name)
+    .def_readwrite("colorf", &sio::texture::colorf)
+    .def_readwrite("colorb", &sio::texture::colorb)
+    .def_readwrite("scalarf", &sio::texture::scalarf)
+    .def_readwrite("scalarb", &sio::texture::scalarb);
+
+  py::class_<sio::material> (m, "material")
+    .def(py::init<std::string, vec3f, vec3f, float, float, float, float, vec3f, 
+                  float, float, float, vec3f, float, float, float, float, bool,
+                  sio::texture*, sio::texture*, sio::texture*, sio::texture*, 
+                  sio::texture*, sio::texture*, sio::texture*, sio::texture*, 
+                  sio::texture*, sio::texture*, sio::texture*, sio::texture*, 
+                  sio::texture*, int, bool>(),
+        // material data
+        py::arg("name") = "",
+        // material
+        py::arg("emission") = vec3f(0,0,0),
+        py::arg("color") = vec3f(0,0,0),
+        py::arg("specular") = 0,
+        py::arg("roughness") = 0, 
+        py::arg("metallic") = 0, 
+        py::arg("ior") = 1.5,
+        py::arg("spectint") = vec3f(1,1,1),
+        py::arg("coat") = 0,
+        py::arg("transmission") = 0,
+        py::arg("translucency") = 0,
+        py::arg("scattering") = vec3f(0,0,0),
+        py::arg("scanisotropy") = 0,
+        py::arg("trdepth") = 0.01,
+        py::arg("opacity") = 1,
+        py::arg("displacement") = 0,
+        py::arg("thin") = true,
+        // textures
+        py::arg("emission_tex") = py::cast<sio::texture*>(nullptr),
+        py::arg("color_tex") = py::cast<sio::texture*>(nullptr),
+        py::arg("specular_tex") = py::cast<sio::texture*>(nullptr),
+        py::arg("metallic_tex") = py::cast<sio::texture*>(nullptr),
+        py::arg("roughness_tex") = py::cast<sio::texture*>(nullptr),
+        py::arg("transmission_tex") = py::cast<sio::texture*>(nullptr),
+        py::arg("translucency_tex") = py::cast<sio::texture*>(nullptr),
+        py::arg("spectint_tex") = py::cast<sio::texture*>(nullptr),
+        py::arg("scattering_tex") = py::cast<sio::texture*>(nullptr),
+        py::arg("coat_tex") = py::cast<sio::texture*>(nullptr),
+        py::arg("opacity_tex") = py::cast<sio::texture*>(nullptr),
+        py::arg("normal_tex") = py::cast<sio::texture*>(nullptr),
+        py::arg("displacement_tex") = py::cast<sio::texture*>(nullptr),
+        // [experimental] properties to drive subdiv and displacement
+        py::arg("subdivisions") = 2,
+        py::arg("smooth") = true)
+    .def_readwrite("name", &sio::material::name)
+    .def_readwrite("emission", &sio::material::emission)
+    .def_readwrite("color", &sio::material::color)
+    .def_readwrite("specular", &sio::material::specular)
+    .def_readwrite("metallic", &sio::material::metallic)
+    .def_readwrite("ior", &sio::material::ior)
+    .def_readwrite("spectint", &sio::material::spectint)
+    .def_readwrite("coat", &sio::material::coat)
+    .def_readwrite("transmission", &sio::material::transmission)
+    .def_readwrite("spectint", &sio::material::spectint)
+    .def_readwrite("translucency", &sio::material::translucency)
+    .def_readwrite("scanisotropy", &sio::material::scanisotropy)
+    .def_readwrite("trdepth", &sio::material::trdepth)
+    .def_readwrite("opacity", &sio::material::opacity)
+    .def_readwrite("displacement", &sio::material::displacement)
+    .def_readwrite("thin", &sio::material::thin)
+    .def_readwrite("emission_tex", &sio::material::emission_tex)
+    .def_readwrite("color_tex", &sio::material::thin)
+    .def_readwrite("specular_tex", &sio::material::specular_tex)
+    .def_readwrite("metallic_tex", &sio::material::metallic_tex)
+    .def_readwrite("roughness_tex", &sio::material::roughness_tex)
+    .def_readwrite("transmission_tex", &sio::material::transmission_tex)
+    .def_readwrite("translucency_tex", &sio::material::translucency_tex)
+    .def_readwrite("spectint_tex", &sio::material::spectint_tex)
+    .def_readwrite("scattering_tex", &sio::material::scattering_tex)
+    .def_readwrite("coat_tex", &sio::material::coat_tex)
+    .def_readwrite("opacity_tex", &sio::material::opacity_tex)
+    .def_readwrite("normal_tex", &sio::material::normal_tex)
+    .def_readwrite("displacement_tex", &sio::material::displacement_tex)
+    .def_readwrite("subdivisions", &sio::material::subdivisions)
+    .def_readwrite("smooth", &sio::material::smooth);
+
   py::class_<sio::model>(m, "model")
     .def(py::init<std::vector<sio::camera*>,
                   std::vector<sio::object*>,
@@ -609,7 +751,7 @@ PYBIND11_MODULE(py_sceneio, m) {
     .def_readwrite("copyright", &sio::model::copyright)
     .def("get", []() -> sio::model* {
       auto ioscene_guard =  std::unique_ptr<sio::model>(new sio::model());
-      // auto ioscene_guard =  std::unique_ptr<sio::model>(new sio::model());
+      // auto ioscene_guard = std::make_unique<sio::model>().get();
       return ioscene_guard.get();
     }, py::return_value_policy::reference);
   // -----------------------------------------------------------------------------
@@ -620,14 +762,15 @@ PYBIND11_MODULE(py_sceneio, m) {
   // -----------------------------------------------------------------------------
   // SCENE IO FUNCTIONS
   // -----------------------------------------------------------------------------
-
   // const py::object progress_callback = py::cast(sio::progress_callback);
   // m.attr("progress_callback") = progress_callback;
 
-  m.def("get_camera", &sio::get_camera, py::arg("scene"), py::arg("name") = "", py::return_value_policy::reference);
-
+  // Load/save a scene in the supported formats. Throws on error.
   m.def("load_scene", &sio::load_scene, py::arg("filename"), py::arg("scene"), py::arg("error"),
       py::arg("progress_cb") = std::function<void(const std::string&, int, int)>(), py::arg("noparallel") = false);
+
+  // get named camera or default if name is empty
+  m.def("get_camera", &sio::get_camera, py::arg("scene"), py::arg("name") = "", py::return_value_policy::reference);
   // -----------------------------------------------------------------------------
   // SCENE IO FUNCTIONS
   // -----------------------------------------------------------------------------
