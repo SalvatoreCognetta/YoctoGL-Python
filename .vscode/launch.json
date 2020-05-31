@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "Python: File corrente",
             "type": "python",
@@ -11,9 +12,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "tests/05_head1ss/head1ss.json",
-                "-o",
-                "out/lowres/05_head1ss_720_256.jpg",
+                "tests/01_surface/surface.json",
                 "-t",
                 "path", 
                 "-s", 

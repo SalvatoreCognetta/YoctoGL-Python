@@ -754,7 +754,7 @@ bool load_scene(const std::string& filename, scn::model* scene,
   auto ext = sfs::path(filename).extension();
   // cli::print_info("test1");
   if (ext == ".json" || ext == ".JSON") {
-    // cli::print_info("test0");
+    cli::print_info("test0 - yocto_sceneio::load_scene");
     return load_json_scene(filename, scene, error, progress_cb, noparallel);
   } else if (ext == ".obj" || ext == ".OBJ") {
     return load_obj_scene(filename, scene, error, progress_cb, noparallel);
@@ -942,7 +942,7 @@ inline bool load_text(
   };
 
   // https://stackoverflow.com/questions/174531/how-to-read-the-content-of-a-file-to-a-string-in-c
-  auto fs = fopen(filename.c_str(), "rb");
+  auto fs = fopen(filename.c_str(), "rb"); //Error
   if (!fs) return open_error();
   auto fs_guard = std::unique_ptr<FILE, decltype(&fclose)>{fs, fclose};
   fseek(fs, 0, SEEK_END);
@@ -1043,7 +1043,10 @@ inline bool load_json(
     return false;
   };
   auto text = ""s;
-  if (!load_text(filename, text, error)) return false;
+  if (!load_text(filename, text, error)) {
+    cli::print_info("load_json error " + error);
+    return false;
+  }
   try {
     js = json::parse(text);
     return true;
@@ -1068,25 +1071,36 @@ static bool load_json_scene(const std::string& filename, scn::model* scene,
     std::string& error, progress_callback progress_cb, bool noparallel) {
   auto parse_error = [filename, &error]() {
     error = filename + ": parse error";
+    cli::print_info(error);
     return false;
   };
   auto material_error = [filename, &error](const std::string& name) {
     error = filename + ": missing material " + name;
+    cli::print_info(error);
     return false;
   };
   auto dependent_error = [filename, &error]() {
     error = filename + ": error in " + error;
+    cli::print_info(error);
     return false;
   };
 
   // handle progress
   auto progress = vec2i{0, 2};
-  if (progress_cb) progress_cb("load scene", progress.x++, progress.y);
+  if (progress_cb) {
+    cli::print_info("load_json_scene::progress_cb 0");
+    progress_cb("load scene", progress.x++, progress.y);
+    cli::print_info("load_json_scene::progress_cb 1");
+  }
 
   // open file
   auto js = json{};
-  if (!load_json(filename, js, error)) return false;
+  if (!load_json(filename, js, error)){
+    cli::print_info("load_json error " + error);
+    return false;
+  }
 
+  cli::print_info("load_json_scene load_json ok");
   // gets a json value
   auto get_value = [](const json& ejs, const std::string& name,
                        auto& value) -> bool {
