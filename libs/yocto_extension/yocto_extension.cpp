@@ -370,17 +370,74 @@ PYBIND11_MODULE(py_pathtrace, m) {
     .def_readwrite("spectint_tex", &ptr::material::spectint_tex)
     .def_readwrite("scattering_tex", &ptr::material::scattering_tex)
     .def_readwrite("opacity_tex", &ptr::material::opacity_tex)
-    .def_readwrite("normal_tex", &ptr::material::normal_tex); 
+    .def_readwrite("normal_tex", &ptr::material::normal_tex);
+    
+  py::class_<ptr::shape>(m, "shape")
+    .def(py::init<std::vector<int>, std::vector<vec2i>, std::vector<vec3i>, 
+                  std::vector<vec3f>, std::vector<vec3f>, std::vector<vec2f>, 
+                  std::vector<float>, std::vector<vec4i>, std::vector<vec4i>, 
+                  std::vector<vec3f>, std::vector<vec2f>, int, bool, float, 
+                  ptr::texture*, ptr::bvh_tree*>(),
+        // primitives
+        py::arg("points") = std::vector<int>(),
+        py::arg("lines") = std::vector<vec2i>(),
+        py::arg("triangles") = std::vector<vec3i>(),
+        // vertex data
+        py::arg("positions") = std::vector<vec3f>(),
+        py::arg("normals") = std::vector<vec3f>(),
+        py::arg("texcoords") = std::vector<vec2f>(),
+        py::arg("radius") = std::vector<float>(),
+        // subdivision data
+        py::arg("subdiv_quadsposition") = std::vector<vec4i>(),
+        py::arg("subdiv_quadstexcoord") = std::vector<vec4i>(),
+        py::arg("subdiv_positions") = std::vector<vec3f>(),
+        py::arg("subdiv_texcoords") = std::vector<vec2f>(),
+        py::arg("subdiv_level") = 0,
+        py::arg("subdiv_smooth") = false,
+        py::arg("subdiv_displacement") = 0,
+        py::arg("subdiv_displacement_tex") = py::cast<ptr::texture*>(nullptr),
+        // computed properties
+        py::arg("bvh") = py::cast<ptr::bvh_tree*>(nullptr))
+    .def_readwrite("points", &ptr::shape::points)
+    .def_readwrite("lines", &ptr::shape::lines)
+    .def_readwrite("triangles", &ptr::shape::triangles)
+    .def_readwrite("positions", &ptr::shape::positions)
+    .def_readwrite("normals", &ptr::shape::normals)
+    .def_readwrite("texcoords", &ptr::shape::texcoords)
+    .def_readwrite("radius", &ptr::shape::radius)
+    .def_readwrite("subdiv_quadsposition", &ptr::shape::subdiv_quadsposition)
+    .def_readwrite("subdiv_quadstexcoord", &ptr::shape::subdiv_quadstexcoord)
+    .def_readwrite("subdiv_positions", &ptr::shape::subdiv_positions)
+    .def_readwrite("subdiv_texcoords", &ptr::shape::subdiv_texcoords)
+    .def_readwrite("subdiv_level", &ptr::shape::subdiv_level)
+    .def_readwrite("subdiv_smooth", &ptr::shape::subdiv_smooth)
+    .def_readwrite("subdiv_displacement", &ptr::shape::subdiv_displacement)
+    .def_readwrite("subdiv_displacement_tex", &ptr::shape::subdiv_displacement_tex)
+    .def_readwrite("bvh", &ptr::shape::bvh);
+
+  py::class_<ptr::object>(m, "object")
+    .def(py::init<frame3f, ptr::shape*, ptr::material*>(),
+        py::arg("frame") = identity3x4f,
+        py::arg("shape") = py::cast<ptr::shape*>(nullptr),
+        py::arg("material") = py::cast<ptr::material*>(nullptr))
+    .def_readwrite("frame", &ptr::object::frame)
+    .def_readwrite("shape", &ptr::object::shape)
+    .def_readwrite("material", &ptr::object::material);
+  
+  py::class_<ptr::environment>(m, "environment")
+    .def(py::init<frame3f, vec3f, ptr::texture*>(),
+        py::arg("frame") = identity3x4f,
+        py::arg("emission") = vec3f(0, 0, 0),
+        py::arg("emission_tex") = py::cast<ptr::texture*>(nullptr))
+    .def_readwrite("frame", &ptr::environment::frame)
+    .def_readwrite("emission" , &ptr::environment::emission)
+    .def_readwrite("emission_tex", &ptr::environment::emission_tex);
 
   py::class_<ptr::scene>(m, "scene")
-    .def(py::init<std::vector<ptr::camera*>,
-                  std::vector<ptr::object*>,
-                  std::vector<ptr::shape*>,
-                  std::vector<ptr::material*>,
-                  std::vector<ptr::texture*>,
-                  std::vector<ptr::environment*>,
-                  std::vector<ptr::light*>,
-                  ptr::bvh_tree*>(), 
+    .def(py::init<std::vector<ptr::camera*>, std::vector<ptr::object*>,
+                  std::vector<ptr::shape*>, std::vector<ptr::material*>,
+                  std::vector<ptr::texture*>, std::vector<ptr::environment*>,
+                  std::vector<ptr::light*>, ptr::bvh_tree*>(), 
           py::arg("cameras") = std::vector<ptr::camera*>(),
           py::arg("objects") = std::vector<ptr::object*>(),
           py::arg("shapes") = std::vector<ptr::shape*>(),
@@ -703,22 +760,18 @@ PYBIND11_MODULE(py_sceneio, m) {
     .def_readwrite("smooth", &sio::material::smooth);
   
   py::class_<sio::shape>(m, "shape")
-    .def(py::init<std::string, 
-                  std::vector<int>, 
-                  std::vector<vec2i>, 
-                  std::vector<vec3i>, 
-                  std::vector<vec4i>, 
-                  std::vector<vec3f>,
-                  std::vector<vec3f>, 
-                  std::vector<vec2f>, 
-                  std::vector<vec3f>,
-                  std::vector<float>, 
-                  std::vector<vec4f>>(),
+    .def(py::init<std::string, std::vector<int>, std::vector<vec2i>,
+                  std::vector<vec3i>, std::vector<vec4i>, std::vector<vec3f>,
+                  std::vector<vec3f>, std::vector<vec2f>, std::vector<vec3f>,
+                  std::vector<float>, std::vector<vec4f>>(),
+        // shape data
         py::arg("name") = "",
+        // primitives
         py::arg("points") = std::vector<int>(),
         py::arg("lines") = std::vector<vec2i>(),
         py::arg("triangles") = std::vector<vec3i>(),
         py::arg("quads") = std::vector<vec4i>(),
+        // vertex data
         py::arg("positions") = std::vector<vec3f>(),
         py::arg("normals") = std::vector<vec3f>(),
         py::arg("texcoords") = std::vector<vec2f>(),
@@ -738,17 +791,16 @@ PYBIND11_MODULE(py_sceneio, m) {
     .def_readwrite("tangents", &sio::shape::tangents);
   
   py::class_<sio::subdiv>(m,"subdiv")
-    .def(py::init<std::string, 
-                  std::vector<vec4i>, 
-                  std::vector<vec4i>, 
-                  std::vector<vec4i>,
-                  std::vector<vec3f>,
-                  std::vector<vec3f>,
+    .def(py::init<std::string, std::vector<vec4i>, std::vector<vec4i>, 
+                  std::vector<vec4i>, std::vector<vec3f>, std::vector<vec3f>,
                   std::vector<vec2f>>(),
+        // shape data
         py::arg("name") = "",
+        // face-varying primitives
         py::arg("quadspos") = std::vector<vec4i>(),
         py::arg("quadsnorm") = std::vector<vec4i>(),
         py::arg("quadstexcoord") = std::vector<vec4i>(),
+        // vertex data
         py::arg("positions") = std::vector<vec3f>(),
         py::arg("normals") = std::vector<vec3f>(),
         py::arg("texcoords") = std::vector<vec3f>())
@@ -787,23 +839,18 @@ PYBIND11_MODULE(py_sceneio, m) {
         py::arg("name") = "",
         py::arg("frame") = identity3x4f,
         py::arg("emission") = vec3f(0, 0, 0),
-        py::arg("emission_tex") = py::cast<sio::shape*>(nullptr))
+        py::arg("emission_tex") = py::cast<sio::texture*>(nullptr))
     .def_readwrite("name", &sio::environment::name)
     .def_readwrite("frame", &sio::environment::frame)
     .def_readwrite("emission" , &sio::environment::emission)
     .def_readwrite("emission_tex", &sio::environment::emission_tex);
 
   py::class_<sio::model>(m, "model")
-    .def(py::init<std::vector<sio::camera*>,
-                  std::vector<sio::object*>,
-                  std::vector<sio::environment*>,
-                  std::vector<sio::shape*>,
-                  std::vector<sio::subdiv*>,
-                  std::vector<sio::texture*>,
-                  std::vector<sio::material*>,
-                  std::vector<sio::instance*>,
-                  std::string,
-                  std::string>(), 
+    .def(py::init<std::vector<sio::camera*>, std::vector<sio::object*>,
+                  std::vector<sio::environment*>, std::vector<sio::shape*>,
+                  std::vector<sio::subdiv*>, std::vector<sio::texture*>,
+                  std::vector<sio::material*>, std::vector<sio::instance*>,
+                  std::string, std::string>(), 
           py::arg("cameras") = std::vector<sio::camera*>(),
           py::arg("objects") = std::vector<sio::object*>(),
           py::arg("environments") = std::vector<sio::environment*>(),

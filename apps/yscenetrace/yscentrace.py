@@ -48,7 +48,6 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
       progress.x += 1
       progress_cb("convert material", progress.x, progress.y)
     material = ptr.add_material(scene)
-    print(iomaterial.color_tex)
     ptr.set_emission(material, iomaterial.emission, texture_map[iomaterial.emission_tex])
     ptr.set_color(material, iomaterial.color, texture_map[iomaterial.color_tex])
     ptr.set_specular(material, iomaterial.specular, texture_map[iomaterial.specular_tex])
@@ -70,7 +69,7 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
       progress_cb("convert subdiv", progress.x, progress.y)
     subdiv = ptr.add_shape(scene)
     ptr.set_subdiv_quadspos(subdiv, iosubdiv.quadspos)
-    ptr.set_subdiv_quadstexcoord(subdiv, iosubdiv.quadstexcoords)
+    ptr.set_subdiv_quadstexcoord(subdiv, iosubdiv.quadstexcoord)
     ptr.set_subdiv_positions(subdiv, iosubdiv.positions)
     ptr.set_subdiv_texcoords(subdiv, iosubdiv.texcoords)
     subdiv_map[iosubdiv] = subdiv
