@@ -12,9 +12,8 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
               len(ioscene.objects))
               
   camera_map = {}
-  print("Test init_scene")
+  camera_map[None] = None
   for iocamera in ioscene.cameras:
-    print("Test iocamera")
     if progress_cb:
       progress.x += 1
       progress_cb("convert camera", progress.x, progress.y)
@@ -25,6 +24,7 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
     camera_map[iocamera] = camera
 
   texture_map = {}
+  texture_map[None] = None
   for iotexture in ioscene.textures:
     if progress_cb:
       progress.x += 1
@@ -42,14 +42,16 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
     texture_map[iotexture] = texture
   
   material_map = {}
+  material_map[None] = None
   for iomaterial in ioscene.materials:
     if progress_cb:
       progress.x += 1
       progress_cb("convert material", progress.x, progress.y)
     material = ptr.add_material(scene)
+    print(iomaterial.color_tex)
     ptr.set_emission(material, iomaterial.emission, texture_map[iomaterial.emission_tex])
     ptr.set_color(material, iomaterial.color, texture_map[iomaterial.color_tex])
-    ptr.set_specular(material, iomaterial.specular, texture_map[iomaterial.specular])
+    ptr.set_specular(material, iomaterial.specular, texture_map[iomaterial.specular_tex])
     ptr.set_ior(material, iomaterial.ior)
     ptr.set_metallic(material, iomaterial.metallic, texture_map[iomaterial.metallic_tex])
     ptr.set_transmission(material, iomaterial.transmission, iomaterial.thin, iomaterial.trdepth, texture_map[iomaterial.transmission_tex])
@@ -61,6 +63,7 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
     material_map[iomaterial] = material
 
   subdiv_map = {}
+  subdiv_map[None] = None
   for iosubdiv in ioscene.subdivs:
     if progress_cb:
       progress.x += 1
@@ -73,6 +76,7 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
     subdiv_map[iosubdiv] = subdiv
 
   shape_map = {}
+  shape_map[None] = None
   for ioshape in ioscene.shapes:
     if progress_cb:
       progress.x += 1
@@ -86,7 +90,6 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
 
 
 def main(*argv):
-  print(argv[0])
 
   # options
   params = ptr.trace_params()
@@ -98,7 +101,6 @@ def main(*argv):
   if len(argv) > 0 and len(argv[0]) > 1:
     if (argv[0][1]).startswith('tests/'):
       filename    = argv[0][1]
-  print(filename)
 
   # parse command line
   cli = commonio.make_cli("yscntrace", "Offline path tracing")
@@ -113,32 +115,17 @@ def main(*argv):
   commonio.add_option(cli, "scene", filename, "Scene filename", True)
 
   # args = [["./apps/yscenetrace/yscentrace.py"], ["tests/01_surface/surface.json"], ["-t"], ["path"], ["-s"], ["256"], ["-r"], ["720"]]
-  print(cli.options[9].value) # If I remove this everything blow up with segmentation-fault
+  # print(cli.options[9].value) # If I remove this everything blow up with segmentation-fault
   # commonio.parse_cli(cli, *argv)
-
-  for option in cli.options:
-    print("Name: ", option.name)
-    print("Usage: ", option.usage)
-    print("Type: ", option.type)
-    print("Value: ", option.value)
-
-  
-  print("cli argument parse")
-
-  filename = "tests/01_surface/surface.json"
 
   # scene loading
   # ioscene_guard = sio.model()
   ioscene = sio.model()
-  print("ioscene created")
   ioerror = ""
   #if not sio.load_scene(filename, ioscene, ioerror, commonio.print_progress):
   #  commonio.print_fatal(ioerror)
   if not sio.load_scene(filename, ioscene, ioerror, commonio.print_progress):
-    print("error loading_scene")
     commonio.print_fatal(ioerror)
-  else:  
-    print("python: scene loaded correctly")
   # get camera
   iocamera = sio.get_camera(ioscene, camera_name)
 

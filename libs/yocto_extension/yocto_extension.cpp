@@ -317,59 +317,60 @@ PYBIND11_MODULE(py_pathtrace, m) {
     return true;    
   });
 
-  // py::class_<ptr::material>(m, "material")
-  //   .def(py::init<vec3f, vec3f, float, float, float, float, vec3f,
-  //                 float, vec3f, float, float, float, bool,
-  //                 ptr::texture*, ptr::texture*, ptr::texture*,
-  //                 ptr::texture*, ptr::texture*, ptr::texture*,
-  //                 ptr::texture*, ptr::texture*, ptr::texture*, ptr::texture*>(),
-  //       // material
-  //       py::arg("emission") = vec3f(0,0,0),
-  //       py::arg("color") = vec3f(0,0,0),
-  //       py::arg("specular") = 0,
-  //       py::arg("roughness") = 0, 
-  //       py::arg("metallic") = 0, 
-  //       py::arg("ior") = 1.5,
-  //       py::arg("spectint") = vec3f(1,1,1),
-  //       py::arg("transmission") = 0,
-  //       py::arg("scattering") = vec3f(0,0,0),
-  //       py::arg("scanisotropy") = 0,
-  //       py::arg("trdepth") = 0.01,
-  //       py::arg("opacity") = 1,
-  //       py::arg("thin") = true,
-  //       // textures
-  //       py::arg("emission_tex") = py::cast<ptr::texture*>(nullptr),
-  //       py::arg("color_tex") = py::cast<ptr::texture*>(nullptr),
-  //       py::arg("specular_tex") = py::cast<ptr::texture*>(nullptr),
-  //       py::arg("metallic_tex") = py::cast<ptr::texture*>(nullptr),
-  //       py::arg("roughness_tex") = py::cast<ptr::texture*>(nullptr),
-  //       py::arg("transmission_tex") = py::cast<ptr::texture*>(nullptr),
-  //       py::arg("spectint_tex") = py::cast<ptr::texture*>(nullptr),
-  //       py::arg("scattering_tex") = py::cast<ptr::texture*>(nullptr),
-  //       py::arg("opacity_tex") = py::cast<ptr::texture*>(nullptr),
-  //       py::arg("normal_tex") = py::cast<ptr::texture*>(nullptr))
-  //   .def_readwrite("emission", &ptr::material::emission)
-  //   .def_readwrite("color", &ptr::material::color)
-  //   .def_readwrite("specular", &ptr::material::specular)
-  //   .def_readwrite("metallic", &ptr::material::metallic)
-  //   .def_readwrite("ior", &ptr::material::ior)
-  //   .def_readwrite("spectint", &ptr::material::spectint)
-  //   .def_readwrite("transmission", &ptr::material::transmission)
-  //   .def_readwrite("scattering", &ptr::material::scattering)
-  //   .def_readwrite("scanisotropy", &ptr::material::scanisotropy)
-  //   .def_readwrite("trdepth", &ptr::material::trdepth)
-  //   .def_readwrite("opacity", &ptr::material::opacity)
-  //   .def_readwrite("thin", &ptr::material::thin)
-  //   .def_readwrite("emission_tex", &ptr::material::emission_tex)
-  //   .def_readwrite("color_tex", &ptr::material::color_tex)
-  //   .def_readwrite("specular_tex", &ptr::material::specular_tex)
-  //   .def_readwrite("metallic_tex", &ptr::material::metallic_tex)
-  //   .def_readwrite("roughness_tex", &ptr::material::roughness_tex)
-  //   .def_readwrite("transmission_tex", &ptr::material::transmission_tex)
-  //   .def_readwrite("spectint_tex", &ptr::material::spectint_tex)
-  //   .def_readwrite("scattering_tex", &ptr::material::scattering_tex)
-  //   .def_readwrite("opacity_tex", &ptr::material::opacity_tex)
-  //   .def_readwrite("normal_tex", &ptr::material::normal_tex); 
+  py::class_<ptr::material>(m, "material")
+    .def(py::init<vec3f, vec3f, float, float, float, float, vec3f,
+                  float, vec3f, float, float, float, bool,
+                  ptr::texture*, ptr::texture*, ptr::texture*,
+                  ptr::texture*, ptr::texture*, ptr::texture*,
+                  ptr::texture*, ptr::texture*, ptr::texture*, ptr::texture*>(),
+        // material
+        py::arg("emission") = vec3f(0,0,0),
+        py::arg("color") = vec3f(0,0,0),
+        py::arg("specular") = 0,
+        py::arg("roughness") = 0, 
+        py::arg("metallic") = 0, 
+        py::arg("ior") = 1.5,
+        py::arg("spectint") = vec3f(1,1,1),
+        py::arg("transmission") = 0,
+        py::arg("scattering") = vec3f(0,0,0),
+        py::arg("scanisotropy") = 0,
+        py::arg("trdepth") = 0.01,
+        py::arg("opacity") = 1,
+        py::arg("thin") = true,
+        // textures
+        py::arg("emission_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("color_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("specular_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("metallic_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("roughness_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("transmission_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("spectint_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("scattering_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("opacity_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("normal_tex") = py::cast<ptr::texture*>(nullptr))
+    .def_readwrite("emission", &ptr::material::emission)
+    .def_readwrite("color", &ptr::material::color)
+    .def_readwrite("specular", &ptr::material::specular)
+    .def_readwrite("roughness", &ptr::material::roughness)
+    .def_readwrite("metallic", &ptr::material::metallic)
+    .def_readwrite("ior", &ptr::material::ior)
+    .def_readwrite("spectint", &ptr::material::spectint)
+    .def_readwrite("transmission", &ptr::material::transmission)
+    .def_readwrite("scattering", &ptr::material::scattering)
+    .def_readwrite("scanisotropy", &ptr::material::scanisotropy)
+    .def_readwrite("trdepth", &ptr::material::trdepth)
+    .def_readwrite("opacity", &ptr::material::opacity)
+    .def_readwrite("thin", &ptr::material::thin)
+    .def_readwrite("emission_tex", &ptr::material::emission_tex)
+    .def_readwrite("color_tex", &ptr::material::color_tex)
+    .def_readwrite("specular_tex", &ptr::material::specular_tex)
+    .def_readwrite("metallic_tex", &ptr::material::metallic_tex)
+    .def_readwrite("roughness_tex", &ptr::material::roughness_tex)
+    .def_readwrite("transmission_tex", &ptr::material::transmission_tex)
+    .def_readwrite("spectint_tex", &ptr::material::spectint_tex)
+    .def_readwrite("scattering_tex", &ptr::material::scattering_tex)
+    .def_readwrite("opacity_tex", &ptr::material::opacity_tex)
+    .def_readwrite("normal_tex", &ptr::material::normal_tex); 
 
   py::class_<ptr::scene>(m, "scene")
     .def(py::init<std::vector<ptr::camera*>,
