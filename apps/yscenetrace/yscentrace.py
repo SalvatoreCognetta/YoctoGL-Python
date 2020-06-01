@@ -1,4 +1,5 @@
 import py_math
+import py_shape as shp
 import py_image as img
 import py_pathtrace as ptr
 import py_commonio  as commonio
@@ -84,9 +85,60 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
     ptr.set_points(shape, ioshape.points)
     ptr.set_lines(shape, ioshape.lines)
     ptr.set_triangles(shape, ioshape.triangles)
-    # if ioshape.quads:
-    #   ptr.set_triangles(shape, )
+    if ioshape.quads:
+      ptr.set_triangles(shape, shp.quads_to_triangles(ioshape.quads))
+    ptr.set_positions(shape, ioshape.positions)
+    ptr.set_normals(shape, ioshape.normals)
+    ptr.set_texcoords(shape, ioshape.texcoords)
+    ptr.set_radius(shape, ioshape.radius)
+    shape_map[ioshape] = shape
+  
+  for ioobject in ioscene.objects:
+    if progress_cb:
+      progress.x += 1
+      progress_cb("convert object", progress.x, progress.y)
+    if ioobject.instance:
+      for frame in ioobject.instance.frames:
+        yocto_object = ptr.add_object(scene)
+        ptr.set_frame(yocto_object, frame * ioobject.frame)
+        if ioobject.shape: ptr.set_shape(yocto_object, shape_map[ioobject.shape])
+        if ioobject.subdiv:
+          ptr.set_shape(yocto_object, subdiv_map[ioobject.subdiv])
+          ptr.set_subdiv_subdivision(subdiv_map[ioobject.subdiv],
+              ioobject.material.subdivisions, True)
+          ptr.set_subdiv_displacement(subdiv_map[ioobject.subdiv],
+              ioobject.material.displacement,
+              texture_map[ioobject.material.displacement_tex])
+        ptr.set_material(yocto_object, material_map[ioobject.material])
+    else:
+      yocto_object = ptr.add_object(scene)
+      ptr.set_frame(yocto_object, ioobject.frame)
+      if ioobject.shape: ptr.set_shape(yocto_object, shape_map[ioobject.shape])
+      if ioobject.subdiv:
+        ptr.set_shape(yocto_object, subdiv_map[ioobject.subdiv])
+        ptr.set_subdiv_subdivision(subdiv_map[ioobject.subdiv],
+            ioobject.material.subdivisions, True)
+        ptr.set_subdiv_displacement(subdiv_map[ioobject.subdiv],
+            ioobject.material.displacement,
+            texture_map[ioobject.material.displacement_tex])
+      ptr.set_material(yocto_object, material_map[ioobject.material])
+  
+  for ioenvironment in ioscene.environments:
+    if progress_cb:
+      progress.x += 1
+      progress_cb("convert environment", progress.x, progress.y)
+    environment = ptr.add_environment(scene)
+    ptr.set_frame(environment, ioenvironment.frame)
+    ptr.set_emission(environment, ioenvironment.emission,
+        texture_map[ioenvironment.emission_tex])
 
+  # done
+  if (progress_cb):
+    progress.x += 1
+    progress_cb("convert done", progress.x, progress.y)
+
+  # get camera
+  camera = camera_map[iocamera]
 
 def main(*argv):
 
@@ -134,6 +186,14 @@ def main(*argv):
   camera      = None # ptr.camera.nullprt()
   init_scene(scene, ioscene, camera, iocamera, commonio.print_progress)
 
+  # init subdivs
+  # ptr.init_subdivs(scene, params, commonio.print_progress)
+
+  # # build bvh
+  # ptr.init_bvh(scene, params, commonio.print_progress)
+
+  # # build lights
+  # ptr.init_lights(scene, params, commonio.print_progress)
 
 if __name__ == "__main__":
   main(sys.argv)

@@ -178,7 +178,6 @@ PYBIND11_MODULE(py_math, m) {
     .def_readwrite("y", &frame3f::y)
     .def_readwrite("z", &frame3f::z)
     .def_readwrite("o", &frame3f::o);
-
   
   // py::object py_identity2x3f = py::cast(identity2x3f);
   // m.attr("identity3x4f")  = py_identity2x3f;
@@ -187,6 +186,38 @@ PYBIND11_MODULE(py_math, m) {
   m.attr("identity3x4f")  = py_identity3x4f;
   // -----------------------------------------------------------------------------
   // RIGID BODY TRANSFORMS/FRAMES
+  // -----------------------------------------------------------------------------
+
+
+  // -----------------------------------------------------------------------------
+  // RANDOM NUMBER GENERATION
+  // -----------------------------------------------------------------------------
+  py::class_<rng_state>(m, "rng_state")
+    .def(py::init<uint64_t, uint64_t>(), 
+        py::arg("state") = 0x853c49e6748fea9bULL,
+        py::arg("inc") = 0xda3e39cb94b95bdbULL)
+    .def_readwrite("state", &rng_state::state)
+    .def_readwrite("inc", &rng_state::inc);
+  // -----------------------------------------------------------------------------
+  // RANDOM NUMBER GENERATION
+  // -----------------------------------------------------------------------------
+
+}
+
+
+// -----------------------------------------------------------------------------
+// YOCTO-SHAPE
+// -----------------------------------------------------------------------------
+PYBIND11_MODULE(py_shape, m) {
+
+  // -----------------------------------------------------------------------------
+  // SHAPE ELEMENT CONVERSION AND GROUPING
+  // -----------------------------------------------------------------------------
+  m.def("quads_to_triangles", &shp::quads_to_triangles, py::return_value_policy::reference);
+  m.def("triangles_to_quads", &shp::triangles_to_quads, py::return_value_policy::reference);
+  // m.def("bezier_to_lines", &shp::bezier_to_lines, py::return_value_policy::reference);
+  // -----------------------------------------------------------------------------
+  // SHAPE ELEMENT CONVERSION AND GROUPING
   // -----------------------------------------------------------------------------
 
 }
@@ -203,9 +234,11 @@ PYBIND11_MODULE(py_image, m) {
   py::class_<img::image<vec2f>>(m, "image_vec2f");
   py::class_<img::image<vec3f>>(m, "image_vec3f")
     .def(py::init<>());
+  py::class_<img::image<vec4f>>(m, "image_vec4f");
   py::class_<img::image<vec3b>>(m, "image_vec3b");
   py::class_<img::image<float>>(m, "image_float");
   py::class_<img::image<unsigned char>>(m, "image_byte");
+  py::class_<img::image<ptr::pixel>>(m, "image_pixel");
 
   // -----------------------------------------------------------------------------
   // IMAGE DATA AND UTILITIES
@@ -250,7 +283,6 @@ PYBIND11_MODULE(py_pathtrace, m) {
     .def_readwrite("noparallel", &ptr::trace_params::noparallel)
     .def_readwrite("pratio", &ptr::trace_params::pratio);
   
-
   const py::object shader_names = py::cast(ptr::shader_names);
   m.attr("shader_names") = shader_names;
   // -----------------------------------------------------------------------------
@@ -433,6 +465,15 @@ PYBIND11_MODULE(py_pathtrace, m) {
     .def_readwrite("emission" , &ptr::environment::emission)
     .def_readwrite("emission_tex", &ptr::environment::emission_tex);
 
+  py::class_<ptr::light>(m, "light")
+    .def(py::init<ptr::object*, ptr::environment*, std::vector<float>>(),
+        py::arg("object") = py::cast<ptr::object*>(nullptr),
+        py::arg("environment") = py::cast<ptr::environment*>(nullptr),
+        py::arg("cdf") = std::vector<float>())
+    .def_readwrite("object", &ptr::light::object)
+    .def_readwrite("environment", &ptr::light::environment)
+    .def_readwrite("cdf", &ptr::light::cdf);
+
   py::class_<ptr::scene>(m, "scene")
     .def(py::init<std::vector<ptr::camera*>, std::vector<ptr::object*>,
                   std::vector<ptr::shape*>, std::vector<ptr::material*>,
@@ -459,10 +500,25 @@ PYBIND11_MODULE(py_pathtrace, m) {
       // auto scene_guard = std::make_unique<ptr::scene>().get()
       return scene_guard.get();
     }, py::return_value_policy::reference);
+
+  py::class_<ptr::pixel>(m, "pixel")
+    .def(py::init<vec4f, int, math::rng_state>(),
+        py::arg("accumulated") = vec4f(0,0,0,0),
+        py::arg("samples") = 0,
+        py::arg("rng") = math::rng_state())
+    .def_readwrite("accumulated", &ptr::pixel::accumulated)
+    .def_readwrite("samples", &ptr::pixel::samples)
+    .def_readwrite("rng", &ptr::pixel::rng);
+
+  py::class_<ptr::state>(m, "state")
+    .def(py::init<img::image<vec4f>, img::image<ptr::pixel>>(),
+        py::arg("render") = img::image<vec4f>(),
+        py::arg("pixels") = img::image<ptr::pixel>())
+    .def_readwrite("render", &ptr::state::render)
+    .def_readwrite("pixels", &ptr::state::pixels);
   // -----------------------------------------------------------------------------
   // SCENE AND RENDERING DATA
   // -----------------------------------------------------------------------------
-
 
 
   // -----------------------------------------------------------------------------
@@ -519,7 +575,10 @@ PYBIND11_MODULE(py_pathtrace, m) {
   m.def("set_thin", &ptr::set_thin, py::arg("material"), py::arg("thin"));
   m.def("set_scattering", &ptr::set_scattering, py::arg("material"), py::arg("scattering"), py::arg("scanisotropy"), py::arg("scattering_tex") = nullptr);
   m.def("set_normalmap", &ptr::set_normalmap, py::arg("material"), py::arg("normal_tex"));
-  
+
+  // environment properties
+  m.def("set_frame", (void (*)(ptr::environment*, const frame3f&))&ptr::set_frame, py::arg("environment"), py::arg("frame"));
+
   // add environment
   m.def("set_emission", (void (*)(ptr::environment*, const vec3f&, ptr::texture*))&ptr::set_emission, py::arg("environment"), py::arg("emission"), py::arg("emission_tex"));
   m.def("set_texture", (void (*)(ptr::texture*, const img::image<vec3b>&))&ptr::set_texture, py::arg("texture"), py::arg("img"));

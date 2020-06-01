@@ -74,6 +74,7 @@ namespace yocto::extension {
 
 // Namespace aliases
 namespace ext = yocto::extension;
+namespace shp = yocto::shape;
 namespace img = yocto::image;
 namespace ptr = yocto::pathtrace;
 namespace cli = yocto::commonio;

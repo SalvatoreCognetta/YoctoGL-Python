@@ -61,14 +61,15 @@ class CMakeBuild(build_ext):
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=self.build_temp)
 
 setup(
-    name='yocto_pathextension',
+    name='yocto-pathextension',
     version='0.0.1',
-    author='Salvatore Cognetta',
+    author='Salvatore Cognetta, Daniele Appetito',
     author_email='salvatore.cognetta@gmail.com',
     description='',
     long_description='',
     ext_modules=[
         CMakeExtension('py_math'), 
+        CMakeExtension('py_shape'), 
         CMakeExtension('py_image'), 
         CMakeExtension('py_pathtrace'), 
         CMakeExtension('py_commonio'), 
