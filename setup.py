@@ -74,7 +74,8 @@ setup(
         CMakeExtension('py_pathtrace'), 
         CMakeExtension('py_commonio'), 
         CMakeExtension('py_sceneio'),
-        CMakeExtension('py_trace')
+        CMakeExtension('py_trace'),
+        CMakeExtension('py_filesystem')
     ],
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
