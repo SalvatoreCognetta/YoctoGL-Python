@@ -233,15 +233,45 @@ PYBIND11_MODULE(py_image, m) {
   // -----------------------------------------------------------------------------
   py::class_<img::image<vec2f>>(m, "image_vec2f");
   py::class_<img::image<vec3f>>(m, "image_vec3f")
-    .def(py::init<>());
+    .def("size", [](img::image<vec3f> image) -> vec2i {
+      return image.size();
+    });
   py::class_<img::image<vec4f>>(m, "image_vec4f");
-  py::class_<img::image<vec3b>>(m, "image_vec3b");
-  py::class_<img::image<float>>(m, "image_float");
-  py::class_<img::image<unsigned char>>(m, "image_byte");
-  py::class_<img::image<ptr::pixel>>(m, "image_pixel");
-
+  py::class_<img::image<vec3b>>(m, "image_vec3b")
+    .def("size", [](img::image<vec3b> image) -> vec2i {
+      return image.size();
+    });
+  py::class_<img::image<float>>(m, "image_float")
+    .def("size", [](img::image<float> image) -> vec2i {
+      return image.size();
+    });
+  py::class_<img::image<unsigned char>>(m, "image_byte")
+    .def("size", [](img::image<unsigned char> image) -> vec2i {
+      return image.size();
+    });
+  py::class_<img::image<ptr::pixel>>(m, "image_pixel")
+    .def("size", [](img::image<ptr::pixel> image) -> vec2i {
+      return image.size();
+    });
   // -----------------------------------------------------------------------------
   // IMAGE DATA AND UTILITIES
+  // -----------------------------------------------------------------------------
+
+
+  // -----------------------------------------------------------------------------
+  // IMAGE IO
+  // -----------------------------------------------------------------------------
+  m.def("save_image_vec4f", [](const std::string& filename, const img::image<vec4f>& img, std::string& error) -> bool {
+    return img::save_image(filename, img, error);
+  });
+  m.def("save_image_vec3f", [](const std::string& filename, const img::image<vec3f>& img, std::string& error) -> bool {
+    return img::save_image(filename, img, error);
+  });
+  m.def("save_image_float", [](const std::string& filename, const img::image<float>& img, std::string& error) -> bool {
+    return img::save_image(filename, img, error);
+  });  
+  // -----------------------------------------------------------------------------
+  // IMAGE IO
   // -----------------------------------------------------------------------------
 }
 
@@ -333,12 +363,12 @@ PYBIND11_MODULE(py_pathtrace, m) {
       return (ptr::camera*)nullptr;
     }, py::return_value_policy::reference);
 
-  py::class_<ptr::texture> (m, "texture")
-    // .def(py::init<img::image<vec3f>, img::image<vec3b>, img::image<float>, img::image<unsigned char>>(),
-    //     py::arg("colorf") = img::image<vec3f>(),
-    //     py::arg("colorb") = img::image<vec3b>(),
-    //     py::arg("scalarf") = img::image<float>(),
-    //     py::arg("scalarb") = img::image<unsigned char>())
+  py::class_<ptr::texture>(m, "texture")
+    .def(py::init<img::image<vec3f>, img::image<vec3b>, img::image<float>, img::image<unsigned char>>(),
+        py::arg("colorf") = img::image<vec3f>(),
+        py::arg("colorb") = img::image<vec3b>(),
+        py::arg("scalarf") = img::image<float>(),
+        py::arg("scalarb") = img::image<unsigned char>())
     .def_readwrite("colorf", &ptr::texture::colorf)
     .def_readwrite("colorb", &ptr::texture::colorb)
     .def_readwrite("scalarf", &ptr::texture::scalarf)
@@ -429,8 +459,10 @@ PYBIND11_MODULE(py_pathtrace, m) {
   m.def("set_normals", &ptr::set_normals, py::arg("shape"), py::arg("normals"));
   m.def("set_texcoords", &ptr::set_texcoords, py::arg("shape"), py::arg("texcoords"));
   m.def("set_radius", &ptr::set_radius, py::arg("shape"), py::arg("radius"));
+
+  // subdiv properties
   m.def("set_subdiv_quadspos", &ptr::set_subdiv_quadspos, py::arg("shape"), py::arg("quadspos"));
-  m.def("set_subdiv_quadstexcoord", &ptr::set_subdiv_quadstexcoord, py::arg("shape"), py::arg("quadstexcoords"));
+  m.def("set_subdiv_quadstexcoord", &ptr::set_subdiv_quadstexcoord, py::arg("shape"), py::arg("quadstexcoord"));
   m.def("set_subdiv_positions", &ptr::set_subdiv_positions, py::arg("shape"), py::arg("positions"));
   m.def("set_subdiv_texcoords", &ptr::set_subdiv_texcoords, py::arg("shape"), py::arg("texcoords"));
   m.def("set_subdiv_subdivision", &ptr::set_subdiv_subdivision, py::arg("shape"), py::arg("level"), py::arg("smooth"));
@@ -842,7 +874,7 @@ PYBIND11_MODULE(py_sceneio, m) {
 
 
 // -----------------------------------------------------------------------------
-// YOCTO TRACE
+// YOCTO-TRACE
 // -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_trace, m) {
 
@@ -850,6 +882,21 @@ PYBIND11_MODULE(py_trace, m) {
   // m.attr("coat_ior") = coat_ior; 
 
   // m.def("eval_normal", &trace::eval_normal);
+
+}
+
+
+// -----------------------------------------------------------------------------
+// FYLESYSTEM
+// -----------------------------------------------------------------------------
+PYBIND11_MODULE(py_filesystem, m) {
+
+  m.def("path_extension", [](std::string imfilename) -> std::string {
+    return fs::path(imfilename).extension().string();
+  });
+  m.def("path_replace_extension", [](std::string imfilename, std::string ext) -> std::string {
+    return fs::path(imfilename).replace_extension(ext).string();
+  });
 
 }
   

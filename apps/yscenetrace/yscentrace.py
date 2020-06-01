@@ -4,6 +4,7 @@ import py_image as img
 import py_pathtrace as ptr
 import py_commonio  as commonio
 import py_sceneio   as sio
+import py_filesystem   as fs
 import sys
 
 def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamera: sio.camera, progress_cb):
@@ -26,6 +27,7 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
 
   texture_map = {}
   texture_map[None] = None
+  iotexture_tmp = None
   for iotexture in ioscene.textures:
     if progress_cb:
       progress.x += 1
@@ -34,6 +36,12 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
     # if ptr.texture_empty(texture, 'colorf'):
     if texture.colorf: # check if a list is empty by its type flexibility. https://therenegadecoder.com/code/how-to-check-if-a-list-is-empty-in-python/#check-if-a-list-is-empty-by-its-type-flexibility
       ptr.set_texture(texture, iotexture.colorf)
+      size_colorf = img.image_vec3f.size(iotexture.colorf)
+      if size_colorf.x:
+        iotexture_tmp = iotexture
+        # print(texture)
+        # print(size_colorf.x)
+        # print(size_colorf.y)
     elif texture.colorb:
       ptr.set_texture(texture, iotexture.colorb)
     elif texture.scalarf:
@@ -41,6 +49,7 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
     elif texture.scalarb:
       ptr.set_texture(texture, iotexture.scalarb)
     texture_map[iotexture] = texture
+    # print(texture_map[iotexture])
   
   material_map = {}
   material_map[None] = None
@@ -120,7 +129,9 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
             ioobject.material.subdivisions, True)
         ptr.set_subdiv_displacement(subdiv_map[ioobject.subdiv],
             ioobject.material.displacement,
-            texture_map[ioobject.material.displacement_tex])
+            texture_map[iotexture_tmp])
+            # texture_map[ioobject.material.displacement_tex])
+        # print(texture_map[iotexture_tmp])
       ptr.set_material(yocto_object, material_map[ioobject.material])
   
   for ioenvironment in ioscene.environments:
@@ -147,9 +158,9 @@ def main(*argv):
   params = ptr.trace_params()
   save_batch  = False
   camera_name = ""
-  imfilename  = "out.hdr"
+  # imfilename  = "out.hdr"
   filename    = "surface.json"
-  # imfilename  = "out/lowres/01_surface_720_256.jpg"
+  imfilename  = "out/lowres/01_surface_720_256.jpg"
   if len(argv) > 0 and len(argv[0]) > 1:
     if (argv[0][1]).startswith('tests/'):
       filename    = argv[0][1]
@@ -187,8 +198,27 @@ def main(*argv):
   camera      = None # ptr.camera.nullprt()
   scene, ioscene, camera, iocamera = init_scene(scene, ioscene, camera, iocamera, commonio.print_progress)
 
-  for shape in scene.shapes:
-    print(shape.subdiv_displacement_tex)
+  # for shape in scene.shapes:
+  #   displacement_tex = shape.subdiv_displacement_tex
+  #   if displacement_tex:
+  #     size_colorf = img.image_vec3f.size(displacement_tex.colorf)
+  #     print("size_colorf.x: ", size_colorf.x)
+  #     print("size_colorf.y: ",size_colorf.y)
+
+  #     size_colorb = img.image_vec3b.size(displacement_tex.colorb)
+  #     print("size_colorb.x: ", size_colorb.x)
+  #     print("size_colorb.y: ",size_colorb.y)
+
+  #     size_scalarf = img.image_float.size(displacement_tex.scalarf)
+  #     print("size_scalarf.x: ", size_scalarf.x)
+  #     print("size_scalarf.y: ",size_scalarf.y)
+
+  #     size_scalarb = img.image_byte.size(displacement_tex.scalarb)
+  #     print("size_scalarb.x: ", size_scalarb.x)
+  #     print("size_scalarb.y: ",size_scalarb.y)
+  # print(scene.shapes[0].subdiv_displacement_tex.colorb)
+  # print(scene.shapes[0].subdiv_displacement_tex.scalarf)
+  # print(scene.shapes[0].subdiv_displacement_tex.scalarb)
 
   # init subdivs
   ptr.init_subdivs(scene, params, commonio.print_progress) # floating point exception (core dumped)
@@ -203,28 +233,28 @@ def main(*argv):
   # state_guard = std::make_unique<ptr::state>()
   state = ptr.state()
   ptr.init_state(state, scene, camera, params) # segmentation fault (core dumped)
-
+  print(img.image_pixel.size(state.pixels).x)
+  # for pixel in state.pixels:
   # render
   commonio.print_progress("render image", 0, params.samples)
   sample = 0
-  # for sample < params.samples:
-  #   commonio.print_progress("render image", sample, params.samples)
-  #   ptr.trace_samples(state, scene, camera, params)
-  #   if save_batch:
-  #       ext = "-s" + std::to_string(sample) +
-  #                  fs::path(imfilename).extension().string()
-  #       outfilename = fs::path(imfilename).replace_extension(ext).string()
-  #       ioerror     = ""s
-  #       commonio.print_progress("save image", sample, params.samples)
-  #       if not save_image(outfilename, state.render, ioerror):
-  #         commonio.print_fatal(ioerror)
-  #   sample += 1
-  # commonio.print_progress("render image", params.samples, params.samples)
+  while sample < params.samples:
+    commonio.print_progress("render image", sample, params.samples)
+    # ptr.trace_samples(state, scene, camera, params)
+    if save_batch:
+        ext = "-s" + str(sample) + fs.path_extension(imfilename)
+        outfilename = fs.path_replace_extension(imfilename, ext)
+        ioerror     = ""
+        commonio.print_progress("save image", sample, params.samples)
+        if not img.save_image_vec4f(outfilename, state.render, ioerror):
+          commonio.print_fatal(ioerror)
+    sample += 1
+  commonio.print_progress("render image", params.samples, params.samples)
 
-  # // save image
-  # commonio.print_progress("save image", 0, 1)
-  # if (!save_image(imfilename, state.render, ioerror)) commonio.print_fatal(ioerror)
-  # commonio.print_progress("save image", 1, 1)
+  # save image
+  commonio.print_progress("save image", 0, 1)
+  if not img.save_image_vec4f(imfilename, state.render, ioerror): commonio.print_fatal(ioerror)
+  commonio.print_progress("save image", 1, 1)
 
   # done
 

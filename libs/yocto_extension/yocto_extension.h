@@ -44,6 +44,7 @@
 #include <yocto/yocto_image.cpp>
 #include <yocto/ext/stb_image.h>
 #include <yocto/ext/stb_image.cpp>
+#include <yocto/ext/filesystem.hpp>
 
 // #include <yocto/yocto_sceneio.h>
 #include <yocto/yocto_sceneio.cpp>
@@ -80,6 +81,8 @@ namespace ptr = yocto::pathtrace;
 namespace cli = yocto::commonio;
 namespace sio = yocto::sceneio;
 namespace trace = yocto::trace;
+
+namespace fs = ghc::filesystem;
 
 // Math defitions
 using math::bbox3f;
