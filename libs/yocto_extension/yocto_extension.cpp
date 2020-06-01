@@ -231,12 +231,18 @@ PYBIND11_MODULE(py_image, m) {
   // -----------------------------------------------------------------------------
   // IMAGE DATA AND UTILITIES
   // -----------------------------------------------------------------------------
-  py::class_<img::image<vec2f>>(m, "image_vec2f");
+  py::class_<img::image<vec2f>>(m, "image_vec2f")
+    .def("size", [](img::image<vec2f> image) -> vec2i {
+      return image.size();
+    });
   py::class_<img::image<vec3f>>(m, "image_vec3f")
     .def("size", [](img::image<vec3f> image) -> vec2i {
       return image.size();
     });
-  py::class_<img::image<vec4f>>(m, "image_vec4f");
+  py::class_<img::image<vec4f>>(m, "image_vec4f")
+    .def("size", [](img::image<vec4f> image) -> vec2i {
+      return image.size();
+    });
   py::class_<img::image<vec3b>>(m, "image_vec3b")
     .def("size", [](img::image<vec3b> image) -> vec2i {
       return image.size();
