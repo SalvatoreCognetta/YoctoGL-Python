@@ -285,6 +285,16 @@ PYBIND11_MODULE(py_pathtrace, m) {
   
   const py::object shader_names = py::cast(ptr::shader_names);
   m.attr("shader_names") = shader_names;
+
+  m.def("init_bvh", (void (*)(ptr::scene*, const ptr::trace_params&, std::function<void(const std::string&, int, int)>))&ptr::init_bvh,
+      py::arg("scene"), py::arg("params"), py::arg("progress_cb") = std::function<void(const std::string&, int, int)>());
+  m.def("init_state", &ptr::init_state, py::arg("state"), py::arg("scene"), py::arg("camera"), py::arg("params"));
+  m.def("init_lights", &ptr::init_lights, py::arg("scene"), py::arg("params"), py::arg("progress_cb"));
+  m.def("init_subdivs", &ptr::init_subdivs, py::arg("scene"), py::arg("params"), py::arg("progress_cb"));
+  m.def("trace_samples", (void (*)(ptr::state*, const ptr::scene*, const ptr::camera*, const ptr::trace_params&))&ptr::trace_samples,
+      py::arg("state"), py::arg("scene"), py::arg("camera"), py::arg("params"));
+  m.def("trace_samples", (void (*)(ptr::state*, const ptr::scene*, const ptr::camera*, const ptr::trace_params&, std::atomic<bool>*))&ptr::trace_samples,
+      py::arg("state"), py::arg("scene"), py::arg("camera"), py::arg("params"), py::arg("stop"));
   // -----------------------------------------------------------------------------
   // HIGH LEVEL API
   // -----------------------------------------------------------------------------

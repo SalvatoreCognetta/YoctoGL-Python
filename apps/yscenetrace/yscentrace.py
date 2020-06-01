@@ -187,13 +187,42 @@ def main(*argv):
   init_scene(scene, ioscene, camera, iocamera, commonio.print_progress)
 
   # init subdivs
-  # ptr.init_subdivs(scene, params, commonio.print_progress)
+  ptr.init_subdivs(scene, params, commonio.print_progress) # floating point exception (core dumped)
 
   # # build bvh
-  # ptr.init_bvh(scene, params, commonio.print_progress)
+  ptr.init_bvh(scene, params, commonio.print_progress) # ok
 
-  # # build lights
-  # ptr.init_lights(scene, params, commonio.print_progress)
+  # build lights
+  ptr.init_lights(scene, params, commonio.print_progress) # ok
+
+  # init state
+  # state_guard = std::make_unique<ptr::state>()
+  state = ptr.state()
+  ptr.init_state(state, scene, camera, params) # segmentation fault (core dumped)
+
+  # render
+  commonio.print_progress("render image", 0, params.samples)
+  sample = 0
+  # for sample < params.samples:
+  #   commonio.print_progress("render image", sample, params.samples)
+  #   ptr.trace_samples(state, scene, camera, params)
+  #   if save_batch:
+  #       ext = "-s" + std::to_string(sample) +
+  #                  fs::path(imfilename).extension().string()
+  #       outfilename = fs::path(imfilename).replace_extension(ext).string()
+  #       ioerror     = ""s
+  #       commonio.print_progress("save image", sample, params.samples)
+  #       if not save_image(outfilename, state.render, ioerror):
+  #         commonio.print_fatal(ioerror)
+  #   sample += 1
+  # commonio.print_progress("render image", params.samples, params.samples)
+
+  # // save image
+  # commonio.print_progress("save image", 0, 1)
+  # if (!save_image(imfilename, state.render, ioerror)) commonio.print_fatal(ioerror)
+  # commonio.print_progress("save image", 1, 1)
+
+  # done
 
 if __name__ == "__main__":
   main(sys.argv)
