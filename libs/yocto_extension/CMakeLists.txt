@@ -8,6 +8,9 @@ target_link_libraries(yocto_extension yocto yocto_pathtrace)
 target_include_directories(py_math PUBLIC ${CMAKE_SOURCE_DIR}/libs)
 target_link_libraries(py_math PRIVATE yocto yocto_pathtrace) # https://github.com/pybind/pybind11/issues/387
 
+target_include_directories(py_image PUBLIC ${CMAKE_SOURCE_DIR}/libs)
+target_link_libraries(py_image PRIVATE yocto yocto_pathtrace)
+
 target_include_directories(py_pathtrace PUBLIC ${CMAKE_SOURCE_DIR}/libs)
 target_link_libraries(py_pathtrace PRIVATE yocto yocto_pathtrace)
 

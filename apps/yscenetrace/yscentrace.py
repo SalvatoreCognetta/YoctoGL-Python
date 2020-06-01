@@ -1,4 +1,5 @@
 import py_math
+import py_image as img
 import py_pathtrace as ptr
 import py_commonio  as commonio
 import py_sceneio   as sio
@@ -29,13 +30,14 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
       progress.x += 1
       progress_cb("convert texture", progress.x, progress.y)
     texture = ptr.add_texture(scene)
-    if ptr.texture_empty(texture, 'colorf'): # check if a list is empty by its type flexibility. https://therenegadecoder.com/code/how-to-check-if-a-list-is-empty-in-python/#check-if-a-list-is-empty-by-its-type-flexibility
+    # if ptr.texture_empty(texture, 'colorf'):
+    if texture.colorf: # check if a list is empty by its type flexibility. https://therenegadecoder.com/code/how-to-check-if-a-list-is-empty-in-python/#check-if-a-list-is-empty-by-its-type-flexibility
       ptr.set_texture(texture, iotexture.colorf)
-    elif ptr.texture_empty(texture, 'colorb'):
+    elif texture.colorb:
       ptr.set_texture(texture, iotexture.colorb)
-    elif ptr.texture_empty(texture, 'scalarf'):
+    elif texture.scalarf:
       ptr.set_texture(texture, iotexture.scalarf)
-    elif ptr.texture_empty(texture, 'scalarb'):
+    elif texture.scalarb:
       ptr.set_texture(texture, iotexture.scalarb)
     texture_map[iotexture] = texture
   

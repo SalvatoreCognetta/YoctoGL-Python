@@ -200,10 +200,12 @@ PYBIND11_MODULE(py_image, m) {
   // -----------------------------------------------------------------------------
   // IMAGE DATA AND UTILITIES
   // -----------------------------------------------------------------------------
-  // py::class_<img::image<typename vec2f>>(m, "image")
-  //   .def(py::init<>())
-  //   .def_property_readonly("extent", &img::image<typename vec2f>::extent)
-  //   .def_property_readonly("pixels", &img::image<typename vec2f>::pixels);
+  py::class_<img::image<vec2f>>(m, "image_vec2f");
+  py::class_<img::image<vec3f>>(m, "image_vec3f")
+    .def(py::init<>());
+  py::class_<img::image<vec3b>>(m, "image_vec3b");
+  py::class_<img::image<float>>(m, "image_float");
+  py::class_<img::image<unsigned char>>(m, "image_byte");
 
   // -----------------------------------------------------------------------------
   // IMAGE DATA AND UTILITIES
