@@ -152,8 +152,9 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
   camera = camera_map[iocamera]
   return scene, ioscene, camera, iocamera
 
-def main(*argv):
 
+def main(*argv):
+  
   # options
   params = ptr.trace_params()
   save_batch  = False
@@ -167,14 +168,14 @@ def main(*argv):
 
   # parse command line
   cli = commonio.make_cli("yscntrace", "Offline path tracing")
-  commonio.add_option(cli, "--camera", camera_name, "Camera name.", False)
-  commonio.add_option(cli, "--resolution,-r", params.resolution, "Image resolution.", False)
-  commonio.add_option(cli, "--samples,-s", params.samples, "Number of samples.", False)
-  commonio.add_option(cli, "--shader,-t", params.shader, "Shader type.", ptr.shader_names, False)
-  commonio.add_option(cli, "--bounces,-b", params.bounces, "Maximum number of bounces.", False)
-  commonio.add_option(cli, "--clamp", params.clamp, "Final pixel clamping.", False)
-  commonio.add_option(cli, "--save-batch", save_batch, "Save images progressively", False)
-  commonio.add_option(cli, "--output-image,-o", imfilename, "Image filename", False)
+  commonio.add_option(cli, "--camera", camera_name, "Camera name.")
+  commonio.add_option(cli, "--resolution,-r", params.resolution, "Image resolution.")
+  commonio.add_option(cli, "--samples,-s", params.samples, "Number of samples.")
+  commonio.add_option(cli, "--shader,-t", params.shader, "Shader type.", ptr.shader_names)
+  commonio.add_option(cli, "--bounces,-b", params.bounces, "Maximum number of bounces.")
+  commonio.add_option(cli, "--clamp", params.clamp, "Final pixel clamping.")
+  commonio.add_option(cli, "--save-batch", save_batch, "Save images progressively")
+  commonio.add_option(cli, "--output-image,-o", imfilename, "Image filename")
   commonio.add_option(cli, "scene", filename, "Scene filename", True)
 
   # args = [["./apps/yscenetrace/yscentrace.py"], ["tests/01_surface/surface.json"], ["-t"], ["path"], ["-s"], ["256"], ["-r"], ["720"]]

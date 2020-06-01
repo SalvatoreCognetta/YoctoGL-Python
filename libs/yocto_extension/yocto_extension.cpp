@@ -87,6 +87,15 @@ namespace py = pybind11;
 PYBIND11_MODULE(py_math, m) {
 
   // -----------------------------------------------------------------------------
+  // MATH CONSTANTS AND FUNCTIONS
+  // -----------------------------------------------------------------------------
+  m.attr("pif")  = pif;
+  // -----------------------------------------------------------------------------
+  // MATH CONSTANTS AND FUNCTIONS
+  // -----------------------------------------------------------------------------
+
+
+  // -----------------------------------------------------------------------------
   // VECTORS
   // -----------------------------------------------------------------------------
   py::class_<vec2f>(m, "vec2f")
@@ -232,30 +241,37 @@ PYBIND11_MODULE(py_image, m) {
   // IMAGE DATA AND UTILITIES
   // -----------------------------------------------------------------------------
   py::class_<img::image<vec2f>>(m, "image_vec2f")
+    .def(py::init<>())
     .def("size", [](img::image<vec2f> image) -> vec2i {
       return image.size();
     });
   py::class_<img::image<vec3f>>(m, "image_vec3f")
+    .def(py::init<>())
     .def("size", [](img::image<vec3f> image) -> vec2i {
       return image.size();
     });
   py::class_<img::image<vec4f>>(m, "image_vec4f")
+    .def(py::init<>())
     .def("size", [](img::image<vec4f> image) -> vec2i {
       return image.size();
     });
   py::class_<img::image<vec3b>>(m, "image_vec3b")
+    .def(py::init<>())
     .def("size", [](img::image<vec3b> image) -> vec2i {
       return image.size();
     });
   py::class_<img::image<float>>(m, "image_float")
+    .def(py::init<>())
     .def("size", [](img::image<float> image) -> vec2i {
       return image.size();
     });
   py::class_<img::image<unsigned char>>(m, "image_byte")
+    .def(py::init<>())
     .def("size", [](img::image<unsigned char> image) -> vec2i {
       return image.size();
     });
   py::class_<img::image<ptr::pixel>>(m, "image_pixel")
+    .def(py::init<>())
     .def("size", [](img::image<ptr::pixel> image) -> vec2i {
       return image.size();
     });
@@ -278,6 +294,47 @@ PYBIND11_MODULE(py_image, m) {
   });  
   // -----------------------------------------------------------------------------
   // IMAGE IO
+  // -----------------------------------------------------------------------------
+
+
+  // -----------------------------------------------------------------------------
+  // EXAMPLE IMAGES
+  // -----------------------------------------------------------------------------
+  m.def("make_grid", &img::make_grid, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("color0") = vec4f(0.2, 0.2, 0.2, 1), py::arg("color1") = vec4f(0.5, 0.5, 0.5, 1));
+  m.def("make_checker", &img::make_checker, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("color0") = vec4f(0.2, 0.2, 0.2, 1), py::arg("color1") = vec4f(0.5, 0.5, 0.5, 1));
+  m.def("make_bumps", &img::make_bumps, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("color0") = vec4f(0, 0, 0, 1), py::arg("color1") = vec4f(1, 1, 1, 1));
+  m.def("make_ramp", &img::make_ramp, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("color0") = vec4f(0, 0, 0, 1), py::arg("color1") = vec4f(1, 1, 1, 1));
+  m.def("make_gammaramp", &img::make_gammaramp, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("color0") = vec4f(0, 0, 0, 1), py::arg("color1") = vec4f(1, 1, 1, 1));
+  m.def("make_uvramp", &img::make_uvramp, py::arg("img"), py::arg("size"), py::arg("scale") = 1);
+  m.def("make_uvgrid", &img::make_uvgrid, py::arg("img"), py::arg("size"), py::arg("scale") = 1,
+    py::arg("colored") = true);
+  m.def("make_blackbodyramp", &img::make_blackbodyramp, py::arg("img"), py::arg("size"), py::arg("scale") = 1,
+    py::arg("from") = 1000, py::arg("from") = 12000);
+  m.def("make_noisemap", &img::make_noisemap, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("color0") = vec4f(0, 0, 0, 1), py::arg("color1") = vec4f(0, 0, 0, 1));
+  m.def("make_fbmmap", &img::make_fbmmap, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("noise") = vec4f(2, 0.5, 8, 1), py::arg("color0") = vec4f(0, 0, 0, 1),
+    py::arg("color1") = vec4f(0, 0, 0, 1));
+  m.def("make_turbulencemap", &img::make_turbulencemap, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("noise") = vec4f(2, 0.5, 8, 1), py::arg("color0") = vec4f(0, 0, 0, 1),
+    py::arg("color1") = vec4f(0, 0, 0, 1));
+  m.def("make_ridgemap", &img::make_ridgemap, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("noise") = vec4f(2, 0.5, 8, 1), py::arg("color0") = vec4f(0, 0, 0, 1),
+    py::arg("color1") = vec4f(0, 0, 0, 1));
+
+  m.def("make_sunsky", &img::make_sunsky, py::arg("img"), py::arg("size"), py::arg("sun_angle"),
+    py::arg("turbidity") = 3, py::arg("has_sun") = false, py::arg("sun_intensity") = 1,
+    py::arg("sun_radius") = 1, py::arg("ground_albedo") = vec3f(0.2, 0.2, 0.2));
+  m.def("make_lights", &img::make_lights, py::arg("img"), py::arg("size"),
+    py::arg("le") = vec3f(1, 1, 1), py::arg("nlights") = 4, py::arg("langle") = pif / 4,
+    py::arg("lwidth") = pif / 16, py::arg("lheight") = pif / 16);
+  // -----------------------------------------------------------------------------
+  // EXAMPLE IMAGES
   // -----------------------------------------------------------------------------
 }
 
