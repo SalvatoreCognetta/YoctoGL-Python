@@ -139,6 +139,7 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
 
   # get camera
   camera = camera_map[iocamera]
+  return scene, ioscene, camera, iocamera
 
 def main(*argv):
 
@@ -184,7 +185,10 @@ def main(*argv):
   # scene_guard = ptr.scene()
   scene       = ptr.scene()
   camera      = None # ptr.camera.nullprt()
-  init_scene(scene, ioscene, camera, iocamera, commonio.print_progress)
+  scene, ioscene, camera, iocamera = init_scene(scene, ioscene, camera, iocamera, commonio.print_progress)
+
+  for shape in scene.shapes:
+    print(shape.subdiv_displacement_tex)
 
   # init subdivs
   ptr.init_subdivs(scene, params, commonio.print_progress) # floating point exception (core dumped)
