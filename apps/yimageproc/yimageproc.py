@@ -7,7 +7,7 @@ import py_sceneio   as sio
 import py_filesystem   as sfs
 import sys
 
-def make_image_preset(type, image, error):
+def make_image_preset(type_yocto, image, error):
   # set_region = [](img::image<vec4f>& img, const img::image<vec4f>& region,
   #                       const vec2i& offset) {
   #   for (j = 0; j < region.size().y; j++) {
@@ -18,63 +18,62 @@ def make_image_preset(type, image, error):
   #   }
   # };
 
-#   size = py_math.vec2i(1024, 1024)
-#   if type.find("sky") != type.npos: size =  py_math.vec2i(2048, 1024)
-#   if type.find("images2") != type.npos: size = py_math.vec2i(2048, 1024)
-#   if type == "grid":
-#     make_grid(img, size)
-#   elif type == "checker":
-#     make_checker(img, size)
-#   elif type == "bumps":
-#     make_bumps(img, size)
-#   elif type == "uvramp":
-#     make_uvramp(img, size)
-#   elif type == "gammaramp":
-#     make_gammaramp(img, size)
-#   elif type == "blackbodyramp":
-#     make_blackbodyramp(img, size)
-#   elif type == "uvgrid":
-#     make_uvgrid(img, size)
-#   elif type == "sky":
-#     make_sunsky(
-#         img, size, pif / 4, 3.0, false, 1.0, 1.0, vec3f(0.7, 0.7, 0.7))
-#   elif type == "sunsky":
-#     make_sunsky(
-#         img, size, pif / 4, 3.0, true, 1.0, 1.0, vec3f(0.7, 0.7, 0.7))
-#   elif type == "noise":
-#     make_noisemap(img, size, 1)
-#   elif type == "fbm":
-#     make_fbmmap(img, size, 1)
-#   elif type == "ridge":
-#     make_ridgemap(img, size, 1)
-#   elif type == "turbulence":
-#     make_turbulencemap(img, size, 1)
-#   elif type == "bump-normal":
-#     make_bumps(img, size)
-#     img = srgb_to_rgb(bump_to_normal(img, 0.05))
-#   elif type == "images1":
-#     sub_types = std::vector<std::string>{"grid", "uvgrid", "checker",
-#         "gammaramp", "bumps", "bump-normal", "noise", "fbm", "blackbodyramp"}
-#     sub_imgs  = std::vector<img::image<vec4f>>(sub_types.size())
-#     for (i = 0; i < sub_imgs.size(); i++) {
-#       if (!make_image_preset(sub_types[i], sub_imgs[i], error)) return false;
-#     }
-#     montage_size = zero2i;
-#     for ( sub_img : sub_imgs) {
-#       montage_size.x += sub_img.size().x;
-#       montage_size.y = max(montage_size.y, sub_img.size().y);
-#     }
-#     img      = img::image<vec4f>(montage_size);
-#     pos = 0;
-#     for ( sub_img : sub_imgs) {
-#       set_region(img, sub_img, {pos, 0});
-#       pos += sub_img.size().x;
-#     }
-#   } else if (type == "images2") {
+  size = py_math.vec2i(1024, 1024)
+  if type_yocto.find("sky") != type_yocto.npos: size =  py_math.vec2i(2048, 1024)
+  if type_yocto.find("images2") != type_yocto.npos: size = py_math.vec2i(2048, 1024)
+  if type_yocto == "grid":
+    img.make_grid(image, size)
+  elif type_yocto == "checker":
+    img.make_checker(image, size)
+  elif type_yocto == "bumps":
+    img.make_bumps(image, size)
+  elif type_yocto == "uvramp":
+    img.make_uvramp(image, size)
+  elif type_yocto == "gammaramp":
+    img.make_gammaramp(image, size)
+  elif type_yocto == "blackbodyramp":
+    img.make_blackbodyramp(image, size)
+  elif type_yocto == "uvgrid":
+    img.make_uvgrid(image, size)
+  elif type_yocto == "sky":
+    img.make_sunsky(
+        image, size, py_math.pif / 4, 3.0, False, 1.0, 1.0, vec3f(0.7, 0.7, 0.7))
+  elif type_yocto == "sunsky":
+    img.make_sunsky(
+        image, size, py_math.pif / 4, 3.0, True, 1.0, 1.0, vec3f(0.7, 0.7, 0.7))
+  elif type_yocto == "noise":
+    img.make_noisemap(image, size, 1)
+  elif type_yocto == "fbm":
+    img.make_fbmmap(image, size, 1)
+  elif type_yocto == "ridge":
+    img.make_ridgemap(image, size, 1)
+  elif type_yocto == "turbulence":
+    img.make_turbulencemap(image, size, 1)
+  elif type_yocto == "bump-normal":
+    img.make_bumps(image, size)
+    img = img.srgb_to_rgb(img.bump_to_normal(image, 0.05))
+  elif type_yocto == "images1":
+    sub_types = {"grid", "uvgrid", "checker",
+        "gammaramp", "bumps", "bump-normal", "noise", "fbm", "blackbodyramp"}
+    sub_imgs  = {}
+    i = 0
+    # while i < len(sub_types):
+    #   if not make_image_preset(sub_types[i], sub_imgs[i], error): return False
+    #   i +=1
+    # montage_size = py_math.zero2i
+    # for sub_img in sub_imgs:
+    #   montage_size.x += img.image_vec4f.size(sub_img).x
+    #   montage_size.y = max(montage_size.y, img.image_vec4f.size(sub_img).y)
+#     image      = img.image_vec4f(montage_size)
+#     pos = 0
+#     for sub_img in sub_imgs:
+#       set_region(image, sub_img, py_math.vec2i(pos, 0))
+#       pos += img.image_vec4f.size(sub_img).x
+#   } else if (type_yocto == "images2") {
 #     sub_types = std::vector<std::string>{"sky", "sunsky"};
 #     sub_imgs  = std::vector<img::image<vec4f>>(sub_types.size());
 #     for (i = 0; i < sub_imgs.size(); i++) {
-#       if (!make_image_preset(sub_types[i], sub_imgs[i], error)) return false;
+#       if (!img.make_image_preset(sub_types[i], sub_imgs[i], error)) return false;
 #     }
 #     montage_size = zero2i;
 #     for ( sub_img : sub_imgs) {
@@ -84,49 +83,49 @@ def make_image_preset(type, image, error):
 #     img      = img::image<vec4f>(montage_size);
 #     pos = 0;
 #     for ( sub_img : sub_imgs) {
-#       set_region(img, sub_img, {pos, 0});
+#       set_region(image, sub_img, {pos, 0});
 #       pos += sub_img.size().x;
 #     }
-#   } else if (type == "test-floor") {
-#     make_grid(img, size);
-#     img = add_border(img, 0.0025f);
-#   } else if (type == "test-grid") {
-#     make_grid(img, size);
-#   } else if (type == "test-checker") {
-#     make_checker(img, size);
-#   } else if (type == "test-bumps") {
-#     make_bumps(img, size);
-#   } else if (type == "test-uvramp") {
-#     make_uvramp(img, size);
-#   } else if (type == "test-gammaramp") {
-#     make_gammaramp(img, size);
-#   } else if (type == "test-blackbodyramp") {
-#     make_blackbodyramp(img, size);
-#   } else if (type == "test-uvgrid") {
-#     make_uvgrid(img, size);
-#   } else if (type == "test-sky") {
-#     make_sunsky(
+#   } else if (type_yocto == "test-floor") {
+#     img.make_grid(image, size);
+#     img = add_border(image, 0.0025f);
+#   } else if (type_yocto == "test-grid") {
+#     img.make_grid(image, size);
+#   } else if (type_yocto == "test-checker") {
+#     img.make_checker(image, size);
+#   } else if (type_yocto == "test-bumps") {
+#     img.make_bumps(image, size);
+#   } else if (type_yocto == "test-uvramp") {
+#     img.make_uvramp(image, size);
+#   } else if (type_yocto == "test-gammaramp") {
+#     img.make_gammaramp(image, size);
+#   } else if (type_yocto == "test-blackbodyramp") {
+#     img.make_blackbodyramp(image, size);
+#   } else if (type_yocto == "test-uvgrid") {
+#     img.make_uvgrid(image, size);
+#   } else if (type_yocto == "test-sky") {
+#     img.make_sunsky(
 #         img, size, pif / 4, 3.0f, false, 1.0f, 1.0f, vec3f{0.7f, 0.7f, 0.7f});
-#   } else if (type == "test-sunsky") {
-#     make_sunsky(
+#   } else if (type_yocto == "test-sunsky") {
+#     img.make_sunsky(
 #         img, size, pif / 4, 3.0f, true, 1.0f, 1.0f, vec3f{0.7f, 0.7f, 0.7f});
-#   } else if (type == "test-noise") {
-#     make_noisemap(img, size);
-#   } else if (type == "test-fbm") {
-#     make_noisemap(img, size);
-#   } else if (type == "test-bumps-normal") {
-#     make_bumps(img, size);
-#     img = bump_to_normal(img, 0.05f);
-#   } else if (type == "test-bumps-displacement") {
-#     make_bumps(img, size);
-#     img = srgb_to_rgb(img);
-#   } else if (type == "test-fbm-displacement") {
-#     make_fbmmap(img, size);
-#     img = srgb_to_rgb(img);
-#   } else if (type == "test-checker-opacity") {
-#     make_checker(img, size, 1, {1, 1, 1, 1}, {0, 0, 0, 0});
-#   } else if (type == "test-grid-opacity") {
-#     make_grid(img, size, 1, {1, 1, 1, 1}, {0, 0, 0, 0});
+#   } else if (type_yocto == "test-noise") {
+#     img.make_noisemap(image, size);
+#   } else if (type_yocto == "test-fbm") {
+#     img.make_noisemap(image, size);
+#   } else if (type_yocto == "test-bumps-normal") {
+#     img.make_bumps(image, size);
+#     img = bump_to_normal(image, 0.05f);
+#   } else if (type_yocto == "test-bumps-displacement") {
+#     img.make_bumps(image, size);
+#     img = srgb_to_rgb(image);
+#   } else if (type_yocto == "test-fbm-displacement") {
+#     img.make_fbmmap(image, size);
+#     img = srgb_to_rgb(image);
+#   } else if (type_yocto == "test-checker-opacity") {
+#     img.make_checker(image, size, 1, {1, 1, 1, 1}, {0, 0, 0, 0});
+#   } else if (type_yocto == "test-grid-opacity") {
+#     img.make_grid(image, size, 1, {1, 1, 1, 1}, {0, 0, 0, 0});
 #   } else {
 #     error = "unknown preset";
 #     img   = {};
