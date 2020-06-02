@@ -327,15 +327,44 @@ PYBIND11_MODULE(py_image, m) {
   // -----------------------------------------------------------------------------
   // IMAGE IO
   // -----------------------------------------------------------------------------
-  m.def("save_image_vec4f", [](const std::string& filename, const img::image<vec4f>& img, std::string& error) -> bool {
-    return img::save_image(filename, img, error);
-  });
-  m.def("save_image_vec3f", [](const std::string& filename, const img::image<vec3f>& img, std::string& error) -> bool {
-    return img::save_image(filename, img, error);
-  });
-  m.def("save_image_float", [](const std::string& filename, const img::image<float>& img, std::string& error) -> bool {
-    return img::save_image(filename, img, error);
-  });  
+  m.def("is_hdr_filename", &img::is_hdr_filename, py::arg("filename"));
+
+  m.def("load_image", (bool (*)(const std::string&, img::image<vec4f>&, std::string&))&img::load_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("save_image", (bool (*)(const std::string&, const img::image<vec4f>&, std::string&))&img::save_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("load_image", (bool (*)(const std::string&, img::image<vec4b>&, std::string&))&img::load_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("save_image", (bool (*)(const std::string&, const img::image<vec4b>&, std::string&))&img::save_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+
+  m.def("load_image", (bool (*)(const std::string&, img::image<vec3f>&, std::string&))&img::load_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("save_image", (bool (*)(const std::string&, const img::image<vec3f>&, std::string&))&img::save_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("load_image", (bool (*)(const std::string&, img::image<vec3b>&, std::string&))&img::load_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("save_image", (bool (*)(const std::string&, const img::image<vec3b>&, std::string&))&img::save_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+
+  m.def("load_image", (bool (*)(const std::string&, img::image<float>&, std::string&))&img::load_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("save_image", (bool (*)(const std::string&, const img::image<float>&, std::string&))&img::save_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("load_image", (bool (*)(const std::string&, img::image<unsigned char>&, std::string&))&img::load_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("save_image", (bool (*)(const std::string&, const img::image<unsigned char>&, std::string&))&img::save_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+
+  // m.def("save_image_vec4f", [](const std::string& filename, const img::image<vec4f>& img, std::string& error) -> bool {
+  //   return img::save_image(filename, img, error);
+  // });
+  // m.def("save_image_vec3f", [](const std::string& filename, const img::image<vec3f>& img, std::string& error) -> bool {
+  //   return img::save_image(filename, img, error);
+  // });
+  // m.def("save_image_float", [](const std::string& filename, const img::image<float>& img, std::string& error) -> bool {
+  //   return img::save_image(filename, img, error);
+  // });  
   // -----------------------------------------------------------------------------
   // IMAGE IO
   // -----------------------------------------------------------------------------

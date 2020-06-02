@@ -168,14 +168,14 @@ def main(*argv):
 
   # parse command line
   cli = commonio.make_cli("yscntrace", "Offline path tracing")
-  commonio.add_option(cli, "--camera", camera_name, "Camera name.")
-  commonio.add_option(cli, "--resolution,-r", params.resolution, "Image resolution.")
-  commonio.add_option(cli, "--samples,-s", params.samples, "Number of samples.")
-  commonio.add_option(cli, "--shader,-t", params.shader, "Shader type.", ptr.shader_names)
-  commonio.add_option(cli, "--bounces,-b", params.bounces, "Maximum number of bounces.")
-  commonio.add_option(cli, "--clamp", params.clamp, "Final pixel clamping.")
-  commonio.add_option(cli, "--save-batch", save_batch, "Save images progressively")
-  commonio.add_option(cli, "--output-image,-o", imfilename, "Image filename")
+  commonio.add_option(cli, "--camera", camera_name, "Camera name.", False)
+  commonio.add_option(cli, "--resolution,-r", params.resolution, "Image resolution.", False)
+  commonio.add_option(cli, "--samples,-s", params.samples, "Number of samples.", False)
+  commonio.add_option(cli, "--shader,-t", params.shader, "Shader type.", ptr.shader_names, False)
+  commonio.add_option(cli, "--bounces,-b", params.bounces, "Maximum number of bounces.", False)
+  commonio.add_option(cli, "--clamp", params.clamp, "Final pixel clamping.", False)
+  commonio.add_option(cli, "--save-batch", save_batch, "Save images progressively", False)
+  commonio.add_option(cli, "--output-image,-o", imfilename, "Image filename", False)
   commonio.add_option(cli, "scene", filename, "Scene filename", True)
 
   # args = [["./apps/yscenetrace/yscentrace.py"], ["tests/01_surface/surface.json"], ["-t"], ["path"], ["-s"], ["256"], ["-r"], ["720"]]
@@ -247,14 +247,14 @@ def main(*argv):
         outfilename = fs.path_replace_extension(imfilename, ext)
         ioerror     = ""
         commonio.print_progress("save image", sample, params.samples)
-        if not img.save_image_vec4f(outfilename, state.render, ioerror):
+        if not img.save_image(outfilename, state.render, ioerror):
           commonio.print_fatal(ioerror)
     sample += 1
   commonio.print_progress("render image", params.samples, params.samples)
 
   # save image
   commonio.print_progress("save image", 0, 1)
-  if not img.save_image_vec4f(imfilename, state.render, ioerror): commonio.print_fatal(ioerror)
+  if not img.save_image(imfilename, state.render, ioerror): commonio.print_fatal(ioerror)
   commonio.print_progress("save image", 1, 1)
 
   # done

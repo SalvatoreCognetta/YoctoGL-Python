@@ -37,10 +37,10 @@ def make_image_preset(type_yocto, image, error):
     img.make_uvgrid(image, size)
   elif type_yocto == "sky":
     img.make_sunsky(
-        image, size, py_math.pif / 4, 3.0, False, 1.0, 1.0, vec3f(0.7, 0.7, 0.7))
+        image, size, py_math.pif / 4, 3.0, False, 1.0, 1.0, py_math.vec3f(0.7, 0.7, 0.7))
   elif type_yocto == "sunsky":
     img.make_sunsky(
-        image, size, py_math.pif / 4, 3.0, True, 1.0, 1.0, vec3f(0.7, 0.7, 0.7))
+        image, size, py_math.pif / 4, 3.0, True, 1.0, 1.0, py_math.vec3f(0.7, 0.7, 0.7))
   elif type_yocto == "noise":
     img.make_noisemap(image, size, 1)
   elif type_yocto == "fbm":
@@ -155,27 +155,27 @@ def main(*argv):
 
   # parse command line
   cli = commonio.make_cli("yimgproc", "Transform images")
-  commonio.add_option(cli, "--tonemap/--no-tonemap", tonemap_on, "Tonemap image")
-  commonio.add_option(cli, "--exposure,-e", tonemap_exposure, "Tonemap exposure")
+  commonio.add_option(cli, "--tonemap/--no-tonemap", tonemap_on, "Tonemap image", False)
+  commonio.add_option(cli, "--exposure,-e", tonemap_exposure, "Tonemap exposure", False)
   commonio.add_option(
-      cli, "--filmic/--no-filmic", tonemap_filmic, "Tonemap uses filmic curve")
+      cli, "--filmic/--no-filmic", tonemap_filmic, "Tonemap uses filmic curve", False)
   commonio.add_option(cli, "--resize-width", resize_width,
-      "resize size (0 to maintain aspect)")
+      "resize size (0 to maintain aspect)", False)
   commonio.add_option(cli, "--resize-height", resize_height,
-      "resize size (0 to maintain aspect)")
-  commonio.add_option(cli, "--spatial-sigma", spatial_sigma, "blur spatial sigma")
-  commonio.add_option(cli, "--range-sigma", range_sigma, "bilateral blur range sigma")
+      "resize size (0 to maintain aspect)", False)
+  commonio.add_option(cli, "--spatial-sigma", spatial_sigma, "blur spatial sigma", False)
+  commonio.add_option(cli, "--range-sigma", range_sigma, "bilateral blur range sigma", False)
   commonio.add_option(
-      cli, "--set-alpha", alpha_filename, "set alpha as this image alpha")
+      cli, "--set-alpha", alpha_filename, "set alpha as this image alpha", False)
   commonio.add_option(cli, "--set-color-as-alpha", coloralpha_filename,
-      "set alpha as this image color")
+      "set alpha as this image color", False)
   commonio.add_option(cli, "--alpha-to-color/--no-alpha-to-color", alpha_to_color,
-      "Set color as alpha")
-  commonio.add_option(cli, "--logo/--no-logo", logo, "Add logo")
-  commonio.add_option(cli, "--diff", diff_filename, "compute the diff between images")
-  commonio.add_option(cli, "--diff-signal", diff_signal, "signal a diff as error")
-  commonio.add_option(cli, "--diff-threshold,", diff_threshold, "diff threshold")
-  commonio.add_option(cli, "--output,-o", output, "output image filename")
+      "Set color as alpha", False)
+  commonio.add_option(cli, "--logo/--no-logo", logo, "Add logo", False)
+  commonio.add_option(cli, "--diff", diff_filename, "compute the diff between images", False)
+  commonio.add_option(cli, "--diff-signal", diff_signal, "signal a diff as error", False)
+  commonio.add_option(cli, "--diff-threshold,", diff_threshold, "diff threshold", False)
+  commonio.add_option(cli, "--output,-o", output, "output image filename", False)
   commonio.add_option(cli, "filename", filename, "input image filename", True)
 
   # error std::string buffer
@@ -189,7 +189,7 @@ def main(*argv):
   if ext == ".ypreset":
     if not make_image_preset(basename, image, ioerror): commonio.print_fatal(ioerror)
   else:
-    if not load_image(filename, image, ioerror): commonio.print_fatal(ioerror)
+    if not img.load_image(filename, image, ioerror): commonio.print_fatal(ioerror)
 
 
 if __name__ == "__main__":
