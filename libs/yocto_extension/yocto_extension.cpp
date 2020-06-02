@@ -127,6 +127,13 @@ PYBIND11_MODULE(py_math, m) {
   m.attr("zero3f")  = py_zero3f;
   py::object py_zero4f = py::cast(zero4f);
   m.attr("zero4f")  = py_zero4f;
+
+  m.def("xyz", (vec3f& (*)(vec4f&))&math::xyz, py::arg("a"), py::return_value_policy::reference);
+  m.def("xyz", (const vec3f& (*)(const vec4f&))&math::xyz, py::arg("a"), py::return_value_policy::reference);
+  
+  m.def("mean", (float (*)(const vec2f&))&math::mean, py::arg("a"));
+  m.def("mean", (float (*)(const vec3f&))&math::mean, py::arg("a"));
+  m.def("mean", (float (*)(const vec4f&))&math::mean, py::arg("a"));
   // -----------------------------------------------------------------------------
   // VECTORS
   // -----------------------------------------------------------------------------
@@ -260,88 +267,71 @@ PYBIND11_MODULE(py_shape, m) {
                       py::arg("steps") = vec2i(1, 1), py::arg("scale") = vec2f(1, 1), py::arg("uvscale") = vec2f(1, 1), py::arg("radius") = 0.3);
   m.def("make_recty", &shp::make_recty, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec2i(1, 1), py::arg("scale") = vec2f(1, 1), py::arg("uvscale") = vec2f(1, 1));
-
   // Make a box
   m.def("make_box", &shp::make_box, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec3i(1, 1, 1), py::arg("scale") = vec3f(1, 1, 1), py::arg("uvscale") = vec3f(1, 1, 1));
   m.def("make_rounded_box", &shp::make_rounded_box, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec3i(1, 1, 1), py::arg("scale") = vec3f(1, 1, 1), py::arg("uvscale") = vec3f(1, 1, 1), py::arg("radius") = 0.3);
-  
   // Make a quad stack
-  // m.def("make_rect_stack", &shp::make_rect_stack, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
-  //                     py::arg("steps") = vec3i(1, 1, 1), py::arg("scale") = vec3f(1, 1, 1), py::arg("uvscale") = vec2f(1, 1));
-
+  m.def("make_rect_stack", &shp::make_rect_stack, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
+                      py::arg("steps") = vec3i(1, 1, 1), py::arg("scale") = vec3f(1, 1, 1), py::arg("uvscale") = vec2f(1, 1));
   // Make a floor
   m.def("make_floor", &shp::make_floor, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec2i(1, 1), py::arg("scale") = vec2f(10, 10), py::arg("uvscale") = vec2f(10, 10));
-  m.def("make_bent_floor", &shp::make_bulged_rect, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
+  m.def("make_bent_floor", &shp::make_bent_floor, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec2i(1, 1), py::arg("scale") = vec2f(10, 10), py::arg("uvscale") = vec2f(10, 10), py::arg("bent") = 0.5);
-  
   // Make a sphere
   m.def("make_sphere", &shp::make_sphere, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = 32, py::arg("scale") = 1, py::arg("uvscale") = 1);
   m.def("make_uvsphere", &shp::make_uvsphere, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec2i(32, 32), py::arg("scale") = 1, py::arg("uvscale") = vec2f(1, 1));
-  
   // Make a sphere with slipped caps
   m.def("make_capped_uvsphere", &shp::make_capped_uvsphere, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec2i(32, 32), py::arg("scale") = 1, py::arg("uvscale") = vec2f(1, 1), py::arg("height") = 0.3);
-
   // Make a disk
   m.def("make_disk", &shp::make_disk, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = 32, py::arg("scale") = 1, py::arg("uvscale") = 1);
-
   // Make a bulged disk
   m.def("make_bulged_disk", &shp::make_bulged_disk, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = 32, py::arg("scale") = 1, py::arg("uvscale") = 1, py::arg("height") = 0.3);
-
   // Make a uv disk
   m.def("make_uvdisk", &shp::make_uvdisk, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec2i(32, 32), py::arg("scale") = 1, py::arg("uvscale") = vec2f(1, 1));
-  
   // Make a uv cylinder
   m.def("make_uvcylinder", &shp::make_uvcylinder, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec3i(32, 32, 32), py::arg("scale") = vec2f(1, 1), py::arg("uvscale") = vec3f(1, 1, 1));
-
   // Make a rounded uv cylinder
   m.def("make_rounded_uvcylinder", &shp::make_rounded_uvcylinder, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec3i(32, 32, 32), py::arg("scale") = vec2f(1, 1), py::arg("uvscale") = vec3f(1, 1, 1), py::arg("radius") = 0.3);
-
   // Make a plane in the xz plane
   m.def("make_yrect", &shp::make_yrect, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec2i(1, 1), py::arg("scale") = vec2f(1, 1), py::arg("uvscale") = vec2f(1, 1));
   m.def("make_bulged_yrect", &shp::make_bulged_yrect, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec2i(1, 1), py::arg("scale") = vec2f(1, 1), py::arg("uvscale") = vec2f(1, 1), py::arg("radius") = 0.3);
-
   // Make a facevarying rect
   m.def("make_fvrect", &shp::make_fvrect, py::arg("quadspos"), py::arg("quadsnorm"), py::arg("quadstexcoord"), py::arg("positions"),
                       py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec2i(1, 1), py::arg("scale") = vec2f(1, 1), py::arg("uvscale") = vec2f(1, 1));
-
   // Make a facevarying box                    
   m.def("make_fvbox", &shp::make_fvbox, py::arg("quadspos"), py::arg("quadsnorm"), py::arg("quadstexcoord"), py::arg("positions"),
                       py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec3i(1, 1, 1), py::arg("scale") = vec3f(1, 1, 1), py::arg("uvscale") = vec3f(1, 1, 1));
-
   // Make a facevarying sphere
   m.def("make_fvsphere", &shp::make_fvsphere, py::arg("quadspos"), py::arg("quadsnorm"), py::arg("quadstexcoord"), py::arg("positions"),
                       py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = 32, py::arg("scale") = 1, py::arg("uvscale") = 1);
-
   //Generate lines set along a quad
-  // m.def("make_lines", &shp::make_lines, py::arg("lines"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
-  //                     py::arg("radius"), py::arg("num") = 65536, py::arg("steps") = vec2i(4, 65536), 
-  //                     py::arg("scale") = vec2f(1, 1), py::arg("uvscale") = vec2f(1, 1), py::arg("rad") = vec2f(0.001, 0.001));
-
+  m.def("make_lines", &shp::make_lines, py::arg("lines"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
+                      py::arg("radius"), py::arg("num") = 65536, py::arg("steps") = vec2i(4, 65536), 
+                      py::arg("size") = vec2f(1, 1), py::arg("uvscale") = vec2f(1, 1), py::arg("rad") = vec2f(0.001, 0.001));
   // Make point primitives
   m.def("make_point", &shp::make_point, py::arg("points"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("radius"), py::arg("point_radius"));
   m.def("make_points", &shp::make_points, py::arg("points"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("radius"), py::arg("num") = 65536, py::arg("uvscale") = 1, py::arg("point_radius") = 0.001);
   m.def("make_random_points", &shp::make_random_points, py::arg("points"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
-                      py::arg("radius"), py::arg("num") = 65536, py::arg("size") = vec3f(1, 1, 1), 
-                      py::arg("uvscale") = 1, py::arg("point_radius") = 0.001, py::arg("rad") = 17); //forse serve uint64_t in rad
-
+                      py::arg("radius"), py::arg("size") = vec3f(1, 1, 1), py::arg("uvscale") = 1, py::arg("point_radius") = 0.001, 
+                      py::arg("rad") = 17, py::arg("num") = 65536); //forse serve uint64_t in rad
   // Predefined meshes
   m.def("make_monkey", &shp::make_monkey, py::arg("quads"), py::arg("positions"), py::arg("scale") = 1);
   m.def("make_quad", &shp::make_quad, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("scale") = 1);
@@ -350,18 +340,17 @@ PYBIND11_MODULE(py_shape, m) {
   m.def("make_fvcube", &shp::make_fvcube, py::arg("quadspos"), py::arg("quadsnorm"), py::arg("quadstexcoord"),py::arg("positions"), 
                       py::arg("normals"), py::arg("texcoords"), py::arg("scale") = 1);
   m.def("make_geosphere", &shp::make_geosphere, py::arg("triangles"), py::arg("positions"), py::arg("scale") = 1);
-
   // Make hair ball around a shape
   m.def("make_hair", &shp::make_hair, py::arg("lines"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("radius"),
                       py::arg("striangles"), py::arg("squads"), py::arg("spos"), py::arg("snorm"), py::arg("stexcoor"),
                       py::arg("steps") = vec2i(8, 65536), py::arg("length") = vec2f(0.1, 0.1), py::arg("rad") = vec2f(0.001, 0001),
                       py::arg("noise") = vec2f(0, 10), py::arg("clump") = vec2f(0, 128), py::arg("rotation") = vec2f(0, 0), py::arg("seed") = 7);
-  
   m.def("make_shell", &shp::make_shell, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("thickness"));
-
   // Make a heightfield mesh
   m.def("make_heightfield", &shp::make_heightfield, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("size"),
-                      py::arg("height")); 
+                      py::arg("height"));
+
+
 
 
 }
@@ -379,41 +368,65 @@ PYBIND11_MODULE(py_image, m) {
     .def(py::init<>())
     .def("size", [](img::image<vec2f> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<vec2f> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   py::class_<img::image<vec3f>>(m, "image_vec3f")
     .def(py::init<>())
     .def("size", [](img::image<vec3f> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<vec3f> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   py::class_<img::image<vec4f>>(m, "image_vec4f")
     .def(py::init<>())
     .def("size", [](img::image<vec4f> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<vec4f> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   py::class_<img::image<vec3b>>(m, "image_vec3b")
     .def(py::init<>())
     .def("size", [](img::image<vec3b> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<vec3b> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   py::class_<img::image<vec4b>>(m, "image_vec4b")
     .def(py::init<>())
     .def("size", [](img::image<vec4b> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<vec4b> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   py::class_<img::image<float>>(m, "image_float")
     .def(py::init<>())
     .def("size", [](img::image<float> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<float> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   py::class_<img::image<unsigned char>>(m, "image_byte")
     .def(py::init<>())
     .def("size", [](img::image<unsigned char> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<unsigned char> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   py::class_<img::image<ptr::pixel>>(m, "image_pixel")
     .def(py::init<>())
     .def("size", [](img::image<ptr::pixel> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<ptr::pixel> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   // -----------------------------------------------------------------------------
   // IMAGE DATA AND UTILITIES
@@ -436,6 +449,14 @@ PYBIND11_MODULE(py_image, m) {
     py::arg("srgb"));
   m.def("rgb_to_srgb", (img::image<vec3f> (*)(const img::image<vec3f>&))&img::rgb_to_srgb, 
     py::arg("rgb"));
+
+  m.def("resize_image", (img::image<vec4f> (*)(const img::image<vec4f>&, const vec2i&))&img::resize_image, 
+    py::arg("img"), py::arg("size"));
+  m.def("resize_image", (img::image<vec4b> (*)(const img::image<vec4b>&, const vec2i&))&img::resize_image, 
+    py::arg("img"), py::arg("size"));
+
+  m.def("image_difference", &img::image_difference, 
+    py::arg("a"), py::arg("b"), py::arg("display_diff"));
   // -----------------------------------------------------------------------------
   // IMAGE UTILITIES
   // -----------------------------------------------------------------------------
@@ -526,6 +547,9 @@ PYBIND11_MODULE(py_image, m) {
 
   m.def("bump_to_normal", (img::image<vec4f> (*)(const img::image<vec4f>&, float))&img::bump_to_normal, 
     py::arg("img"), py::arg("scale") = 1);
+
+  m.def("add_border", (img::image<vec4f> (*)(const img::image<vec4f>&, float, const vec4f&))&img::add_border,
+    py::arg("img"), py::arg("width"), py::arg("color") = vec4f(0,0,0,1));
   // -----------------------------------------------------------------------------
   // EXAMPLE IMAGES
   // -----------------------------------------------------------------------------
