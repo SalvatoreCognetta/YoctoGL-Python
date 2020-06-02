@@ -186,7 +186,6 @@ def main(*argv):
   # ioscene_guard = sio.model()
   ioscene = sio.model()
   ioerror = ""
-  #if not sio.load_scene(filename, ioscene, ioerror, commonio.print_progress):
   #  commonio.print_fatal(ioerror)
   if not sio.load_scene(filename, ioscene, ioerror, commonio.print_progress):
     commonio.print_fatal(ioerror)

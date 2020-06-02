@@ -11,3 +11,6 @@ tests/renderings/*.hdr
 tests1/
 .vs
 testsr/
+shapes/
+subdivs/
+out.json

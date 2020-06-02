@@ -1057,7 +1057,7 @@ PYBIND11_MODULE(py_filesystem, m) {
   m.def("path_create_directories", [](std::string dirname)-> bool{
     return fs::create_directories(dirname);
   });
-  m.def("path_parent_path", [](std::string output)-> std::string{
+  m.def("path_parent_path", [](std::string output){
     return fs::path(output).parent_path();
   });
 }
