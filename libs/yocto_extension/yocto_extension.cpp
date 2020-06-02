@@ -586,6 +586,7 @@ PYBIND11_MODULE(py_commonio, m) {
   });
 
   m.def("print_progress", &cli::print_progress, py::arg("message"), py::arg("current"), py::arg("total"));
+  m.def("print_info", &cli::print_info, py::arg("msg"));
   m.def("print_fatal", &cli::print_fatal, py::arg("msg"));
 
 
@@ -854,13 +855,16 @@ PYBIND11_MODULE(py_sceneio, m) {
   // Load/save a scene in the supported formats. Throws on error.
   m.def("load_scene", &sio::load_scene, py::arg("filename"), py::arg("scene"), py::arg("error"),
       py::arg("progress_cb") = std::function<void(const std::string&, int, int)>(), py::arg("noparallel") = false);
+  
+  m.def("save_scene", &sio::save_scene, py::arg("filename"), py::arg("scene"), py::arg("error"),
+      py::arg("progress_cb") = std::function<void(const std::string&, int, int)>(), py::arg("noparallel") = false);
 
   // get named camera or default if name is empty
   m.def("get_camera", &sio::get_camera, py::arg("scene"), py::arg("name") = "", py::return_value_policy::reference);
   // -----------------------------------------------------------------------------
   // SCENE IO FUNCTIONS
   // -----------------------------------------------------------------------------
-
+  
 
   // -----------------------------------------------------------------------------
   // EXAMPLE SCENES
@@ -869,7 +873,15 @@ PYBIND11_MODULE(py_sceneio, m) {
   // -----------------------------------------------------------------------------
   // EXAMPLE SCENES
   // -----------------------------------------------------------------------------
-
+  // -----------------------------------------------------------------------------
+  // SCENE STATS AND VALIDATION
+  // -----------------------------------------------------------------------------
+  m.def("scene_stats", &sio::scene_stats, py::arg("scene"), py::arg("verbose") = false);
+  m.def("scene_validation",&sio::scene_validation, py::arg("scene"), py::arg("notextures") = false);
+  // -----------------------------------------------------------------------------
+  // SCENE UTILITIES
+  // -----------------------------------------------------------------------------
+  m.def("tesselate_subdiv", &sio::tesselate_subdiv, py::arg("scene"), py::arg("subdiv"));
 }
 
 
@@ -897,7 +909,18 @@ PYBIND11_MODULE(py_filesystem, m) {
   m.def("path_replace_extension", [](std::string imfilename, std::string ext) -> std::string {
     return fs::path(imfilename).replace_extension(ext).string();
   });
-
+  m.def("path_stem", [](std::string filename) -> std::string {
+    return fs::path(filename).stem().string();
+  });
+  m.def("path_exists", [](std::string dirname) -> bool{
+    return fs::exists(fs::status(dirname));
+  });
+  m.def("path_create_directories", [](std::string dirname)-> bool{
+    return fs::create_directories(dirname);
+  });
+  m.def("path_parent_path", [](std::string output)-> std::string{
+    return fs::path(output).parent_path();
+  });
 }
   
 }  // namespace yocto::extension

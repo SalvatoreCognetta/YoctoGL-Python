@@ -20,7 +20,6 @@ def make_dir(dirname):
     fs.path_create_directories(dirname)
   except:
     cli.print_fatal("cannot create directory " + dirname)
-
   
 
 
@@ -33,11 +32,11 @@ def main(*argv):
   filename = "scene.json"
 
   #parse command line
-  cli = cli.make_cli("yscnproc", "Process scene")
-  cli.add_option(cli, "--info,-i", info, "print scene info")
-  cli.add_option(cli, "--copyright,-c", copyrigt, "copyright string")
-  cli.add_option(cli, "--validate/--no-validate", validate, "Validate scene")
-  cli.add_option(cli, "--output,-o", output, "output scene")
+  cli = cli.make_cli("yscnproc", "Process scene",False)
+  cli.add_option(cli, "--info,-i", info, "print scene info", False)
+  cli.add_option(cli, "--copyright,-c", copyrigt, "copyright string", False)
+  cli.add_option(cli, "--validate/--no-validate", validate, "Validate scene", False)
+  cli.add_option(cli, "--output,-o", output, "output scene", False)
   cli.add_option(cli, "scene", filename, "input scene", True)
 
   #load scene
@@ -54,7 +53,41 @@ def main(*argv):
     if not (sio.load_scene(filename, scene , ioerror)):
       cli.print_fatal(ioerror)
 
+  #copyright
+  if (copyrigt != ""):
+    scene.copyright = copyrigt
+  
+  #validate scene
+  if (validate):
+    for error in sio.scene_validation(scene):
+      cli.print_info("error" + error)
 
-  # if (copyrigt != ""):
-  #   for error in 
+  #print infor
+  if (info):
+    cli.print_info("scene stats ----------")
+    for stat in sio.scene_stats(scene):
+      cli.print_info(stat)
+  
+  #tesselate if needed
+  if (fs.path_extension(output) != ".json"):
+    for iosubdiv in scene.subdivs():
+      sio.tesselate_subdiv(scene, iosubdiv)
+  
 
+  #make a directory if needed
+  make_dir(fs.path_parent_path(output))
+  if scene.shapes:
+    make_dir(fs.path_parent_path(output) / "shapes")
+  if scene.subdivs:
+    make_dir(fs.path_parent_path(output) / "subdivs")
+  if scene.textures:
+    make_dir(fs.path_parent_path(output) / "texture")
+  if scene.instances:
+    make_dir(fs.path_parent_path(output) / "instances")
+
+
+  #save scene
+  if not(sio.save_scene(output, scene, ioerror, cli.print_progress())):
+    cli.print_fatal(ioerror)
+  
+  
