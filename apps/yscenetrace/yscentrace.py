@@ -152,8 +152,9 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
   camera = camera_map[iocamera]
   return scene, ioscene, camera, iocamera
 
-def main(*argv):
 
+def main(*argv):
+  
   # options
   params = ptr.trace_params()
   save_batch  = False
@@ -246,14 +247,14 @@ def main(*argv):
         outfilename = fs.path_replace_extension(imfilename, ext)
         ioerror     = ""
         commonio.print_progress("save image", sample, params.samples)
-        if not img.save_image_vec4f(outfilename, state.render, ioerror):
+        if not img.save_image(outfilename, state.render, ioerror):
           commonio.print_fatal(ioerror)
     sample += 1
   commonio.print_progress("render image", params.samples, params.samples)
 
   # save image
   commonio.print_progress("save image", 0, 1)
-  if not img.save_image_vec4f(imfilename, state.render, ioerror): commonio.print_fatal(ioerror)
+  if not img.save_image(imfilename, state.render, ioerror): commonio.print_fatal(ioerror)
   commonio.print_progress("save image", 1, 1)
 
   # done

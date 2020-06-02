@@ -87,6 +87,15 @@ namespace py = pybind11;
 PYBIND11_MODULE(py_math, m) {
 
   // -----------------------------------------------------------------------------
+  // MATH CONSTANTS AND FUNCTIONS
+  // -----------------------------------------------------------------------------
+  m.attr("pif")  = pif;
+  // -----------------------------------------------------------------------------
+  // MATH CONSTANTS AND FUNCTIONS
+  // -----------------------------------------------------------------------------
+
+
+  // -----------------------------------------------------------------------------
   // VECTORS
   // -----------------------------------------------------------------------------
   py::class_<vec2f>(m, "vec2f")
@@ -109,6 +118,13 @@ PYBIND11_MODULE(py_math, m) {
     .def_readwrite("y", &vec4f::y)
     .def_readwrite("z", &vec4f::z)
     .def_readwrite("w", &vec4f::w);
+
+  py::object py_zero2f = py::cast(zero2f);
+  m.attr("zero2f")  = py_zero2f;
+  py::object py_zero3f = py::cast(zero3f);
+  m.attr("zero3f")  = py_zero3f;
+  py::object py_zero4f = py::cast(zero4f);
+  m.attr("zero4f")  = py_zero4f;
   // -----------------------------------------------------------------------------
   // VECTORS
   // -----------------------------------------------------------------------------
@@ -151,6 +167,17 @@ PYBIND11_MODULE(py_math, m) {
     .def_readwrite("y", &vec4b::y)
     .def_readwrite("z", &vec4b::z)
     .def_readwrite("w", &vec4b::w);
+
+  py::object py_zero2i = py::cast(zero2i);
+    m.attr("zero2i")  = py_zero2i;
+  py::object py_zero3i = py::cast(zero3i);
+    m.attr("zero3i")  = py_zero3i;
+  py::object py_zero4i = py::cast(zero4i);
+    m.attr("zero4i")  = py_zero4i;
+  py::object py_zero3b = py::cast(math::zero3b);
+    m.attr("zero3b")  = py_zero3b;
+  py::object py_zero4b = py::cast(math::zero4b);
+    m.attr("zero4b")  = py_zero4b;
   // -----------------------------------------------------------------------------
   // INTEGER VECTORS
   // -----------------------------------------------------------------------------
@@ -231,25 +258,43 @@ PYBIND11_MODULE(py_image, m) {
   // -----------------------------------------------------------------------------
   // IMAGE DATA AND UTILITIES
   // -----------------------------------------------------------------------------
-  py::class_<img::image<vec2f>>(m, "image_vec2f");
+  py::class_<img::image<vec2f>>(m, "image_vec2f")
+    .def(py::init<>())
+    .def("size", [](img::image<vec2f> image) -> vec2i {
+      return image.size();
+    });
   py::class_<img::image<vec3f>>(m, "image_vec3f")
+    .def(py::init<>())
     .def("size", [](img::image<vec3f> image) -> vec2i {
       return image.size();
     });
-  py::class_<img::image<vec4f>>(m, "image_vec4f");
+  py::class_<img::image<vec4f>>(m, "image_vec4f")
+    .def(py::init<>())
+    .def("size", [](img::image<vec4f> image) -> vec2i {
+      return image.size();
+    });
   py::class_<img::image<vec3b>>(m, "image_vec3b")
+    .def(py::init<>())
     .def("size", [](img::image<vec3b> image) -> vec2i {
       return image.size();
     });
+  py::class_<img::image<vec4b>>(m, "image_vec4b")
+    .def(py::init<>())
+    .def("size", [](img::image<vec4b> image) -> vec2i {
+      return image.size();
+    });
   py::class_<img::image<float>>(m, "image_float")
+    .def(py::init<>())
     .def("size", [](img::image<float> image) -> vec2i {
       return image.size();
     });
   py::class_<img::image<unsigned char>>(m, "image_byte")
+    .def(py::init<>())
     .def("size", [](img::image<unsigned char> image) -> vec2i {
       return image.size();
     });
   py::class_<img::image<ptr::pixel>>(m, "image_pixel")
+    .def(py::init<>())
     .def("size", [](img::image<ptr::pixel> image) -> vec2i {
       return image.size();
     });
@@ -259,19 +304,113 @@ PYBIND11_MODULE(py_image, m) {
 
 
   // -----------------------------------------------------------------------------
+  // IMAGE UTILITIES
+  // -----------------------------------------------------------------------------
+  // Conversion between linear and gamma-encoded images.
+  m.def("srgb_to_rgb", (img::image<vec4f> (*)(const img::image<vec4f>&))&img::srgb_to_rgb, 
+    py::arg("srgb"));
+  m.def("rgb_to_srgb", (img::image<vec4f> (*)(const img::image<vec4f>&))&img::rgb_to_srgb, 
+    py::arg("rgb"));
+  m.def("srgb_to_rgb", (img::image<vec4f> (*)(const img::image<vec4b>&))&img::srgb_to_rgb, 
+    py::arg("srgb"));
+  m.def("rgb_to_srgbb", (img::image<vec4b> (*)(const img::image<vec4f>&))&img::rgb_to_srgbb, 
+    py::arg("rgb"));
+  m.def("srgb_to_rgb", (img::image<vec3f> (*)(const img::image<vec3f>&))&img::srgb_to_rgb, 
+    py::arg("srgb"));
+  m.def("rgb_to_srgb", (img::image<vec3f> (*)(const img::image<vec3f>&))&img::rgb_to_srgb, 
+    py::arg("rgb"));
+  // -----------------------------------------------------------------------------
+  // IMAGE UTILITIES
+  // -----------------------------------------------------------------------------
+
+
+  // -----------------------------------------------------------------------------
   // IMAGE IO
   // -----------------------------------------------------------------------------
-  m.def("save_image_vec4f", [](const std::string& filename, const img::image<vec4f>& img, std::string& error) -> bool {
-    return img::save_image(filename, img, error);
-  });
-  m.def("save_image_vec3f", [](const std::string& filename, const img::image<vec3f>& img, std::string& error) -> bool {
-    return img::save_image(filename, img, error);
-  });
-  m.def("save_image_float", [](const std::string& filename, const img::image<float>& img, std::string& error) -> bool {
-    return img::save_image(filename, img, error);
-  });  
+  m.def("is_hdr_filename", &img::is_hdr_filename, py::arg("filename"));
+
+  m.def("load_image", (bool (*)(const std::string&, img::image<vec4f>&, std::string&))&img::load_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("save_image", (bool (*)(const std::string&, const img::image<vec4f>&, std::string&))&img::save_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("load_image", (bool (*)(const std::string&, img::image<vec4b>&, std::string&))&img::load_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("save_image", (bool (*)(const std::string&, const img::image<vec4b>&, std::string&))&img::save_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+
+  m.def("load_image", (bool (*)(const std::string&, img::image<vec3f>&, std::string&))&img::load_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("save_image", (bool (*)(const std::string&, const img::image<vec3f>&, std::string&))&img::save_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("load_image", (bool (*)(const std::string&, img::image<vec3b>&, std::string&))&img::load_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("save_image", (bool (*)(const std::string&, const img::image<vec3b>&, std::string&))&img::save_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+
+  m.def("load_image", (bool (*)(const std::string&, img::image<float>&, std::string&))&img::load_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("save_image", (bool (*)(const std::string&, const img::image<float>&, std::string&))&img::save_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("load_image", (bool (*)(const std::string&, img::image<unsigned char>&, std::string&))&img::load_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+  m.def("save_image", (bool (*)(const std::string&, const img::image<unsigned char>&, std::string&))&img::save_image,
+    py::arg("filename"), py::arg("img"), py::arg("error"));
+
+  // m.def("save_image_vec4f", [](const std::string& filename, const img::image<vec4f>& img, std::string& error) -> bool {
+  //   return img::save_image(filename, img, error);
+  // });
+  // m.def("save_image_vec3f", [](const std::string& filename, const img::image<vec3f>& img, std::string& error) -> bool {
+  //   return img::save_image(filename, img, error);
+  // });
+  // m.def("save_image_float", [](const std::string& filename, const img::image<float>& img, std::string& error) -> bool {
+  //   return img::save_image(filename, img, error);
+  // });  
   // -----------------------------------------------------------------------------
   // IMAGE IO
+  // -----------------------------------------------------------------------------
+
+
+  // -----------------------------------------------------------------------------
+  // EXAMPLE IMAGES
+  // -----------------------------------------------------------------------------
+  m.def("make_grid", &img::make_grid, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("color0") = vec4f(0.2, 0.2, 0.2, 1), py::arg("color1") = vec4f(0.5, 0.5, 0.5, 1));
+  m.def("make_checker", &img::make_checker, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("color0") = vec4f(0.2, 0.2, 0.2, 1), py::arg("color1") = vec4f(0.5, 0.5, 0.5, 1));
+  m.def("make_bumps", &img::make_bumps, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("color0") = vec4f(0, 0, 0, 1), py::arg("color1") = vec4f(1, 1, 1, 1));
+  m.def("make_ramp", &img::make_ramp, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("color0") = vec4f(0, 0, 0, 1), py::arg("color1") = vec4f(1, 1, 1, 1));
+  m.def("make_gammaramp", &img::make_gammaramp, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("color0") = vec4f(0, 0, 0, 1), py::arg("color1") = vec4f(1, 1, 1, 1));
+  m.def("make_uvramp", &img::make_uvramp, py::arg("img"), py::arg("size"), py::arg("scale") = 1);
+  m.def("make_uvgrid", &img::make_uvgrid, py::arg("img"), py::arg("size"), py::arg("scale") = 1,
+    py::arg("colored") = true);
+  m.def("make_blackbodyramp", &img::make_blackbodyramp, py::arg("img"), py::arg("size"), py::arg("scale") = 1,
+    py::arg("from") = 1000, py::arg("from") = 12000);
+  m.def("make_noisemap", &img::make_noisemap, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("color0") = vec4f(0, 0, 0, 1), py::arg("color1") = vec4f(0, 0, 0, 1));
+  m.def("make_fbmmap", &img::make_fbmmap, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("noise") = vec4f(2, 0.5, 8, 1), py::arg("color0") = vec4f(0, 0, 0, 1),
+    py::arg("color1") = vec4f(0, 0, 0, 1));
+  m.def("make_turbulencemap", &img::make_turbulencemap, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("noise") = vec4f(2, 0.5, 8, 1), py::arg("color0") = vec4f(0, 0, 0, 1),
+    py::arg("color1") = vec4f(0, 0, 0, 1));
+  m.def("make_ridgemap", &img::make_ridgemap, py::arg("img"), py::arg("size"), py::arg("scale") = 1, 
+    py::arg("noise") = vec4f(2, 0.5, 8, 1), py::arg("color0") = vec4f(0, 0, 0, 1),
+    py::arg("color1") = vec4f(0, 0, 0, 1));
+
+  m.def("make_sunsky", &img::make_sunsky, py::arg("img"), py::arg("size"), py::arg("sun_angle"),
+    py::arg("turbidity") = 3, py::arg("has_sun") = false, py::arg("sun_intensity") = 1,
+    py::arg("sun_radius") = 1, py::arg("ground_albedo") = vec3f(0.2, 0.2, 0.2));
+  m.def("make_lights", &img::make_lights, py::arg("img"), py::arg("size"),
+    py::arg("le") = vec3f(1, 1, 1), py::arg("nlights") = 4, py::arg("langle") = pif / 4,
+    py::arg("lwidth") = pif / 16, py::arg("lheight") = pif / 16);
+
+  m.def("bump_to_normal", (img::image<vec4f> (*)(const img::image<vec4f>&, float))&img::bump_to_normal, 
+    py::arg("img"), py::arg("scale") = 1);
+  // -----------------------------------------------------------------------------
+  // EXAMPLE IMAGES
   // -----------------------------------------------------------------------------
 }
 
