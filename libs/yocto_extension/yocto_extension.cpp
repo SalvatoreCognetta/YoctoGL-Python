@@ -125,6 +125,13 @@ PYBIND11_MODULE(py_math, m) {
   m.attr("zero3f")  = py_zero3f;
   py::object py_zero4f = py::cast(zero4f);
   m.attr("zero4f")  = py_zero4f;
+
+  m.def("xyz", (vec3f& (*)(vec4f&))&math::xyz, py::arg("a"), py::return_value_policy::reference);
+  m.def("xyz", (const vec3f& (*)(const vec4f&))&math::xyz, py::arg("a"), py::return_value_policy::reference);
+  
+  m.def("mean", (float (*)(const vec2f&))&math::mean, py::arg("a"));
+  m.def("mean", (float (*)(const vec3f&))&math::mean, py::arg("a"));
+  m.def("mean", (float (*)(const vec4f&))&math::mean, py::arg("a"));
   // -----------------------------------------------------------------------------
   // VECTORS
   // -----------------------------------------------------------------------------
@@ -262,41 +269,65 @@ PYBIND11_MODULE(py_image, m) {
     .def(py::init<>())
     .def("size", [](img::image<vec2f> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<vec2f> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   py::class_<img::image<vec3f>>(m, "image_vec3f")
     .def(py::init<>())
     .def("size", [](img::image<vec3f> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<vec3f> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   py::class_<img::image<vec4f>>(m, "image_vec4f")
     .def(py::init<>())
     .def("size", [](img::image<vec4f> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<vec4f> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   py::class_<img::image<vec3b>>(m, "image_vec3b")
     .def(py::init<>())
     .def("size", [](img::image<vec3b> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<vec3b> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   py::class_<img::image<vec4b>>(m, "image_vec4b")
     .def(py::init<>())
     .def("size", [](img::image<vec4b> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<vec4b> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   py::class_<img::image<float>>(m, "image_float")
     .def(py::init<>())
     .def("size", [](img::image<float> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<float> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   py::class_<img::image<unsigned char>>(m, "image_byte")
     .def(py::init<>())
     .def("size", [](img::image<unsigned char> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<unsigned char> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   py::class_<img::image<ptr::pixel>>(m, "image_pixel")
     .def(py::init<>())
     .def("size", [](img::image<ptr::pixel> image) -> vec2i {
       return image.size();
+    })
+    .def("contains", [](img::image<ptr::pixel> image, const vec2i& ij) -> bool {
+      return image.contains(ij);
     });
   // -----------------------------------------------------------------------------
   // IMAGE DATA AND UTILITIES
@@ -319,6 +350,14 @@ PYBIND11_MODULE(py_image, m) {
     py::arg("srgb"));
   m.def("rgb_to_srgb", (img::image<vec3f> (*)(const img::image<vec3f>&))&img::rgb_to_srgb, 
     py::arg("rgb"));
+
+  m.def("resize_image", (img::image<vec4f> (*)(const img::image<vec4f>&, const vec2i&))&img::resize_image, 
+    py::arg("img"), py::arg("size"));
+  m.def("resize_image", (img::image<vec4b> (*)(const img::image<vec4b>&, const vec2i&))&img::resize_image, 
+    py::arg("img"), py::arg("size"));
+
+  m.def("image_difference", &img::image_difference, 
+    py::arg("a"), py::arg("b"), py::arg("display_diff"));
   // -----------------------------------------------------------------------------
   // IMAGE UTILITIES
   // -----------------------------------------------------------------------------
@@ -409,6 +448,9 @@ PYBIND11_MODULE(py_image, m) {
 
   m.def("bump_to_normal", (img::image<vec4f> (*)(const img::image<vec4f>&, float))&img::bump_to_normal, 
     py::arg("img"), py::arg("scale") = 1);
+
+  m.def("add_border", (img::image<vec4f> (*)(const img::image<vec4f>&, float, const vec4f&))&img::add_border,
+    py::arg("img"), py::arg("width"), py::arg("color") = vec4f(0,0,0,1));
   // -----------------------------------------------------------------------------
   // EXAMPLE IMAGES
   // -----------------------------------------------------------------------------
