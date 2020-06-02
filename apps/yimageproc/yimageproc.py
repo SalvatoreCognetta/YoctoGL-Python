@@ -1,3 +1,4 @@
+import math
 import py_math
 import py_shape as shp
 import py_image as img
@@ -7,41 +8,47 @@ import py_sceneio   as sio
 import py_filesystem   as sfs
 import sys
 
-# def filter_bilateral(img,
-#     spatial_sigma, range_sigma,
-#     features, features_sigma):
-  # auto filtered     = img::image{img.size(), zero4f};
-  # auto filter_width = (int)ceil(2.57f * spatial_sigma);
-  # auto sw           = 1 / (2.0f * spatial_sigma * spatial_sigma);
-  # auto rw           = 1 / (2.0f * range_sigma * range_sigma);
-  # auto fw           = std::vector<float>();
-  # for (auto feature_sigma : features_sigma)
-  #   fw.push_back(1 / (2.0f * feature_sigma * feature_sigma));
-  # for (auto j = 0; j < img.size().y; j++) {
-  #   for (auto i = 0; i < img.size().x; i++) {
-  #     auto av = zero4f;
-  #     auto aw = 0.0f;
-  #     for (auto fj = -filter_width; fj <= filter_width; fj++) {
-  #       for (auto fi = -filter_width; fi <= filter_width; fi++) {
-  #         auto ii = i + fi, jj = j + fj;
-  #         if (ii < 0 || jj < 0) continue;
-  #         if (ii >= img.size().x || jj >= img.size().y) continue;
-  #         auto uv  = vec2f{float(i - ii), float(j - jj)};
-  #         auto rgb = img[{i, j}] - img[{i, j}];
-  #         auto w   = (float)math::exp(-dot(uv, uv) * sw) *
-  #                  (float)math::exp(-dot(rgb, rgb) * rw);
-  #         for (auto fi = 0; fi < features.size(); fi++) {
-  #           auto feat = features[fi][{i, j}] - features[fi][{i, j}];
-  #           w *= math::exp(-dot(feat, feat) * fw[fi]);
-  #         }
-  #         av += w * img[{ii, jj}];
-  #         aw += w;
-  #       }
-  #     }
-  #     filtered[{i, j}] = av / aw;
-  #   }
-  # }
-  # return filtered;
+def filter_bilateral(image,
+    spatial_sigma, range_sigma,
+    features, features_sigma):
+  filtered     = img.image_vec4f(img.image_vec4f.size(image), py_math.zero4f)
+  filter_width = int(math.ceil(2.57 * spatial_sigma))
+  sw           = 1 / (2.0 * spatial_sigma * spatial_sigma)
+  rw           = 1 / (2.0 * range_sigma * range_sigma)
+  fw           = []
+  for feature_sigma in features_sigma:
+    fw.append(1 / (2.0 * feature_sigma * feature_sigma))
+    j = 0
+  while j < img.image_vec4f.size(image).y:
+    i = 0
+    while i < img.image_vec4f.size(image).x:
+      av = py_math.zero4f
+      aw = 0.0
+      fj = -filter_width
+      while fj <= filter_width:
+        fi = -filter_width
+        while fi <= filter_width:
+          ii = i + fi
+          jj = j + fj
+          if ii < 0 or jj < 0: continue
+          if ii >= img.image_vec4f.size(image).x or jj >= img.image_vec4f.size(image).y: continue
+          uv  = py_math.vec2f(float(i - ii), float(j - jj))
+          rgb = image[py_math.vec2i(i, j)] - image[py_math.vec2i(i, j)]
+          # w   = (float)math::exp(-dot(uv, uv) * sw) *
+          #          (float)math::exp(-dot(rgb, rgb) * rw)
+          fi = 0
+          while fi < len(features):
+            # feat = features[fi][py_math.vec2i(i, j)] - features[fi][py_math.vec2i(i, j)]
+            # w *= math::exp(-dot(feat, feat) * fw[fi])
+            fi += 1
+          av += w * image[py_math.vec2i(ii, jj)]
+          aw += w
+          fi += 1
+        fj += 1
+      filtered[py_math.vec2i(i, j)] = av / aw
+      i += 1
+    j += 1
+  return filtered
 
 def make_image_preset(type_yocto, image, error):
   def set_region(image, region, offset):
@@ -238,11 +245,11 @@ def main(*argv):
   if alpha_filename != "":
     alpha = img.image_vec4f()
     if not img.load_image(alpha_filename, alpha, ioerror): commonio.print_fatal(ioerror)
-    if len(image) != len(alpha): commonio.print_fatal("bad image size")
+    if img.image_vec4f.size(image) != img.image_vec4f.size(alpha): commonio.print_fatal("bad image size")
     j = 0
-    while j < len(image).y:
+    while j < img.image_vec4f.size(image).y:
       i = 0
-      while i < len(img).x:
+      while i < img.image_vec4f.size(image).x:
         image[py_math.vec2i(i, j)].w = alpha[py_math.vec2i(i, j)].w
         i += 1
       j += 1
@@ -252,11 +259,11 @@ def main(*argv):
     alpha = img.image_vec4f()
     if not img.load_image(coloralpha_filename, alpha, ioerror):
       commonio.print_fatal(ioerror)
-    if len(image) != len(alpha): commonio.print_fatal("bad image size")
+    if img.image_vec4f.size(image) != img.image_vec4f.size(alpha): commonio.print_fatal("bad image size")
     j = 0
-    while j < len(image).y:
+    while j < img.image_vec4f.size(image).y:
       i = 0
-      while i < len(image).x:
+      while i < img.image_vec4f.size(image).x:
         image[py_math.vec2i(i, j)].w = py_math.mean(py_math.xyz(alpha[py_math.vec2i(i, j)]))
         i += 1
       j += 1
@@ -271,35 +278,36 @@ def main(*argv):
   if diff_filename != "":
     diff = img.image_vec4f()
     if not img.load_image(diff_filename, diff, ioerror): commonio.print_fatal(ioerror)
-    if len(image) != len(diff):
+    if img.image_vec4f.size(image) != img.image_vec4f.size(diff):
       commonio.print_fatal("image sizes are different")
-    image = img.image_difference(img, diff, True)
+    image = img.image_difference(image, diff, True)
 
   # resize
   if resize_width != 0 or resize_height != 0:
-    image = img.resize_image(img, py_math.vec2i(resize_width, resize_height))
+    image = img.resize_image(image, py_math.vec2i(resize_width, resize_height))
 
-  # // bilateral
-  # if (spatial_sigma && range_sigma) {
-  #   img = filter_bilateral(img, spatial_sigma, range_sigma, {}, {})
-  # }
+  # bilateral
+  if spatial_sigma and range_sigma:
+    image = filter_bilateral(image, spatial_sigma, range_sigma, [], [])
 
-  # // hdr correction
-  # if (tonemap_on) {
-  #   img = tonemap_image(img, tonemap_exposure, tonemap_filmic, false)
-  # }
+  # hdr correction
+  if tonemap_on:
+    image = img.tonemap_image(image, tonemap_exposure, tonemap_filmic, False)
 
-  # // save
-  # if (!save_image(output, logo ? add_logo(img) : img, ioerror))
-  #   cli::print_fatal(ioerror)
+  # save
+  image_logo = None
+  if logo:
+    image_logo = img.add_logo(image)
+  else:
+    image_logo = image
+  if not img.save_image(output, image_logo, ioerror):
+    commonio.print_fatal(ioerror)
 
-  # // check diff
-  # if (diff_filename != "" && diff_signal) {
-  #   for ( c : img) {
-  #     if (max(xyz(c)) > diff_threshold)
-  #       cli::print_fatal("image content differs")
-  #   }
-  # }
+  # check diff
+  if diff_filename != "" and diff_signal:
+    for c in image:
+      if max(xyz(c)) > diff_threshold:
+        commonio.print_fatal("image content differs")
 
   # done
 

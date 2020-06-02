@@ -129,6 +129,8 @@ PYBIND11_MODULE(py_math, m) {
   m.def("xyz", (vec3f& (*)(vec4f&))&math::xyz, py::arg("a"), py::return_value_policy::reference);
   m.def("xyz", (const vec3f& (*)(const vec4f&))&math::xyz, py::arg("a"), py::return_value_policy::reference);
   
+  m.def("dot", (float (*)(const vec2f&, const vec2f&))&math::dot, py::arg("a"), py::arg("b"));
+
   m.def("mean", (float (*)(const vec2f&))&math::mean, py::arg("a"));
   m.def("mean", (float (*)(const vec3f&))&math::mean, py::arg("a"));
   m.def("mean", (float (*)(const vec4f&))&math::mean, py::arg("a"));
@@ -364,6 +366,8 @@ PYBIND11_MODULE(py_image, m) {
   // -----------------------------------------------------------------------------
   py::class_<img::image<vec2f>>(m, "image_vec2f")
     .def(py::init<>())
+    .def(py::init<const vec2i&, const vec2f&>(),
+        py::arg("size"), py::arg("value") = vec2f())
     .def("size", [](img::image<vec2f> image) -> vec2i {
       return image.size();
     })
@@ -372,6 +376,8 @@ PYBIND11_MODULE(py_image, m) {
     });
   py::class_<img::image<vec3f>>(m, "image_vec3f")
     .def(py::init<>())
+    .def(py::init<const vec2i&, const vec3f&>(),
+        py::arg("size"), py::arg("value") = vec3f())
     .def("size", [](img::image<vec3f> image) -> vec2i {
       return image.size();
     })
@@ -380,6 +386,8 @@ PYBIND11_MODULE(py_image, m) {
     });
   py::class_<img::image<vec4f>>(m, "image_vec4f")
     .def(py::init<>())
+    .def(py::init<const vec2i&, const vec4f&>(),
+        py::arg("size"), py::arg("value") = vec4f())
     .def("size", [](img::image<vec4f> image) -> vec2i {
       return image.size();
     })
@@ -388,6 +396,8 @@ PYBIND11_MODULE(py_image, m) {
     });
   py::class_<img::image<vec3b>>(m, "image_vec3b")
     .def(py::init<>())
+    .def(py::init<const vec2i&, const vec3b&>(),
+        py::arg("size"), py::arg("value") = vec3b())
     .def("size", [](img::image<vec3b> image) -> vec2i {
       return image.size();
     })
@@ -396,6 +406,8 @@ PYBIND11_MODULE(py_image, m) {
     });
   py::class_<img::image<vec4b>>(m, "image_vec4b")
     .def(py::init<>())
+    .def(py::init<const vec2i&, const vec4b&>(),
+        py::arg("size"), py::arg("value") = vec4b())
     .def("size", [](img::image<vec4b> image) -> vec2i {
       return image.size();
     })
@@ -404,6 +416,8 @@ PYBIND11_MODULE(py_image, m) {
     });
   py::class_<img::image<float>>(m, "image_float")
     .def(py::init<>())
+    .def(py::init<const vec2i&, const float&>(),
+        py::arg("size"), py::arg("value"))
     .def("size", [](img::image<float> image) -> vec2i {
       return image.size();
     })
@@ -412,6 +426,8 @@ PYBIND11_MODULE(py_image, m) {
     });
   py::class_<img::image<unsigned char>>(m, "image_byte")
     .def(py::init<>())
+    .def(py::init<const vec2i&, const unsigned char&>(),
+        py::arg("size"), py::arg("value"))
     .def("size", [](img::image<unsigned char> image) -> vec2i {
       return image.size();
     })
@@ -420,6 +436,8 @@ PYBIND11_MODULE(py_image, m) {
     });
   py::class_<img::image<ptr::pixel>>(m, "image_pixel")
     .def(py::init<>())
+    .def(py::init<const vec2i&, ptr::pixel&>(),
+        py::arg("size"), py::arg("value"))
     .def("size", [](img::image<ptr::pixel> image) -> vec2i {
       return image.size();
     })
@@ -447,6 +465,14 @@ PYBIND11_MODULE(py_image, m) {
     py::arg("srgb"));
   m.def("rgb_to_srgb", (img::image<vec3f> (*)(const img::image<vec3f>&))&img::rgb_to_srgb, 
     py::arg("rgb"));
+
+  m.def("tonemap_image", &img::tonemap_image, py::arg("hdr"), py::arg("exposure"), 
+    py::arg("filmic") = false, py::arg("srgb") = true);
+  m.def("tonemap_imageb", &img::tonemap_imageb, py::arg("hdr"), py::arg("exposure"), 
+    py::arg("filmic") = false, py::arg("srgb") = true);
+
+  m.def("tonemap_image_mt", &img::tonemap_image_mt, py::arg("ldr"), py::arg("hdr"), 
+    py::arg("exposure"), py::arg("filmic") = false, py::arg("srgb") = true);
 
   m.def("resize_image", (img::image<vec4f> (*)(const img::image<vec4f>&, const vec2i&))&img::resize_image, 
     py::arg("img"), py::arg("size"));
