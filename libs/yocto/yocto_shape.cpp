@@ -4044,7 +4044,7 @@ void make_bulged_yrect(std::vector<vec4i>& quads, std::vector<vec3f>& positions,
 void make_lines(std::vector<vec2i>& lines, std::vector<vec3f>& positions,
     std::vector<vec3f>& normals, std::vector<vec2f>& texcoords,
     std::vector<float>& radius, const vec2i& steps, const vec2f& size,
-    const vec2f& uvscale, const vec2f& rad) {
+    const vec2f& uvscale, const vec2f& rad, int num) {
   auto nverts = (steps.x + 1) * steps.y;
   auto nlines = steps.x * steps.y;
   auto vid    = [steps](int i, int j) { return j * (steps.x + 1) + i; };

@@ -814,7 +814,7 @@ void make_rounded_box(std::vector<vec4i>& quads, std::vector<vec3f>& positions,
 void make_rect_stack(std::vector<vec4i>& quads, std::vector<vec3f>& positions,
     std::vector<vec3f>& normals, std::vector<vec2f>& texcoords,
     const vec3i& steps = {1, 1, 1}, const vec3f& scale = {1, 1, 1},
-    const vec3f& uvscale = {1, 1, 1});
+    const vec2f& uvscale = {1, 1});
 // Make a floor.
 void make_floor(std::vector<vec4i>& quads, std::vector<vec3f>& positions,
     std::vector<vec3f>& normals, std::vector<vec2f>& texcoords,
@@ -892,9 +892,8 @@ void make_fvsphere(std::vector<vec4i>& quadspos, std::vector<vec4i>& quadsnorm,
 // Generate lines set along a quad. Returns lines, pos, norm, texcoord, radius.
 void make_lines(std::vector<vec2i>& lines, std::vector<vec3f>& positions,
     std::vector<vec3f>& normals, std::vector<vec2f>& texcoords,
-    std::vector<float>& radius, int num = 65536,
-    const vec2i& steps = {4, 65536}, const vec2f& scale = {1, 1},
-    const vec2f& uvscale = {1, 1}, const vec2f& rad = {0.001, 0.001});
+    std::vector<float>& radius, const vec2i& steps = {4, 65536}, const vec2f& size = {1, 1},
+    const vec2f& uvscale = {1, 1}, const vec2f& rad = {0.001, 0.001}, int num = 65536);
 
 // Make point primitives. Returns points, pos, norm, texcoord, radius.
 void make_point(std::vector<int>& points, std::vector<vec3f>& positions,
