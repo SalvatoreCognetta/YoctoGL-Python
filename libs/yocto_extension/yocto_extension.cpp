@@ -90,6 +90,7 @@ PYBIND11_MODULE(py_math, m) {
   // MATH CONSTANTS AND FUNCTIONS
   // -----------------------------------------------------------------------------
   m.attr("pif")  = pif;
+  m.def("pow2", &math::pow2, py::arg("a"));
   // -----------------------------------------------------------------------------
   // MATH CONSTANTS AND FUNCTIONS
   // -----------------------------------------------------------------------------
@@ -98,6 +99,7 @@ PYBIND11_MODULE(py_math, m) {
   // -----------------------------------------------------------------------------
   // VECTORS
   // -----------------------------------------------------------------------------
+  
   py::class_<vec2f>(m, "vec2f")
     .def(py::init<float, float>(), 
         py::arg("x") = 0, py::arg("y") = 0)
@@ -266,8 +268,8 @@ PYBIND11_MODULE(py_shape, m) {
                       py::arg("steps") = vec3i(1, 1, 1), py::arg("scale") = vec3f(1, 1, 1), py::arg("uvscale") = vec3f(1, 1, 1), py::arg("radius") = 0.3);
   
   // Make a quad stack
-  m.def("make_rect_stack", &shp::make_rect_stack, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),                  
-                      py::arg("steps") = vec3i(1, 1, 1), py::arg("scamake_rectyle") = vec3f(1, 1, 1), py::arg("uvscale") = vec3f(1, 1, 1));
+  // m.def("make_rect_stack", &shp::make_rect_stack, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
+  //                     py::arg("steps") = vec3i(1, 1, 1), py::arg("scale") = vec3f(1, 1, 1), py::arg("uvscale") = vec2f(1, 1));
 
   // Make a floor
   m.def("make_floor", &shp::make_floor, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
@@ -286,11 +288,11 @@ PYBIND11_MODULE(py_shape, m) {
                       py::arg("steps") = vec2i(32, 32), py::arg("scale") = 1, py::arg("uvscale") = vec2f(1, 1), py::arg("height") = 0.3);
 
   // Make a disk
-  m.def("make_disk", &shp::make_floor, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
+  m.def("make_disk", &shp::make_disk, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = 32, py::arg("scale") = 1, py::arg("uvscale") = 1);
 
   // Make a bulged disk
-  m.def("make_bulged_disk", &shp::make_floor, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
+  m.def("make_bulged_disk", &shp::make_bulged_disk, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = 32, py::arg("scale") = 1, py::arg("uvscale") = 1, py::arg("height") = 0.3);
 
   // Make a uv disk
@@ -327,9 +329,9 @@ PYBIND11_MODULE(py_shape, m) {
                       py::arg("steps") = 32, py::arg("scale") = 1, py::arg("uvscale") = 1);
 
   //Generate lines set along a quad
-  m.def("make_lines", &shp::make_recty, py::arg("lines"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
-                      py::arg("radius"), py::arg("num") = 65536, py::arg("steps") = vec2i(4, 65536), 
-                      py::arg("scale") = vec2f(1, 1), py::arg("uvscale") = vec2f(1, 1), py::arg("rad") = vec2f(0.001, 0.001));
+  // m.def("make_lines", &shp::make_lines, py::arg("lines"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
+  //                     py::arg("radius"), py::arg("num") = 65536, py::arg("steps") = vec2i(4, 65536), 
+  //                     py::arg("scale") = vec2f(1, 1), py::arg("uvscale") = vec2f(1, 1), py::arg("rad") = vec2f(0.001, 0.001));
 
   // Make point primitives
   m.def("make_point", &shp::make_point, py::arg("points"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
@@ -359,16 +361,7 @@ PYBIND11_MODULE(py_shape, m) {
 
   // Make a heightfield mesh
   m.def("make_heightfield", &shp::make_heightfield, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("size"),
-                      py::arg("height"));
-
-
-                    
-
-
-
-
-  
-  
+                      py::arg("height")); 
 
 
 }
