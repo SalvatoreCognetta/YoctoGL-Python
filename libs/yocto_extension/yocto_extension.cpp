@@ -112,12 +112,26 @@ PYBIND11_MODULE(py_math, m) {
   py::class_<vec2f>(m, "vec2f")
     .def(py::init<float, float>(), 
         py::arg("x") = 0, py::arg("y") = 0)
+    .def(py::self + py::self)
+    .def(py::self - py::self)
+    .def(float() * py::self)
+    .def(py::self / float())
+    .def("isEqual", [](const vec2f& a, const vec2f & b) -> bool {
+      return a == b;
+    })
     .def_readwrite("x", &vec2f::x)
     .def_readwrite("y", &vec2f::y);
 
   py::class_<vec3f>(m, "vec3f")
     .def(py::init<float, float, float>(), 
         py::arg("x") = 0, py::arg("y") = 0, py::arg("z") = 0)
+    .def(py::self + py::self)
+    .def(py::self - py::self)
+    .def(float() * py::self)
+    .def(py::self / float())
+    .def("isEqual", [](const vec3f& a, const vec3f& b) -> bool {
+      return a == b;
+    })
     .def_readwrite("x", &vec3f::x)
     .def_readwrite("y", &vec3f::y)
     .def_readwrite("z", &vec3f::z);
@@ -125,6 +139,13 @@ PYBIND11_MODULE(py_math, m) {
   py::class_<vec4f>(m, "vec4f")
     .def(py::init<float, float, float, float>(), 
         py::arg("x") = 0, py::arg("y") = 0, py::arg("z") = 0, py::arg("w") = 0)
+    .def(py::self + py::self)
+    .def(py::self - py::self)
+    .def(float() * py::self)
+    .def(py::self / float())
+    .def("isEqual", [](const vec4f& a, const vec4f& b) -> bool {
+      return a == b;
+    })
     .def_readwrite("x", &vec4f::x)
     .def_readwrite("y", &vec4f::y)
     .def_readwrite("z", &vec4f::z)
@@ -140,6 +161,14 @@ PYBIND11_MODULE(py_math, m) {
   m.def("xyz", (vec3f& (*)(vec4f&))&math::xyz, py::arg("a"), py::return_value_policy::reference);
   m.def("xyz", (const vec3f& (*)(const vec4f&))&math::xyz, py::arg("a"), py::return_value_policy::reference);
   
+  m.def("dot", (float (*)(const vec2f&, const vec2f&))&math::dot, py::arg("a"), py::arg("b"));
+  m.def("dot", (float (*)(const vec3f&, const vec3f&))&math::dot, py::arg("a"), py::arg("b"));
+  m.def("dot", (float (*)(const vec4f&, const vec4f&))&math::dot, py::arg("a"), py::arg("b"));
+  
+  m.def("max", (vec2f (*)(const vec2f&, float))&math::max, py::arg("a"), py::arg("b"));
+  m.def("max", (vec2f (*)(const vec2f&, const vec2f&))&math::max, py::arg("a"), py::arg("b"));
+  m.def("max", (float (*)(const vec2f&))&math::max, py::arg("a"));
+
   m.def("mean", (float (*)(const vec2f&))&math::mean, py::arg("a"));
   m.def("mean", (float (*)(const vec3f&))&math::mean, py::arg("a"));
   m.def("mean", (float (*)(const vec4f&))&math::mean, py::arg("a"));
@@ -153,12 +182,26 @@ PYBIND11_MODULE(py_math, m) {
   // -----------------------------------------------------------------------------
   py::class_<vec2i>(m, "vec2i")
     .def(py::init<int, int>(), py::arg("x") = 0, py::arg("y") = 0)
+    .def(py::self + py::self)
+    .def(py::self - py::self)
+    .def(float() * py::self)
+    .def(py::self / float())
+    .def("isEqual", [](const vec2i& a, const vec2i& b) -> bool {
+      return a == b;
+    })
     .def_readwrite("x", &vec2i::x)
     .def_readwrite("y", &vec2i::y);
 
   py::class_<vec3i>(m, "vec3i")
     .def(py::init<int, int, int>(), 
         py::arg("x") = 0, py::arg("y") = 0, py::arg("z") = 0)
+    .def(py::self + py::self)
+    .def(py::self - py::self)
+    .def(float() * py::self)
+    .def(py::self / float())
+    .def("isEqual", [](const vec3i& a, const vec3i& b) -> bool {
+      return a == b;
+    })
     .def_readwrite("x", &vec3i::x)
     .def_readwrite("y", &vec3i::y)
     .def_readwrite("z", &vec3i::z);
@@ -166,6 +209,13 @@ PYBIND11_MODULE(py_math, m) {
   py::class_<vec4i>(m, "vec4i")
     .def(py::init<int, int, int, int>(), 
         py::arg("x") = 0, py::arg("y") = 0, py::arg("z") = 0, py::arg("w") = 0)
+    .def(py::self + py::self)
+    .def(py::self - py::self)
+    .def(float() * py::self)
+    .def(py::self / float())
+    .def("isEqual", [](const vec4i& a, const vec4i& b) -> bool {
+      return a == b;
+    })
     .def_readwrite("x", &vec4i::x)
     .def_readwrite("y", &vec4i::y)
     .def_readwrite("z", &vec4i::z)
@@ -408,68 +458,108 @@ PYBIND11_MODULE(py_image, m) {
   // -----------------------------------------------------------------------------
   py::class_<img::image<vec2f>>(m, "image_vec2f")
     .def(py::init<>())
+    .def(py::init<const vec2i&, const vec2f&>(),
+        py::arg("size"), py::arg("value") = vec2f())
     .def("size", [](img::image<vec2f> image) -> vec2i {
       return image.size();
     })
     .def("contains", [](img::image<vec2f> image, const vec2i& ij) -> bool {
       return image.contains(ij);
-    });
+    })
+    .def("get", [](img::image<vec2f> image, const vec2i& ij) -> vec2f& {
+      return image[ij];
+    }, py::return_value_policy::reference);
   py::class_<img::image<vec3f>>(m, "image_vec3f")
     .def(py::init<>())
+    .def(py::init<const vec2i&, const vec3f&>(),
+        py::arg("size"), py::arg("value") = vec3f())
     .def("size", [](img::image<vec3f> image) -> vec2i {
       return image.size();
     })
     .def("contains", [](img::image<vec3f> image, const vec2i& ij) -> bool {
       return image.contains(ij);
-    });
+    })
+    .def("get", [](img::image<vec3f> image, const vec2i& ij) -> vec3f& {
+      return image[ij];
+    }, py::return_value_policy::reference);
   py::class_<img::image<vec4f>>(m, "image_vec4f")
     .def(py::init<>())
+    .def(py::init<const vec2i&, const vec4f&>(),
+        py::arg("size"), py::arg("value") = vec4f())
     .def("size", [](img::image<vec4f> image) -> vec2i {
       return image.size();
     })
     .def("contains", [](img::image<vec4f> image, const vec2i& ij) -> bool {
       return image.contains(ij);
-    });
+    })
+    .def("get", [](img::image<vec4f> image, const vec2i& ij) -> vec4f& {
+      return image[ij];
+    }, py::return_value_policy::reference);
   py::class_<img::image<vec3b>>(m, "image_vec3b")
     .def(py::init<>())
+    .def(py::init<const vec2i&, const vec3b&>(),
+        py::arg("size"), py::arg("value") = vec3b())
     .def("size", [](img::image<vec3b> image) -> vec2i {
       return image.size();
     })
     .def("contains", [](img::image<vec3b> image, const vec2i& ij) -> bool {
       return image.contains(ij);
-    });
+    })
+    .def("get", [](img::image<vec3b> image, const vec2i& ij) -> vec3b& {
+      return image[ij];
+    }, py::return_value_policy::reference);
   py::class_<img::image<vec4b>>(m, "image_vec4b")
     .def(py::init<>())
+    .def(py::init<const vec2i&, const vec4b&>(),
+        py::arg("size"), py::arg("value") = vec4b())
     .def("size", [](img::image<vec4b> image) -> vec2i {
       return image.size();
     })
     .def("contains", [](img::image<vec4b> image, const vec2i& ij) -> bool {
       return image.contains(ij);
-    });
+    })
+    .def("get", [](img::image<vec4b> image, const vec2i& ij) -> vec4b& {
+      return image[ij];
+    }, py::return_value_policy::reference);
   py::class_<img::image<float>>(m, "image_float")
     .def(py::init<>())
+    .def(py::init<const vec2i&, const float&>(),
+        py::arg("size"), py::arg("value"))
     .def("size", [](img::image<float> image) -> vec2i {
       return image.size();
     })
     .def("contains", [](img::image<float> image, const vec2i& ij) -> bool {
       return image.contains(ij);
-    });
+    })
+    .def("get", [](img::image<float> image, const vec2i& ij) -> float& {
+      return image[ij];
+    }, py::return_value_policy::reference);
   py::class_<img::image<unsigned char>>(m, "image_byte")
     .def(py::init<>())
+    .def(py::init<const vec2i&, const unsigned char&>(),
+        py::arg("size"), py::arg("value"))
     .def("size", [](img::image<unsigned char> image) -> vec2i {
       return image.size();
     })
     .def("contains", [](img::image<unsigned char> image, const vec2i& ij) -> bool {
       return image.contains(ij);
-    });
+    })
+    .def("get", [](img::image<unsigned char> image, const vec2i& ij) -> unsigned char& {
+      return image[ij];
+    }, py::return_value_policy::reference);
   py::class_<img::image<ptr::pixel>>(m, "image_pixel")
     .def(py::init<>())
+    .def(py::init<const vec2i&, ptr::pixel&>(),
+        py::arg("size"), py::arg("value"))
     .def("size", [](img::image<ptr::pixel> image) -> vec2i {
       return image.size();
     })
     .def("contains", [](img::image<ptr::pixel> image, const vec2i& ij) -> bool {
       return image.contains(ij);
-    });
+    })
+    .def("get", [](img::image<ptr::pixel> image, const vec2i& ij) -> ptr::pixel& {
+      return image[ij];
+    }, py::return_value_policy::reference);
   // -----------------------------------------------------------------------------
   // IMAGE DATA AND UTILITIES
   // -----------------------------------------------------------------------------
@@ -491,6 +581,14 @@ PYBIND11_MODULE(py_image, m) {
     py::arg("srgb"));
   m.def("rgb_to_srgb", (img::image<vec3f> (*)(const img::image<vec3f>&))&img::rgb_to_srgb, 
     py::arg("rgb"));
+
+  m.def("tonemap_image", &img::tonemap_image, py::arg("hdr"), py::arg("exposure"), 
+    py::arg("filmic") = false, py::arg("srgb") = true);
+  m.def("tonemap_imageb", &img::tonemap_imageb, py::arg("hdr"), py::arg("exposure"), 
+    py::arg("filmic") = false, py::arg("srgb") = true);
+
+  m.def("tonemap_image_mt", &img::tonemap_image_mt, py::arg("ldr"), py::arg("hdr"), 
+    py::arg("exposure"), py::arg("filmic") = false, py::arg("srgb") = true);
 
   m.def("resize_image", (img::image<vec4f> (*)(const img::image<vec4f>&, const vec2i&))&img::resize_image, 
     py::arg("img"), py::arg("size"));

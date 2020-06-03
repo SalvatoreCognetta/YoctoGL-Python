@@ -1,4 +1,5 @@
-import py_math
+import math
+import py_math as mth
 import py_shape as shp
 import py_image as img
 import py_pathtrace as ptr
@@ -7,41 +8,51 @@ import py_sceneio   as sio
 import py_filesystem   as sfs
 import sys
 
-# def filter_bilateral(img,
-#     spatial_sigma, range_sigma,
-#     features, features_sigma):
-  # auto filtered     = img::image{img.size(), zero4f};
-  # auto filter_width = (int)ceil(2.57f * spatial_sigma);
-  # auto sw           = 1 / (2.0f * spatial_sigma * spatial_sigma);
-  # auto rw           = 1 / (2.0f * range_sigma * range_sigma);
-  # auto fw           = std::vector<float>();
-  # for (auto feature_sigma : features_sigma)
-  #   fw.push_back(1 / (2.0f * feature_sigma * feature_sigma));
-  # for (auto j = 0; j < img.size().y; j++) {
-  #   for (auto i = 0; i < img.size().x; i++) {
-  #     auto av = zero4f;
-  #     auto aw = 0.0f;
-  #     for (auto fj = -filter_width; fj <= filter_width; fj++) {
-  #       for (auto fi = -filter_width; fi <= filter_width; fi++) {
-  #         auto ii = i + fi, jj = j + fj;
-  #         if (ii < 0 || jj < 0) continue;
-  #         if (ii >= img.size().x || jj >= img.size().y) continue;
-  #         auto uv  = vec2f{float(i - ii), float(j - jj)};
-  #         auto rgb = img[{i, j}] - img[{i, j}];
-  #         auto w   = (float)math::exp(-dot(uv, uv) * sw) *
-  #                  (float)math::exp(-dot(rgb, rgb) * rw);
-  #         for (auto fi = 0; fi < features.size(); fi++) {
-  #           auto feat = features[fi][{i, j}] - features[fi][{i, j}];
-  #           w *= math::exp(-dot(feat, feat) * fw[fi]);
-  #         }
-  #         av += w * img[{ii, jj}];
-  #         aw += w;
-  #       }
-  #     }
-  #     filtered[{i, j}] = av / aw;
-  #   }
-  # }
-  # return filtered;
+def filter_bilateral(image,
+    spatial_sigma, range_sigma,
+    features, features_sigma):
+  filtered     = img.image_vec4f(img.image_vec4f.size(image), mth.zero4f)
+  filter_width = int(math.ceil(2.57 * spatial_sigma))
+  sw           = 1 / (2.0 * spatial_sigma * spatial_sigma)
+  rw           = 1 / (2.0 * range_sigma * range_sigma)
+  fw           = []
+  for feature_sigma in features_sigma:
+    fw.append(1 / (2.0 * feature_sigma * feature_sigma))
+  j = 0
+  while j < img.image_vec4f.size(image).y:
+    i = 0
+    while i < img.image_vec4f.size(image).x:
+      av = mth.zero4f
+      aw = 0.0
+      fj = -filter_width
+      while fj <= filter_width:
+        fi = -filter_width
+        while fi <= filter_width:
+          ii = i + fi
+          jj = j + fj
+          if ii < 0 or jj < 0: 
+            fi += 1
+            continue
+          if ii >= img.image_vec4f.size(image).x or jj >= img.image_vec4f.size(image).y: 
+            fi += 1
+            continue
+          uv  = mth.vec2f(float(i - ii), float(j - jj))
+          rgb = image.get(mth.vec2i(i, j)) - image.get(mth.vec2i(i, j))
+          w   = float(math.exp(-mth.dot(uv, uv) * sw) ) * float(math.exp(-mth.dot(rgb, rgb) * rw))
+          fi1 = 0
+          while fi1 < len(features):
+            feat = features[fi1].get(mth.vec2i(i, j)) - features[fi1].get(mth.vec2i(i, j))
+            w *= math.exp(-mth.dot(feat, feat) * fw[fi1])
+            fi1 += 1
+          av = av + (w * image.get(mth.vec2i(ii, jj)))
+          aw = aw + w
+          fi += 1
+        fj += 1
+      filtered_tmp = filtered.get(mth.vec2i(i, j)) 
+      filtered_tmp = av / aw
+      i += 1
+    j += 1
+  return filtered
 
 def make_image_preset(type_yocto, image, error):
   def set_region(image, region, offset):
@@ -49,15 +60,18 @@ def make_image_preset(type_yocto, image, error):
     while j < region.size().y:
       i = 0
       while i < region.size().x:
-        if not img.image_vec4f.contains((py_math.vec2i(i, j))): continue
-        image[py_math.vec2i(i, j) + offset] = region[py_math.vec2i(i, j)]
+        if not img.image_vec4f.contains(image, mth.vec2i(i, j)):
+          i += 1
+          continue
+        img_tmp = image.get(mth.vec2i(i, j) + offset) 
+        img_tmp = region.get(mth.vec2i(i, j))
         i += 1
       j += 1
     return image
 
-  size = py_math.vec2i(1024, 1024)
-  if type_yocto.find("sky") != type_yocto.npos: size =  py_math.vec2i(2048, 1024)
-  if type_yocto.find("images2") != type_yocto.npos: size = py_math.vec2i(2048, 1024)
+  size = mth.vec2i(1024, 1024)
+  if type_yocto.find("sky") != -1: size =  mth.vec2i(2048, 1024)
+  if type_yocto.find("images2") != -1: size = mth.vec2i(2048, 1024)
   if type_yocto == "grid":
     img.make_grid(image, size)
   elif type_yocto == "checker":
@@ -74,10 +88,10 @@ def make_image_preset(type_yocto, image, error):
     img.make_uvgrid(image, size)
   elif type_yocto == "sky":
     img.make_sunsky(
-        image, size, py_math.pif / 4, 3.0, False, 1.0, 1.0, py_math.vec3f(0.7, 0.7, 0.7))
+        image, size, mth.pif / 4, 3.0, False, 1.0, 1.0, mth.vec3f(0.7, 0.7, 0.7))
   elif type_yocto == "sunsky":
     img.make_sunsky(
-        image, size, py_math.pif / 4, 3.0, True, 1.0, 1.0, py_math.vec3f(0.7, 0.7, 0.7))
+        image, size, mth.pif / 4, 3.0, True, 1.0, 1.0, mth.vec3f(0.7, 0.7, 0.7))
   elif type_yocto == "noise":
     img.make_noisemap(image, size, 1)
   elif type_yocto == "fbm":
@@ -88,47 +102,49 @@ def make_image_preset(type_yocto, image, error):
     img.make_turbulencemap(image, size, 1)
   elif type_yocto == "bump-normal":
     img.make_bumps(image, size)
-    img = img.srgb_to_rgb(img.bump_to_normal(image, 0.05))
+    image = img.srgb_to_rgb(img.bump_to_normal(image, 0.05))
   elif type_yocto == "images1":
     sub_types = ["grid", "uvgrid", "checker",
         "gammaramp", "bumps", "bump-normal", "noise", "fbm", "blackbodyramp"]
     sub_imgs  = []
 
     for i in range(len(sub_types)):
-      sub_imgs.append(None)
+      sub_imgs.append(img.image_vec4f())
 
     i = 0
     while i < len(sub_types):
-      if not make_image_preset(sub_types[i], sub_imgs[i], error): return False
+      ret_flag, type_yocto, image, error = make_image_preset(sub_types[i], sub_imgs[i], error)
+      if not ret_flag: return False, type_yocto, image, error
       i +=1
-    montage_size = py_math.zero2i
+    montage_size = mth.zero2i
     for sub_img in sub_imgs:
       montage_size.x += img.image_vec4f.size(sub_img).x
       montage_size.y = max(montage_size.y, img.image_vec4f.size(sub_img).y)
     image      = img.image_vec4f(montage_size)
     pos = 0
     for sub_img in sub_imgs:
-      image = set_region(image, sub_img, py_math.vec2i(pos, 0))
+      image = set_region(image, sub_img, mth.vec2i(pos, 0))
       pos += img.image_vec4f.size(sub_img).x
   elif type_yocto == "images2":
     sub_types = ["sky", "sunsky"]
     sub_imgs  = []
 
     for i in range(len(sub_types)):
-      sub_imgs.append(None)
+      sub_imgs.append(img.image_vec4f())
 
     i = 0
     while i < len(sub_imgs):
-      if not img.make_image_preset(sub_types[i], sub_imgs[i], error): return False
+      ret_flag, type_yocto, image, error = make_image_preset(sub_types[i], sub_imgs[i], error)
+      if not ret_flag: return False, type_yocto, image, error
       i +=1
-    montage_size = py_math.zero2i
+    montage_size = mth.zero2i
     for sub_img in sub_imgs:
       montage_size.x += img.image_vec4f.size(sub_img).x
-      montage_size.y = max(montage_size.y, mg.image_vec4f.size(sub_img).y)
-    img      = img.image_vec4f(montage_size)
+      montage_size.y = max(montage_size.y, img.image_vec4f.size(sub_img).y)
+    image      = img.image_vec4f(montage_size)
     pos = 0
     for sub_img in sub_imgs:
-      image = set_region(image, sub_img, py_math.vec2i(pos, 0))
+      image = set_region(image, sub_img, mth.vec2i(pos, 0))
       pos += img.image_vec4f.size(sub_img).x
   elif type_yocto == "test-floor":
     img.make_grid(image, size)
@@ -149,10 +165,10 @@ def make_image_preset(type_yocto, image, error):
     img.make_uvgrid(image, size)
   elif type_yocto == "test-sky":
     img.make_sunsky(
-        image, size, py_math.pif / 4, 3.0, False, 1.0, 1.0, py_math.vec3f(0.7, 0.7, 0.7))
+        image, size, mth.pif / 4, 3.0, False, 1.0, 1.0, mth.vec3f(0.7, 0.7, 0.7))
   elif type_yocto == "test-sunsky":
     img.make_sunsky(
-        image, size, py_math.pif / 4, 3.0, True, 1.0, 1.0, py_math.vec3f(0.7, 0.7, 0.7))
+        image, size, mth.pif / 4, 3.0, True, 1.0, 1.0, mth.vec3f(0.7, 0.7, 0.7))
   elif type_yocto == "test-noise":
     img.make_noisemap(image, size)
   elif type_yocto == "test-fbm":
@@ -167,14 +183,14 @@ def make_image_preset(type_yocto, image, error):
     img.make_fbmmap(image, size)
     image = img.srgb_to_rgb(image)
   elif type_yocto == "test-checker-opacity":
-    img.make_checker(image, size, 1, py_math.vec4f(1, 1, 1, 1), py_math.vec4f(0, 0, 0, 0))
+    img.make_checker(image, size, 1, mth.vec4f(1, 1, 1, 1), mth.vec4f(0, 0, 0, 0))
   elif type_yocto == "test-grid-opacity":
-    img.make_grid(image, size, 1, py_math.vec4f(1, 1, 1, 1), py_math.vec4f(0, 0, 0, 0))
+    img.make_grid(image, size, 1, mth.vec4f(1, 1, 1, 1), mth.vec4f(0, 0, 0, 0))
   else:
     error = "unknown preset"
-    image   = {}
-    return False
-  return True
+    image   = []
+    return False, type_yocto, image, error
+  return True, type_yocto, image, error
 
 def main(*argv):
   # command line parameters
@@ -193,8 +209,7 @@ def main(*argv):
   diff_signal         = False
   diff_threshold      = 0.0
   output              = "out.png"
-  # filename            = "img.hdr"
-  filename            = "tests/01_surface/textures/sky.hdr"
+  filename            = "img.hdr"
 
   # parse command line
   cli = commonio.make_cli("yimgproc", "Transform images")
@@ -230,7 +245,8 @@ def main(*argv):
   ioerror  = ""
   image      = img.image_vec4f()
   if ext == ".ypreset":
-    if not make_image_preset(basename, image, ioerror): commonio.print_fatal(ioerror)
+    ret_flag, basename, image, ioerror = make_image_preset(basename, image, ioerror)
+    if not ret_flag: commonio.print_fatal(ioerror)
   else:
     if not img.load_image(filename, image, ioerror): commonio.print_fatal(ioerror)
 
@@ -238,12 +254,12 @@ def main(*argv):
   if alpha_filename != "":
     alpha = img.image_vec4f()
     if not img.load_image(alpha_filename, alpha, ioerror): commonio.print_fatal(ioerror)
-    if len(image) != len(alpha): commonio.print_fatal("bad image size")
+    if not mth.isEqual(img.image_vec4f.size(image), img.image_vec4f.size(alpha)): commonio.print_fatal("bad image size")
     j = 0
-    while j < len(image).y:
+    while j < img.image_vec4f.size(image).y:
       i = 0
-      while i < len(img).x:
-        image[py_math.vec2i(i, j)].w = alpha[py_math.vec2i(i, j)].w
+      while i < img.image_vec4f.size(image).x:
+        image.get(mth.vec2i(i, j)).w = alpha.get(mth.vec2i(i, j)).w
         i += 1
       j += 1
 
@@ -252,54 +268,55 @@ def main(*argv):
     alpha = img.image_vec4f()
     if not img.load_image(coloralpha_filename, alpha, ioerror):
       commonio.print_fatal(ioerror)
-    if len(image) != len(alpha): commonio.print_fatal("bad image size")
+    if not mth.isEqual(img.image_vec4f.size(image), img.image_vec4f.size(alpha)): commonio.print_fatal("bad image size")
     j = 0
-    while j < len(image).y:
+    while j < img.image_vec4f.size(image).y:
       i = 0
-      while i < len(image).x:
-        image[py_math.vec2i(i, j)].w = py_math.mean(py_math.xyz(alpha[py_math.vec2i(i, j)]))
+      while i < img.image_vec4f.size(image).x:
+        image.get(mth.vec2i(i, j)).w = mth.mean(mth.xyz(alpha.get(mth.vec2i(i, j))))
         i += 1
       j += 1
 
   # set color from alpha
   if alpha_to_color:
     for c in image: 
-      xyz = py_math.xyz(c)
-      xyz = py_math.vec3f(c.w)
+      xyz = mth.xyz(c)
+      xyz = mth.vec3f(c.w)
 
   # diff
   if diff_filename != "":
     diff = img.image_vec4f()
     if not img.load_image(diff_filename, diff, ioerror): commonio.print_fatal(ioerror)
-    if len(image) != len(diff):
+    if not mth.isEqual(img.image_vec4f.size(image), img.image_vec4f.size(diff)):
       commonio.print_fatal("image sizes are different")
-    image = img.image_difference(img, diff, True)
+    image = img.image_difference(image, diff, True)
 
   # resize
   if resize_width != 0 or resize_height != 0:
-    image = img.resize_image(img, py_math.vec2i(resize_width, resize_height))
+    image = img.resize_image(image, mth.vec2i(resize_width, resize_height))
 
-  # // bilateral
-  # if (spatial_sigma && range_sigma) {
-  #   img = filter_bilateral(img, spatial_sigma, range_sigma, {}, {})
-  # }
+  # bilateral
+  if spatial_sigma and range_sigma:
+    image = filter_bilateral(image, spatial_sigma, range_sigma, [], [])
 
-  # // hdr correction
-  # if (tonemap_on) {
-  #   img = tonemap_image(img, tonemap_exposure, tonemap_filmic, false)
-  # }
+  # hdr correction
+  if tonemap_on:
+    image = img.tonemap_image(image, tonemap_exposure, tonemap_filmic, False)
 
-  # // save
-  # if (!save_image(output, logo ? add_logo(img) : img, ioerror))
-  #   cli::print_fatal(ioerror)
+  # save
+  image_logo = None
+  if logo:
+    image_logo = img.add_logo(image)
+  else:
+    image_logo = image
+  if not img.save_image(output, image_logo, ioerror):
+    commonio.print_fatal(ioerror)
 
-  # // check diff
-  # if (diff_filename != "" && diff_signal) {
-  #   for ( c : img) {
-  #     if (max(xyz(c)) > diff_threshold)
-  #       cli::print_fatal("image content differs")
-  #   }
-  # }
+  # check diff
+  if diff_filename != "" and diff_signal:
+    for c in image:
+      if mth.max(xyz(c)) > diff_threshold:
+        commonio.print_fatal("image content differs")
 
   # done
 
