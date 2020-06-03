@@ -360,6 +360,52 @@ PYBIND11_MODULE(py_shape, m) {
   // py::class_<shp::geodesic_solver>(m, "geodesic_solver")
   //   .def_readwrite("min_arcs", &shp::geodesic_solver::min_arcs)
   //   .def_readwrite("graph", &shp::geodesic_solver::graph);
+
+
+  m.def("make_geodesic_solver", &shp::make_geodesic_solver, py::arg("triangles"), py::arg("adjecencies"), py::arg("positions"));
+  m.def("compute_geodesic_distances", &shp::compute_geodesic_distances, py::arg("solver"), py::arg("sources"), py::arg("max_distance")= flt_max);
+  m.def("sample_vertices_poisson", &shp::sample_vertices_poisson, py::arg("solver"), py::arg("num_samples");)
+  py::class_<shp::surface_path::vertex>(m, "vertex")
+    .def(py::init<vec2i, int, float>(),
+      py::arg("edge") = vec2i(0, 0),
+      py::arg("face") = 0,
+      py::arg("alpha") = 0)
+    .def_readwrite("edge", &shp::surface_path::vertex::edge)
+    .def_readwrite("face", &shp::surface_path::vertex::edge)
+    .def_readwrite("alpha", &shp::surface_path::vertex::edge);
+  
+  // py::class_<shp::surface_path>(m, "surface_path") // SAME TYPE AS GEODESIC SOLVER
+  //   .def_readwrite("vertex", &shp::surface_path::vertex)
+  //   .def_readwrite("start", &shp::surface_path::start)
+  //   .def_readwrite("end", &shp::surface_path::end)
+  //   .def_readwrite("vertices", &shp::surface_path::vertices);
+  m.def("integrate_field", (shp::surface_path (*)(const std::vector<vec3i>&,
+    const std::vector<vec3f>& , const std::vector<vec3i>& ,
+    const std::vector<int>& , int , const std::vector<float>& ,
+    int ))&shp::integrate_field, 
+    py::arg("triangles"),
+    py::arg("positions"),
+    py::arg("adjacency"),
+    py::arg("tags"),
+    py::arg("tag"),
+    py::arg("field"),
+    py::arg("from"));
+
+  m.def("integrate_field", (shp::surface_path (*)(const std::vector<vec3i>&,
+    const std::vector<vec3f>& , const std::vector<vec3i>& ,
+    const std::vector<int>& , int , const std::vector<float>& ,
+    int ))&shp::integrate_field, 
+    py::arg("triangles"),
+    py::arg("positions"),
+    py::arg("adjacency"),
+    py::arg("tags"),
+    py::arg("tag"),
+    py::arg("field"),
+    py::arg("from"),
+    py::arg("to"));
+
+  m.def("make_positions_from_path", &shp::make_positions_from_path, py::arg("path"), py::arg("mesh_positions"));
+  
   
   // -----------------------------------------------------------------------------
   // SHAPE IO FUNCTIONS
@@ -476,7 +522,11 @@ PYBIND11_MODULE(py_shape, m) {
   m.def("make_heightfield", &shp::make_heightfield, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("size"),
                       py::arg("height"));
 
-
+  // -----------------------------------------------------------------------------
+  // PROCEDURAL MODELING
+  // -----------------------------------------------------------------------------
+  m.def("meandering_triangles", &shp::meandering_triangles, py::arg("field"), py::arg("isoline"), py::arg("selected_tag"), py::arg("t0"),
+    py::arg("t1"), py::arg("triangles"), py::arg("tags"), py::arg("positions"), py::arg("normals"));
 
 
 }
