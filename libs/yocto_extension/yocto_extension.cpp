@@ -91,11 +91,20 @@ PYBIND11_MODULE(py_math, m) {
   // -----------------------------------------------------------------------------
   m.attr("pif")  = pif;
   m.def("pow2", &math::pow2, py::arg("a"));
+  m.def("radians", &math::radians, py::arg("a"));
   // -----------------------------------------------------------------------------
   // MATH CONSTANTS AND FUNCTIONS
   // -----------------------------------------------------------------------------
 
-
+  m.def("translation_frame", &math::translation_frame, py::arg("a"));
+  m.def("scaling_frame", &math::scaling_frame, py::arg("a"));
+  m.def("rotation_frame", (frame3f (*)(const vec3f&, float))&math::rotation_frame, py::arg("axis"), py::arg("angle"));
+  
+  m.def("transform_normal", (vec3f (*)(const frame3f&, const vec3f&, bool))&math::transform_normal, py::arg("a"), py::arg("b"), py::arg("non_rigid"));
+  m.def("transform_point", (vec3f (*)(const frame3f&, const vec3f&))&math::transform_point, py::arg("a"), py::arg("b"));
+  //Max element
+  m.def("max", (float (*)(const vec3f&))&math::max, py::arg("a")); 
+  m.def("min", (float (*)(const vec3f&))&math::min, py::arg("a")); 
   // -----------------------------------------------------------------------------
   // VECTORS
   // -----------------------------------------------------------------------------
@@ -246,6 +255,18 @@ PYBIND11_MODULE(py_math, m) {
 // -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_shape, m) {
 
+
+  // -----------------------------------------------------------------------------
+  // COMPUTATION OF PER_VERTEX PROPERTIES
+  // -----------------------------------------------------------------------------
+  m.def("compute_tangents", &shp::compute_tangents, py::arg("lines"), py::arg("positions"));
+  m.def("compute_normals", (std::vector<vec3f> (*)(const std::vector<vec4i>&, const std::vector<vec3f>&))&shp::compute_normals,
+   py::arg("triangles"), py::arg("positions"));
+  m.def("compute_normals", (std::vector<vec3f> (*)(const std::vector<vec4i>&, const std::vector<vec3f>&))&shp::compute_normals,
+   py::arg("quads"), py::arg("positions"));
+
+
+
   // -----------------------------------------------------------------------------
   // SHAPE ELEMENT CONVERSION AND GROUPING
   // -----------------------------------------------------------------------------
@@ -257,9 +278,30 @@ PYBIND11_MODULE(py_shape, m) {
   // -----------------------------------------------------------------------------
 
   // -----------------------------------------------------------------------------
+  // SHAPE IO FUNCTIONS
+  // -----------------------------------------------------------------------------
+  m.def("load_shape", &shp::load_shape, py::arg("filename"), py::arg("points"), py::arg("lines"), py::arg("triangles"),
+      py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("colors"),
+      py::arg("radius"), py::arg("error"), py::arg("flip_texcoords") = true);
+  m.def("save_shape", &shp::save_shape, py::arg("filename"), py::arg("points"), py::arg("lines"), py::arg("triangles"),
+      py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("colors"),
+      py::arg("radius"), py::arg("error"), py::arg("ascii") = false, py::arg("flip_texcoords") = true);
+
+  m.def("load_fvshape", &shp::load_fvshape, py::arg("filename"), py::arg("quadspos"), py::arg("quadsnorm"), py::arg("quadstexcoord"),
+      py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("colors"), py::arg("error"), py::arg("flip_texcoords") = false);
+  m.def("save_fvshape", &shp::save_fvshape, py::arg("filename"), py::arg("quadspos"), py::arg("quadsnorm"), py::arg("quadstexcoord"),
+      py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("colors"), py::arg("error"), py::arg("ascii") = false, py::arg("flip_texcoords") = true);
+  // -----------------------------------------------------------------------------
+  // SHAPE STATS AND VALIDATION
+  // -----------------------------------------------------------------------------
+  m.def("shape_stats", &shp::shape_stats, py::arg("points"), py::arg("lines"), py::arg("triangles"), py::arg("quads"), py::arg("quadspos"),
+      py::arg("quadsnorm"), py::arg("quadstexcoord"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("colors"),
+      py::arg("radius"), py::arg("verbose") = false)
+  
+  
+  // -----------------------------------------------------------------------------
   // SHAPE EXAMPLES
   // -----------------------------------------------------------------------------
-  
   // Make a Plane
   m.def("make_rect", &shp::make_rect, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec2i(1, 1), py::arg("scale") = vec2f(1, 1), py::arg("uvscale") = vec2f(1, 1));
