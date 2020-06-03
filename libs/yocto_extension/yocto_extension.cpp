@@ -338,9 +338,9 @@ PYBIND11_MODULE(py_shape, m) {
       py::arg("radius"), py::arg("error"), py::arg("ascii") = false, py::arg("flip_texcoords") = true);
 
   m.def("load_fvshape", &shp::load_fvshape, py::arg("filename"), py::arg("quadspos"), py::arg("quadsnorm"), py::arg("quadstexcoord"),
-      py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("colors"), py::arg("error"), py::arg("flip_texcoords") = false);
+      py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("error"), py::arg("flip_texcoords") = true);
   m.def("save_fvshape", &shp::save_fvshape, py::arg("filename"), py::arg("quadspos"), py::arg("quadsnorm"), py::arg("quadstexcoord"),
-      py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("colors"), py::arg("error"), py::arg("ascii") = false, py::arg("flip_texcoords") = true);
+      py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("error"), py::arg("ascii") = false, py::arg("flip_texcoords") = true);
   // -----------------------------------------------------------------------------
   // SHAPE STATS AND VALIDATION
   // -----------------------------------------------------------------------------
