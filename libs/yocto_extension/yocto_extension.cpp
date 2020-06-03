@@ -90,6 +90,7 @@ PYBIND11_MODULE(py_math, m) {
   // MATH CONSTANTS AND FUNCTIONS
   // -----------------------------------------------------------------------------
   m.attr("pif")  = pif;
+  m.attr("flt_max") = flt_max;
   m.def("pow2", &math::pow2, py::arg("a"));
   m.def("radians", &math::radians, py::arg("a"));
   // -----------------------------------------------------------------------------
@@ -315,8 +316,13 @@ PYBIND11_MODULE(py_shape, m) {
   m.def("compute_normals", (std::vector<vec3f> (*)(const std::vector<vec4i>&, const std::vector<vec3f>&))&shp::compute_normals,
    py::arg("quads"), py::arg("positions"));
 
+  // -----------------------------------------------------------------------------
+  // EDGES AND ADJACENCIES
+  // -----------------------------------------------------------------------------
+  m.def("face_adjacencies", &shp::face_adjacencies, py::arg("triangles"));
 
 
+  
   // -----------------------------------------------------------------------------
   // SHAPE ELEMENT CONVERSION AND GROUPING
   // -----------------------------------------------------------------------------
@@ -327,6 +333,21 @@ PYBIND11_MODULE(py_shape, m) {
   // SHAPE ELEMENT CONVERSION AND GROUPING
   // -----------------------------------------------------------------------------
 
+  // -----------------------------------------------------------------------------
+  // SHAPE GEODESICS
+  // -----------------------------------------------------------------------------
+  
+  py::class_<shp::geodesic_solver::graph_edge>(m, "graph_edge")
+    .def(py::init<int, float>(),
+      py::arg("node") = -1,
+      py::arg("length") = flt_max)
+    .def_readwrite("node", &shp::geodesic_solver::graph_edge::node)
+    .def_readwrite("length", &shp::geodesic_solver::graph_edge::length);
+      
+  // py::class_<shp::geodesic_solver>(m, "geodesic_solver")
+  //   .def_readwrite("min_arcs", &shp::geodesic_solver::min_arcs)
+  //   .def_readwrite("graph", &shp::geodesic_solver::graph);
+  
   // -----------------------------------------------------------------------------
   // SHAPE IO FUNCTIONS
   // -----------------------------------------------------------------------------
@@ -340,7 +361,7 @@ PYBIND11_MODULE(py_shape, m) {
   m.def("load_fvshape", &shp::load_fvshape, py::arg("filename"), py::arg("quadspos"), py::arg("quadsnorm"), py::arg("quadstexcoord"),
       py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("error"), py::arg("flip_texcoords") = true);
   m.def("save_fvshape", &shp::save_fvshape, py::arg("filename"), py::arg("quadspos"), py::arg("quadsnorm"), py::arg("quadstexcoord"),
-      py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("error"), py::arg("ascii") = false, py::arg("flip_texcoords") = true);
+      py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("colors"), py::arg("error"), py::arg("ascii") = false, py::arg("flip_texcoords") = true);
   // -----------------------------------------------------------------------------
   // SHAPE STATS AND VALIDATION
   // -----------------------------------------------------------------------------
