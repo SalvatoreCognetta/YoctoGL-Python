@@ -1,4 +1,4 @@
-import py_math
+import py_math as mth
 import py_shape as shp
 import py_image as img
 import py_pathtrace as ptr
