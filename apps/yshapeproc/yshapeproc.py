@@ -294,17 +294,7 @@ def main(*argv):
       if not shp.load_fvshape(filename, quadspos, quadsnorm,  quadstexcoord,
               positions, normals, texcoords, ioerror):
         commonio.print_fatal(ioerror)
-  
-
   commonio.print_progress("load shape", 1, 1)
-
-  # swap function
-  def swap(left, right):
-    temp = left
-    left = right
-    right = temp
-    return (left, right)
-
 
   # remove data
   if positiononly:
@@ -314,8 +304,7 @@ def main(*argv):
     radius = []
     quadsnorm = []
     quadstexcoord = []
-    if quadsnorm:
-      swap(quads, quadspos)#not sure about swap
+    if quadsnorm: mth.swap(quads, quadspos)
 
   # convert data
   if trianglesonly:
@@ -331,14 +320,16 @@ def main(*argv):
     stats = shp.shape_stats(points, lines, triangles, quads, quadspos, 
         quadsnorm, quadstexcoord, positions, normals, texcoords, colors, 
         radius)
-    for stat in stats:
-      commonio.print_info(stat)
+    for stat in stats: commonio.print_info(stat)
   
   # transform
   if uscale != 1: scale = scale * uscale
   if (not mth.vec3f.isEqual(translate, mth.zero3f)) or (not mth.vec3f.isEqual(rotate, mth.zero3f)) or (not mth.vec3f.isEqual(scale, mth.vec3f(1, 1, 1))):
     commonio.print_progress("transform shape", 0, 1) # Next line is very loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong
-    xform = mth.translation_frame(translate) * mth.scaling_frame(scale)* mth.rotation_frame(mth.vec3f(1, 0, 0), mth.radians(rotate.x)) * mth.rotation_frame(mth.vec3f(1, 0, 0), mth.radians(rotate.x)) * mth.rotation_frame(mth.vec3f(1, 0, 0), mth.radians(rotate.x)) 
+    xform = (mth.translation_frame(translate) * mth.scaling_frame(scale) * 
+            mth.rotation_frame(mth.vec3f(1, 0, 0), mth.radians(rotate.x)) * 
+            mth.rotation_frame(mth.vec3f(1, 0, 0), mth.radians(rotate.x)) * 
+            mth.rotation_frame(mth.vec3f(1, 0, 0), mth.radians(rotate.x)))
     for p in positions: p = mth.transform_point(xform, p)
     for n in normals:
       n = mth.transform_normal(xform, n, mth.max(scale) != mth.min(scale))
@@ -377,6 +368,75 @@ def main(*argv):
   #   commonio.print_progress("compute geodesic", 0, 1)
 
 
+  if p0 != -1:
+    commonio.print_progress("cut mesh", 0, 1)
+    tags = [0]*len(triangles)
+    adjacencies = shp.face_adjacencies(triangles)
+    solver = shp.make_geodesic_solver(triangles, adjacencies, positions)
+
+    paths = []
+    fields = []
+    fields.append(shp.compute_geodesic_distances(solver, [p0]))
+    fields.append(shp.compute_geodesic_distances(solver, [p1]))
+    fields.append(shp.compute_geodesic_distances(solver, [p2]))
+    i = 0
+    while i < 3:
+      for f in fields[i]: f = -f
+      i += 1
+
+    paths.append(shp.integrate_field(
+        triangles, positions, adjacencies, tags, 0, fields[1], p0, p1))
+
+    paths.append(shp.integrate_field(
+        triangles, positions, adjacencies, tags, 0, fields[2], p1, p2))
+
+    paths.append(shp.integrate_field(
+        triangles, positions, adjacencies, tags, 0, fields[0], p2, p0))
+
+    plines     = []
+    ppositions = []
+    i = 0
+    while i < 3:
+      pos  = shp.make_positions_from_path(paths[i], positions)
+      line = []
+      k = 0
+      while k < len(line):
+        line.append(mth.vec2i(k, k + 1))
+        line[k] = line[k] + int(len(lines))
+      # plines.insert(plines.end(), line.begin(), line.end());
+      # ppositions.insert(ppositions.end(), pos.begin(), pos.end());
+      i += 1
+    points    = []
+    lines     = plines
+    triangles = []
+    quads     = []
+    positions = ppositions
+    normals   = []
+    texcoords = []
+    colors    = []
+    radius    = []
+    commonio.print_progress("cut mesh", 1, 1)
+
+  if info:
+    commonio.print_info("shape stats ------------")
+    stats = shp.shape_stats(points, lines, triangles, quads, quadspos,
+        quadsnorm, quadstexcoord, positions, normals, texcoords, colors,
+        radius)
+    for stat in stats: commonio.print_info(stat)
+
+  # save mesh
+  commonio.print_progress("save shape", 0, 1)
+  if quadspos:
+    if not shp.save_fvshape(output, quadspos, quadsnorm, quadstexcoord,
+            positions, normals, texcoords, ioerror):
+      commonio.print_fatal(ioerror)
+  else:
+    if not shp.save_shape(output, points, lines, triangles, quads, positions,
+            normals, texcoords, colors, radius, ioerror):
+      commonio.print_fatal(ioerror)
+  commonio.print_progress("save shape", 1, 1)
+
+  # done
 
 
 

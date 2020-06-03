@@ -85,6 +85,9 @@ namespace py = pybind11;
 // YOCTO-MATH
 // -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_math, m) {
+  m.def("swap", [](vec4i& source, vec4i& dest) {
+    swap(source, dest);
+  });
 
   // -----------------------------------------------------------------------------
   // MATH CONSTANTS AND FUNCTIONS
@@ -97,15 +100,7 @@ PYBIND11_MODULE(py_math, m) {
   // MATH CONSTANTS AND FUNCTIONS
   // -----------------------------------------------------------------------------
 
-  m.def("translation_frame", &math::translation_frame, py::arg("a"));
-  m.def("scaling_frame", &math::scaling_frame, py::arg("a"));
-  m.def("rotation_frame", (frame3f (*)(const vec3f&, float))&math::rotation_frame, py::arg("axis"), py::arg("angle"));
   
-  m.def("transform_normal", (vec3f (*)(const frame3f&, const vec3f&, bool))&math::transform_normal, py::arg("a"), py::arg("b"), py::arg("non_rigid"));
-  m.def("transform_point", (vec3f (*)(const frame3f&, const vec3f&))&math::transform_point, py::arg("a"), py::arg("b"));
-  //Max element
-  m.def("max", (float (*)(const vec3f&))&math::max, py::arg("a")); 
-  m.def("min", (float (*)(const vec3f&))&math::min, py::arg("a")); 
   // -----------------------------------------------------------------------------
   // VECTORS
   // -----------------------------------------------------------------------------
@@ -169,6 +164,9 @@ PYBIND11_MODULE(py_math, m) {
   m.def("max", (vec2f (*)(const vec2f&, float))&math::max, py::arg("a"), py::arg("b"));
   m.def("max", (vec2f (*)(const vec2f&, const vec2f&))&math::max, py::arg("a"), py::arg("b"));
   m.def("max", (float (*)(const vec2f&))&math::max, py::arg("a"));
+  m.def("max", (float (*)(const vec3f&))&math::max, py::arg("a"));
+
+  m.def("min", (float (*)(const vec3f&))&math::min, py::arg("a")); 
 
   m.def("mean", (float (*)(const vec2f&))&math::mean, py::arg("a"));
   m.def("mean", (float (*)(const vec3f&))&math::mean, py::arg("a"));
@@ -282,6 +280,21 @@ PYBIND11_MODULE(py_math, m) {
   m.attr("identity3x4f")  = py_identity3x4f;
   // -----------------------------------------------------------------------------
   // RIGID BODY TRANSFORMS/FRAMES
+  // -----------------------------------------------------------------------------
+
+
+
+  // -----------------------------------------------------------------------------
+  // TRANSFORMS
+  // -----------------------------------------------------------------------------
+  m.def("transform_point", (vec3f (*)(const frame3f&, const vec3f&))&math::transform_point, py::arg("a"), py::arg("b"));
+  m.def("transform_normal", (vec3f (*)(const frame3f&, const vec3f&, bool))&math::transform_normal, py::arg("a"), py::arg("b"), py::arg("non_rigid"));
+
+  m.def("translation_frame", &math::translation_frame, py::arg("a"));
+  m.def("scaling_frame", &math::scaling_frame, py::arg("a"));
+  m.def("rotation_frame", (frame3f (*)(const vec3f&, float))&math::rotation_frame, py::arg("axis"), py::arg("angle"));
+  // -----------------------------------------------------------------------------
+  // TRANSFORMS
   // -----------------------------------------------------------------------------
 
 
