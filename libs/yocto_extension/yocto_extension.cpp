@@ -346,7 +346,7 @@ PYBIND11_MODULE(py_shape, m) {
   // -----------------------------------------------------------------------------
   m.def("shape_stats", &shp::shape_stats, py::arg("points"), py::arg("lines"), py::arg("triangles"), py::arg("quads"), py::arg("quadspos"),
       py::arg("quadsnorm"), py::arg("quadstexcoord"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("colors"),
-      py::arg("radius"), py::arg("verbose") = false)
+      py::arg("radius"), py::arg("verbose") = false);
   
   
   // -----------------------------------------------------------------------------
