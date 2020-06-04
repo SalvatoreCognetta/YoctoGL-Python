@@ -383,7 +383,6 @@ PYBIND11_MODULE(py_shape, m) {
   //   .def_readwrite("min_arcs", &shp::geodesic_solver::min_arcs)
   //   .def_readwrite("graph", &shp::geodesic_solver::graph);
 
-
   m.def("make_geodesic_solver", &shp::make_geodesic_solver, py::arg("triangles"), py::arg("adjecencies"), py::arg("positions"));
   m.def("compute_geodesic_distances", &shp::compute_geodesic_distances, py::arg("solver"), py::arg("sources"), py::arg("max_distance")= flt_max);
   m.def("sample_vertices_poisson", &shp::sample_vertices_poisson, py::arg("solver"), py::arg("num_samples"));
@@ -401,6 +400,7 @@ PYBIND11_MODULE(py_shape, m) {
   //   .def_readwrite("start", &shp::surface_path::start)
   //   .def_readwrite("end", &shp::surface_path::end)
   //   .def_readwrite("vertices", &shp::surface_path::vertices);
+
   m.def("integrate_field", (shp::surface_path (*)(const std::vector<vec3i>&,
     const std::vector<vec3f>& , const std::vector<vec3i>& ,
     const std::vector<int>& , int , const std::vector<float>& ,
