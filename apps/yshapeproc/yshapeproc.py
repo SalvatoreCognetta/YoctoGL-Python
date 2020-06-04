@@ -373,7 +373,7 @@ def main(*argv):
     quadsnorm = []
     commonio.print_progress("facet shape", 1, 1)
   
-  #compute geodesic and store them as colors
+  # compute geodesic and store them as colors
   if geodesic_source >= 0 or num_geodesic_samples > 0:
     commonio.print_progress("compute geodesic", 0, 1)
     adjacencies = shp.face_adjacencies(triangles)
@@ -389,7 +389,7 @@ def main(*argv):
       vec_tags = []
 
       j = 0 
-      while j < len(triangles): #maybe wrong
+      while j < len(triangles):
          vec_tags.append(0)
          j += 1
 
@@ -433,13 +433,13 @@ def main(*argv):
     paths.append(shp.integrate_field(
       triangles, positions, adjacencies, vec_tags, 0, fields[0], p2, p0))
     
-    plines = []
+    plines     = []
     ppositions = []
     for i in range(0,3):
       pos = shp.make_positions_from_path(paths[i], positions)
       line = []
       k = 0
-      while k < len(line):
+      while k < len(pos):
         line.append(mth.vec2i(k, k+1))
         line[k] += int(len(lines))
         k += 1
