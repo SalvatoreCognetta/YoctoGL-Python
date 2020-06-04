@@ -1,3 +1,4 @@
+import math
 import py_math as mth
 import py_shape as shp
 import py_commonio as commonio
@@ -379,30 +380,29 @@ def main(*argv):
     solver = shp.make_geodesic_solver(triangles, adjacencies, positions)
     sources = []
     if geodesic_source >= 0:
-      #sources = {geodesic_source} 
-      sources = [geodesic_source] # wrong, fix later
+      sources = [geodesic_source]
     else:
       sources = shp.sample_vertices_poisson(solver, num_geodesic_samples)
     field = shp.compute_geodesic_distances(solver, sources)
 
-    if (slise):
+    if slise:
       vec_tags = []
+
       j = 0 
       while j < len(triangles): #maybe wrong
          vec_tags.append(0)
          j += 1
-      shp.meandering_triangles(field, geodesic_scale, 0, 1, 2, triangles, vec_tags, positions, normals)
+
+      shp.meandering_triangles(
+          field, geodesic_scale, 0, 1, 2, triangles, vec_tags, positions, normals)
       i = 0
-      while i < len(colors):
-        if vec_tags[i] == 1:
-          triangles[i] = mth.vec3f(-1, -1, -1)
+      while i < len(triangles):
+        if vec_tags[i] == 1: triangles[i] = mth.vec3i(-1, -1, -1)
         i += 1
     else:
-      colors = [len(positions)]
       i = 0
       while i < len(colors):
-        # colors[i] = vec3f(sinf(geodesic_scale * field[i]))  <---WHAT THE FUCK IS "SINF"
-        colors[i] = mth.vec3f()
+        colors.append(mth.vec3f(math.sin(geodesic_scale * field[i])))
         i += 1
     commonio.print_progress("compute geodesic", 1, 1)
 
@@ -415,14 +415,14 @@ def main(*argv):
       i += 1
     adjacencies = shp.face_adjacencies(triangles)
     solver = shp.make_geodesic_solver(triangles, adjacencies, positions)
-    paths = []
-    fields = [3]
+
+    paths     = []
+    fields    = [3]
     fields[0] = shp.compute_geodesic_distances(solver, [p0])
     fields[1] = shp.compute_geodesic_distances(solver, [p1])
     fields[2] = shp.compute_geodesic_distances(solver, [p2])
     for i in range(0,3): # maybe wrong
-      for f in fields[i]:
-        f = -f
+      for f in fields[i]: f = -f
     
     paths.append(shp.integrate_field(
       triangles, positions, adjacencies, vec_tags, 0, fields[1], p0, p1))
@@ -437,23 +437,23 @@ def main(*argv):
     ppositions = []
     for i in range(0,3):
       pos = shp.make_positions_from_path(paths[i], positions)
-      line = [len(pos) - 1] # POSSIBLY COULD FUCK UP THE WHOLE THING
+      line = []
       k = 0
       while k < len(line):
-        line[k] = mth.vec2i(k, k+1)
-        line[k] += len(lines)
+        line.append(mth.vec2i(k, k+1))
+        line[k] += int(len(lines))
         k += 1
       # plines.insert(plines.end(), line.begin(), line.end())
       # ppositions.insert(plines.end(), line.begin(), line.end())
-    points = []
-    lines = plines
+    points    = []
+    lines     = plines
     triangles = []
-    quads = []
+    quads     = []
     positions = ppositions
-    normals = []
+    normals   = []
     texcoords = []
-    colors = []
-    radius = []
+    colors    = []
+    radius    = []
     commonio.print_progress("cut mesh", 1, 1)
   
   if info:
@@ -461,9 +461,9 @@ def main(*argv):
     stats = shp.shape_stats(points, lines, triangles, quads, quadspos,
         quadsnorm, quadstexcoord, positions, normals, texcoords, colors,
         radius)
-    for stat in stats:
-      commonio.print_info(stat)
+    for stat in stats: commonio.print_info(stat)
   
+  # save mesh
   commonio.print_progress("save shape", 0, 1)
   if quadspos:
     if not shp.save_fvshape(output, quadspos, quadsnorm, quadstexcoord,
@@ -475,6 +475,8 @@ def main(*argv):
       commonio.print_fatal(ioerror)
   commonio.print_progress("save shape", 1, 1)
 
+  # done
+
+
 if __name__ == "__main__":
   main(sys.argv)
-  

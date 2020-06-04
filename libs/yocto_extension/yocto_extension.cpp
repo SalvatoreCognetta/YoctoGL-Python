@@ -85,6 +85,7 @@ namespace py = pybind11;
 // YOCTO-MATH
 // -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_math, m) {
+
   m.def("swap", [](vec4i& source, vec4i& dest) {
     swap(source, dest);
   });
@@ -103,8 +104,7 @@ PYBIND11_MODULE(py_math, m) {
   
   // -----------------------------------------------------------------------------
   // VECTORS
-  // -----------------------------------------------------------------------------
-  
+  // -----------------------------------------------------------------------------  
   py::class_<vec2f>(m, "vec2f")
     .def(py::init<float, float>(), 
         py::arg("x") = 0, py::arg("y") = 0)
@@ -283,7 +283,6 @@ PYBIND11_MODULE(py_math, m) {
   // -----------------------------------------------------------------------------
 
 
-
   // -----------------------------------------------------------------------------
   // TRANSFORMS
   // -----------------------------------------------------------------------------
@@ -319,7 +318,6 @@ PYBIND11_MODULE(py_math, m) {
 // -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_shape, m) {
 
-
   // -----------------------------------------------------------------------------
   // COMPUTATION OF PER_VERTEX PROPERTIES
   // -----------------------------------------------------------------------------
@@ -328,12 +326,18 @@ PYBIND11_MODULE(py_shape, m) {
    py::arg("triangles"), py::arg("positions"));
   m.def("compute_normals", (std::vector<vec3f> (*)(const std::vector<vec4i>&, const std::vector<vec3f>&))&shp::compute_normals,
    py::arg("quads"), py::arg("positions"));
+  // -----------------------------------------------------------------------------
+  // COMPUTATION OF PER_VERTEX PROPERTIES
+  // -----------------------------------------------------------------------------
+  
 
   // -----------------------------------------------------------------------------
   // EDGES AND ADJACENCIES
   // -----------------------------------------------------------------------------
   m.def("face_adjacencies", &shp::face_adjacencies, py::arg("triangles"));
-
+  // -----------------------------------------------------------------------------
+  // EDGES AND ADJACENCIES
+  // -----------------------------------------------------------------------------
 
   
   // -----------------------------------------------------------------------------
@@ -346,10 +350,10 @@ PYBIND11_MODULE(py_shape, m) {
   // SHAPE ELEMENT CONVERSION AND GROUPING
   // -----------------------------------------------------------------------------
 
+
   // -----------------------------------------------------------------------------
   // SHAPE GEODESICS
   // -----------------------------------------------------------------------------
-  
   py::class_<shp::geodesic_solver::graph_edge>(m, "graph_edge")
     .def(py::init<int, float>(),
       py::arg("node") = -1,
@@ -405,6 +409,9 @@ PYBIND11_MODULE(py_shape, m) {
     py::arg("to"));
 
   m.def("make_positions_from_path", &shp::make_positions_from_path, py::arg("path"), py::arg("mesh_positions"));
+  // -----------------------------------------------------------------------------
+  // SHAPE GEODESICS
+  // -----------------------------------------------------------------------------  
   
   
   // -----------------------------------------------------------------------------
@@ -420,14 +427,22 @@ PYBIND11_MODULE(py_shape, m) {
   m.def("load_fvshape", &shp::load_fvshape, py::arg("filename"), py::arg("quadspos"), py::arg("quadsnorm"), py::arg("quadstexcoord"),
       py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("error"), py::arg("flip_texcoords") = true);
   m.def("save_fvshape", &shp::save_fvshape, py::arg("filename"), py::arg("quadspos"), py::arg("quadsnorm"), py::arg("quadstexcoord"),
-      py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("colors"), py::arg("error"), py::arg("ascii") = false, py::arg("flip_texcoords") = true);
+      py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("error"), py::arg("ascii") = false, py::arg("flip_texcoords") = true);
+  // -----------------------------------------------------------------------------
+  // SHAPE IO FUNCTIONS
+  // -----------------------------------------------------------------------------
+
+
   // -----------------------------------------------------------------------------
   // SHAPE STATS AND VALIDATION
   // -----------------------------------------------------------------------------
   m.def("shape_stats", &shp::shape_stats, py::arg("points"), py::arg("lines"), py::arg("triangles"), py::arg("quads"), py::arg("quadspos"),
       py::arg("quadsnorm"), py::arg("quadstexcoord"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("colors"),
       py::arg("radius"), py::arg("verbose") = false);
-  
+  // -----------------------------------------------------------------------------
+  // SHAPE STATS AND VALIDATION
+  // -----------------------------------------------------------------------------
+
   
   // -----------------------------------------------------------------------------
   // SHAPE EXAMPLES
@@ -521,12 +536,19 @@ PYBIND11_MODULE(py_shape, m) {
   // Make a heightfield mesh
   m.def("make_heightfield", &shp::make_heightfield, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("size"),
                       py::arg("height"));
+  // -----------------------------------------------------------------------------
+  // SHAPE EXAMPLES
+  // -----------------------------------------------------------------------------
+
 
   // -----------------------------------------------------------------------------
   // PROCEDURAL MODELING
   // -----------------------------------------------------------------------------
   m.def("meandering_triangles", &shp::meandering_triangles, py::arg("field"), py::arg("isoline"), py::arg("selected_tag"), py::arg("t0"),
     py::arg("t1"), py::arg("triangles"), py::arg("tags"), py::arg("positions"), py::arg("normals"));
+  // -----------------------------------------------------------------------------
+  // PROCEDURAL MODELING
+  // -----------------------------------------------------------------------------
 
 
 }
