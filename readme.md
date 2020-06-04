@@ -38,7 +38,7 @@ pip install . --no-cache-dir
 Insert the pybindmodule in the principal cmakelists.txt, and the libs in the cmakelist of yoctoextension (otherwise it will blow up)
 
 # Task
-We were asked to create a python binding to the main Yocto functionality by writing a set of Python scripts interpreting already existing files in Yocto. More specifically we were asked to create 'yscenetrace.py', `ysceneproc.py', 'yimageproc.py', and 'yshapeproc.py' by binding functions enclosed in the corresponding ".cpp" files to Python, using pybind11.
+We were asked to create a python binding to the main Yocto functionality by writing a set of Python scripts interpreting already existing files in Yocto. More specifically we were asked to create 'apps/yscenetrace/yscenetrace.py', `apps/ysceneproc/ysceneproc.py', 'apps/yimageproc/yimageproc.py', and 'apps/yshapeproc/yshapeproc.py' by binding functions enclosed in the corresponding ".cpp" files to Python, using pybind11.
 
 # What was done
 As instructed we downloaded pybind11 and linked it to the yocto library. We wrote the list of bindings inside "yocto_extension.cpp" as told, creating a pybind11 module for each header file we bound (yocto_shapeio, yocto_image, yocto_commonio, yocto_pathtrace, yocto_sceneio, and filesystem). 
