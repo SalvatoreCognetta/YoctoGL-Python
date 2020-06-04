@@ -7,6 +7,31 @@ import py_sceneio   as sio
 import py_filesystem   as fs
 import sys
 
+def parse_cli(args):
+  filename = "scene.json"
+  output = "out.json"
+  validate = False
+  info = False
+  copyright_yocto = ''
+  
+  i = 0
+  for arg in args:
+    if not arg.startswith('-') and i == 0 and arg.endswith('.json'):
+      filename = arg
+    elif arg.startswith('-c'):
+      copyright_yocto = args[i+1]
+    elif arg.startswith('-i'):
+      info = bool(args[i+1])
+      copyright_yocto = args[i+1]
+    elif arg.startswith('--validate'):
+      validate = bool(args[i+1])
+    elif arg.startswith('-o'):
+      output = args[i+1]
+    i +=1
+
+  return filename, output, validate, info, copyright_yocto
+
+
 def make_preset(scene, type, error):
   if(type == "cornellbox"):
     sio.make_cornellbox(scene)
@@ -29,14 +54,16 @@ def main(*argv):
   # command line parameters
   validate = False
   info = False
-  copyrigt = ""
+  copyright_yocto = ""
   output = "out.json"
   filename = "scene.json"
+
+  filename, output, validate, info, copyright_yocto = parse_cli(argv[0][1:])
 
   # parse command line
   cli = commonio.make_cli("yscnproc", "Process scene")
   commonio.add_option(cli, "--info,-i", info, "print scene info", False)
-  commonio.add_option(cli, "--copyright,-c", copyrigt, "copyright string", False)
+  commonio.add_option(cli, "--copyright,-c", copyright_yocto, "copyright string", False)
   commonio.add_option(cli, "--validate/--no-validate", validate, "Validate scene", False)
   commonio.add_option(cli, "--output,-o", output, "output scene", False)
   commonio.add_option(cli, "scene", filename, "input scene", True)
@@ -56,8 +83,8 @@ def main(*argv):
       commonio.print_fatal(ioerror)
 
   # copyright
-  if (copyrigt != ""):
-    scene.copyright = copyrigt
+  if (copyright_yocto != ""):
+    scene.copyright = copyright_yocto
   
   # validate scene
   if (validate):
@@ -72,7 +99,7 @@ def main(*argv):
   
   # tesselate if needed
   if (fs.path_extension(output) != ".json"):
-    for iosubdiv in scene.subdivs():
+    for iosubdiv in scene.subdivs:
       sio.tesselate_subdiv(scene, iosubdiv)
   
 

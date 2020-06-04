@@ -7,6 +7,44 @@ import py_sceneio   as sio
 import py_filesystem   as fs
 import sys
 
+def parse_cli(args, params: ptr.trace_params):
+  filename = "surface.json"
+  imfilename = "out.hdr"
+  camera_name = ''
+  save_batch = False
+  i = 0
+  for arg in args:
+    if not arg.startswith('-') and i == 0 and arg.endswith('.json'):
+      filename = arg
+    elif arg.startswith('--camera'):
+      camera_name = arg
+    elif arg.startswith('-r'):
+      params.resolution = int(args[i+1])
+    elif arg.startswith('-s'):
+      params.samples = int(args[i+1])
+    elif arg.startswith('-b'):
+      params.bounces = int(args[i+1])
+    elif arg.startswith('-c'):
+      params.clamp = float(args[i+1])
+    elif arg.startswith('-clamp'):
+      params.clamp = float(args[i+1])
+    elif arg.startswith('-t'):
+      shader = ptr.shader_type(0)
+      if args[i+1] == 'path':
+        shader = ptr.shader_type(1)
+      elif args[i+1] == 'eyelight':
+        shader = ptr.shader_type(2)
+      elif args[i+1] == 'normal':
+        shader = ptr.shader_type(3)
+      params.shader = shader
+    elif arg.startswith('-o'):
+      imfilename = args[i+1]
+    elif arg.startswith('--save-batch'):
+      save_batch = bool(args[i+1])
+    i +=1
+
+  return filename, imfilename, camera_name, params, save_batch
+
 def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamera: sio.camera, progress_cb):
   progress = py_math.vec2i(0, len(ioscene.cameras) + len(ioscene.environments) +
               len(ioscene.materials) + len(ioscene.textures) +
@@ -36,12 +74,9 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
     # if ptr.texture_empty(texture, 'colorf'):
     if texture.colorf: # check if a list is empty by its type flexibility. https://therenegadecoder.com/code/how-to-check-if-a-list-is-empty-in-python/#check-if-a-list-is-empty-by-its-type-flexibility
       ptr.set_texture(texture, iotexture.colorf)
-      size_colorf = img.image_vec3f.size(iotexture.colorf)
+      size_colorf = img.image_vec3f.size(iotexture.colorf) # Only to by-pass the floating point exception, but this is wrong
       if size_colorf.x:
         iotexture_tmp = iotexture
-        # print(texture)
-        # print(size_colorf.x)
-        # print(size_colorf.y)
     elif texture.colorb:
       ptr.set_texture(texture, iotexture.colorb)
     elif texture.scalarf:
@@ -49,7 +84,6 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
     elif texture.scalarb:
       ptr.set_texture(texture, iotexture.scalarb)
     texture_map[iotexture] = texture
-    # print(texture_map[iotexture])
   
   material_map = {}
   material_map[None] = None
@@ -131,7 +165,6 @@ def init_scene(scene: ptr.scene, ioscene: sio.model, camera: ptr.camera, iocamer
             ioobject.material.displacement,
             texture_map[iotexture_tmp])
             # texture_map[ioobject.material.displacement_tex])
-        # print(texture_map[iotexture_tmp])
       ptr.set_material(yocto_object, material_map[ioobject.material])
   
   for ioenvironment in ioscene.environments:
@@ -159,12 +192,10 @@ def main(*argv):
   params = ptr.trace_params()
   save_batch  = False
   camera_name = ""
-  # imfilename  = "out.hdr"
+  imfilename  = "out.hdr"
   filename    = "surface.json"
-  imfilename  = "out/lowres/01_surface_720_256.jpg"
-  if len(argv) > 0 and len(argv[0]) > 1:
-    if (argv[0][1]).startswith('tests/'):
-      filename    = argv[0][1]
+
+  filename, imfilename, camera_name, params, save_batch = parse_cli(argv[0][1:], params)
 
   # parse command line
   cli = commonio.make_cli("yscntrace", "Offline path tracing")
@@ -177,10 +208,6 @@ def main(*argv):
   commonio.add_option(cli, "--save-batch", save_batch, "Save images progressively", False)
   commonio.add_option(cli, "--output-image,-o", imfilename, "Image filename", False)
   commonio.add_option(cli, "scene", filename, "Scene filename", True)
-
-  # args = [["./apps/yscenetrace/yscentrace.py"], ["tests/01_surface/surface.json"], ["-t"], ["path"], ["-s"], ["256"], ["-r"], ["720"]]
-  # print(cli.options[9].value) # If I remove this everything blow up with segmentation-fault
-  # commonio.parse_cli(cli, *argv)
 
   # scene loading
   # ioscene_guard = sio.model()
@@ -197,50 +224,26 @@ def main(*argv):
   scene       = ptr.scene()
   camera      = None # ptr.camera.nullprt()
   scene, ioscene, camera, iocamera = init_scene(scene, ioscene, camera, iocamera, commonio.print_progress)
-
-  # for shape in scene.shapes:
-  #   displacement_tex = shape.subdiv_displacement_tex
-  #   if displacement_tex:
-  #     size_colorf = img.image_vec3f.size(displacement_tex.colorf)
-  #     print("size_colorf.x: ", size_colorf.x)
-  #     print("size_colorf.y: ",size_colorf.y)
-
-  #     size_colorb = img.image_vec3b.size(displacement_tex.colorb)
-  #     print("size_colorb.x: ", size_colorb.x)
-  #     print("size_colorb.y: ",size_colorb.y)
-
-  #     size_scalarf = img.image_float.size(displacement_tex.scalarf)
-  #     print("size_scalarf.x: ", size_scalarf.x)
-  #     print("size_scalarf.y: ",size_scalarf.y)
-
-  #     size_scalarb = img.image_byte.size(displacement_tex.scalarb)
-  #     print("size_scalarb.x: ", size_scalarb.x)
-  #     print("size_scalarb.y: ",size_scalarb.y)
-  # print(scene.shapes[0].subdiv_displacement_tex.colorb)
-  # print(scene.shapes[0].subdiv_displacement_tex.scalarf)
-  # print(scene.shapes[0].subdiv_displacement_tex.scalarb)
-
+  
   # init subdivs
-  ptr.init_subdivs(scene, params, commonio.print_progress) # floating point exception (core dumped)
+  ptr.init_subdivs(scene, params, commonio.print_progress) # floating point exception (core dumped) caused by ptr::eval_texture : auto ii = (i + 1) % size.x, jj = (j + 1) % size.y;
 
-  # # build bvh
+  # build bvh
   ptr.init_bvh(scene, params, commonio.print_progress) # ok
 
   # build lights
   ptr.init_lights(scene, params, commonio.print_progress) # ok
 
   # init state
-  # state_guard = std::make_unique<ptr::state>()
+  # state_guard = ptr.state.make_unique()
   state = ptr.state()
-  ptr.init_state(state, scene, camera, params) # segmentation fault (core dumped)
-  print(img.image_pixel.size(state.pixels).x)
-  # for pixel in state.pixels:
-  # render
+  ptr.init_state(state, scene, camera, params)
+  
   commonio.print_progress("render image", 0, params.samples)
   sample = 0
   while sample < params.samples:
     commonio.print_progress("render image", sample, params.samples)
-    # ptr.trace_samples(state, scene, camera, params)
+    # ptr.trace_samples(state, scene, camera, params) # error on ptr::eval_camera : auto p = dc * camera->focus / abs(dc.z);
     if save_batch:
         ext = "-s" + str(sample) + fs.path_extension(imfilename)
         outfilename = fs.path_replace_extension(imfilename, ext)

@@ -136,20 +136,26 @@ static vec3f eval_texture(const ptr::texture* texture, const vec2f& uv,
   if (clamp_to_edge) {
     s = clamp(uv.x, 0.0f, 1.0f) * size.x;
     t = clamp(uv.y, 0.0f, 1.0f) * size.y;
+    // cli::print_info("eval_texture clamp ok");
   } else {
     s = fmod(uv.x, 1.0f) * size.x;
     if (s < 0) s += size.x;
     t = fmod(uv.y, 1.0f) * size.y;
     if (t < 0) t += size.y;
+    // cli::print_info("eval_texture fmod ok");
   }
 
   // get yimg::image coordinates and residuals
+  // cli::print_info("eval_texture size.x: " + std::to_string(size.x) + " size.y: " + std::to_string(size.y));
   auto i = clamp((int)s, 0, size.x - 1), j = clamp((int)t, 0, size.y - 1);
+  // cli::print_info("eval_texture clamp: " + std::to_string(i));
   auto ii = (i + 1) % size.x, jj = (j + 1) % size.y;
+  // cli::print_info("eval_texture clamp: " + std::to_string(ii));
   auto u = s - i, v = t - j;
+  // cli::print_info("eval_texture yimg::image coordinates and residuals ok");
 
   if (no_interpolation) return lookup_texture(texture, {i, j}, ldr_as_linear);
-
+  // cli::print_info("eval_texture lookup_texture ok");
   // handle interpolation
   return lookup_texture(texture, {i, j}, ldr_as_linear) * (1 - u) * (1 - v) +
          lookup_texture(texture, {i, jj}, ldr_as_linear) * (1 - u) * v +
@@ -171,10 +177,13 @@ static ray3f eval_camera(
   auto q  = vec3f{camera->film.x * (0.5f - image_uv.x),
       camera->film.y * (image_uv.y - 0.5f), camera->lens};
   auto dc = -normalize(q);
+  cli::print_info("Inside eval_camera 1" + std::to_string(dc.z));
   auto e  = vec3f{
       lens_uv.x * camera->aperture / 2, lens_uv.y * camera->aperture / 2, 0};
   auto p = dc * camera->focus / abs(dc.z);
+  // cli::print_info("Inside eval_camera 3");
   auto d = normalize(p - e);
+  // cli::print_info("Inside eval_camera 4");
   return ray3f{
       transform_point(camera->frame, e), transform_direction(camera->frame, d)};
 }
@@ -1453,16 +1462,23 @@ static shader_func get_trace_shader_func(const trace_params& params) {
 // Trace a block of samples
 vec4f trace_sample(ptr::state* state, const ptr::scene* scene,
     const ptr::camera* camera, const vec2i& ij, const trace_params& params) {
+  // cli::print_info("Inside trace_sample");
   auto  shader = get_trace_shader_func(params);
   auto& pixel  = state->pixels[ij];
+  // cli::print_info("pixel.size.x: " + std::to_string(state->pixels.size().x));
   auto  ray    = sample_camera(
       camera, ij, state->pixels.size(), rand2f(pixel.rng), rand2f(pixel.rng));
+  // cli::print_info("trace_sample sample_camera ok");
   auto shaded = shader(scene, ray, pixel.rng, params);
+  // cli::print_info("trace_sample shader ok");
   if (!isfinite(xyz(shaded))) xyz(shaded) = zero3f;
+  // cli::print_info("trace_sample isfinite ok");
   if (max(xyz(shaded)) > params.clamp)
     xyz(shaded) = xyz(shaded) * (params.clamp / max(xyz(shaded)));
+  // cli::print_info("trace_sample /shaded ok");
   pixel.accumulated += shaded;
   pixel.samples += 1;
+  // cli::print_info("trace_sample: " + std::to_string(pixel.samples));
   return pixel.accumulated / pixel.samples;
 }
 
@@ -1674,16 +1690,21 @@ static void subdivide_shape(ptr::shape* shape) {
     shape->texcoords = texcoords;
   }
   if (shape->subdiv_displacement) {
+    // cli::print_info("subdiv_displacement: " + std::to_string(shape->subdiv_displacement));
     for (auto idx = 0; idx < shape->positions.size(); idx++) {
+      // cli::print_info("subdivide_shape 14 ok");
       auto displacement = eval_texturef(
           shape->subdiv_displacement_tex, shape->texcoords[idx], true);
+      // cli::print_info("subdivide_shape 14-1 ok");
       if (!shape->subdiv_displacement_tex->scalarb.empty() ||
           !shape->subdiv_displacement_tex->colorb.empty())
         displacement -= 0.5f;
+      // cli::print_info("subdivide_shape 14-2 ok");
       shape->positions[idx] += shape->normals[idx] *
                                shape->subdiv_displacement * displacement;
     }
   }
+  // cli::print_info("subdivide_shape exit ok");
 }
 
 // Initialize subdivision surfaces
@@ -1693,16 +1714,19 @@ void init_subdivs(ptr::scene* scene, const trace_params& params,
   auto nsubdivs = (int)std::count_if(scene->shapes.begin(), scene->shapes.end(),
       [](ptr::shape* shape) { return !shape->subdiv_quadsposition.empty(); });
   auto progress = vec2i{0, 1 + nsubdivs};
-
   // tesselate subdivs
   for (auto shape : scene->shapes) {
     if (shape->subdiv_quadsposition.empty()) continue;
     if (progress_cb) progress_cb("tesselate subdiv", progress.x++, progress.y);
+    // cli::print_info("init_subdivs for loop2");
     subdivide_shape(shape);
+    // cli::print_info("init_subdivs for loop3");
   }
+  // cli::print_info("init_subdivs exit loop4");
 
   // handle progress
   if (progress_cb) progress_cb("tesselate subdiv", progress.x++, progress.y);
+  // cli::print_info("init_subdivs exit");
 }
 
 // Init a sequence of random number generators.

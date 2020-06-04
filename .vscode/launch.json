@@ -12,15 +12,15 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            // "args": [
-            //     "tests/01_surface/surface.json",
-            //     "-t",
-            //     "path", 
-            //     "-s", 
-            //     "256", 
-            //     "-r",
-            //     "720"
-            // ]
+            "args": [
+                "tests/01_surface/surface.json",
+                "-t",
+                "path", 
+                "-s", 
+                "256", 
+                "-r",
+                "720"
+            ]
         }
     ]
 }

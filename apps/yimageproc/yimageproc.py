@@ -8,6 +8,62 @@ import py_sceneio   as sio
 import py_filesystem   as sfs
 import sys
 
+def parse_cli(args):
+  tonemap_on          = False
+  tonemap_exposure    = 0
+  tonemap_filmic      = False
+  logo                = False
+  resize_width        = 0
+  resize_height       = 0
+  spatial_sigma       = 0.0
+  range_sigma         = 0.0
+  alpha_to_color      = False
+  alpha_filename      = ""
+  coloralpha_filename = ""
+  diff_filename       = ""
+  diff_signal         = False
+  diff_threshold      = 0.0
+  output              = "out.png"
+  filename            = "img.hdr"
+  
+  i = 0
+  for arg in args:
+    if not arg.startswith('-') and i == 0 and arg.endswith('.hdr'):
+      filename = arg
+    elif arg.startswith('--tonemap'):
+      tonemap_on = bool(args[i+1])
+    elif arg.startswith('-e'):
+      tonemap_exposure = int(args[i+1])
+    elif arg.startswith('--filmic'):
+      tonemap_filmic = bool(args[i+1])
+    elif arg.startswith('--resize-width'):
+      resize_width = int(args[i+1])
+    elif arg.startswith('--resize-height'):
+      resize_height = int(args[i+1])
+    elif arg.startswith('--spatial-sigma'):
+      spatial_sigma = float(args[i+1])
+    elif arg.startswith('--range-sigma'):
+      range_sigma = float(args[i+1])
+    elif arg.startswith('--set-alpha'):
+      alpha_filename = args[i+1]
+    elif arg.startswith('--set-color-as-alpha'):
+      coloralpha_filename = args[i+1]
+    elif arg.startswith('--alpha-to-color'):
+      alpha_to_color = bool(args[i+1])
+    elif arg.startswith('--logo'):
+      logo = bool(args[i+1])
+    elif arg.startswith('--diff'):
+      diff_filename = args[i+1]
+    elif arg.startswith('--diff-signal'):
+      diff_signal = bool(args[i+1])
+    elif arg.startswith('--diff-threshold'):
+      diff_threshold = float(args[i+1])
+    elif arg.startswith('-o'):
+      output = args[i+1]
+    i += 1
+
+  return filename, output, tonemap_on, tonemap_exposure, tonemap_filmic, logo, resize_width, resize_height, spatial_sigma, range_sigma, alpha_to_color, alpha_filename, coloralpha_filename, diff_filename, diff_signal, diff_threshold
+
 def filter_bilateral(image,
     spatial_sigma, range_sigma,
     features, features_sigma):
@@ -210,6 +266,8 @@ def main(*argv):
   diff_threshold      = 0.0
   output              = "out.png"
   filename            = "img.hdr"
+
+  filename, output, tonemap_on, tonemap_exposure, tonemap_filmic, logo, resize_width, resize_height, spatial_sigma, range_sigma, alpha_to_color, alpha_filename, coloralpha_filename, diff_filename, diff_signal, diff_threshold = parse_cli(argv[0][1:])
 
   # parse command line
   cli = commonio.make_cli("yimgproc", "Transform images")
