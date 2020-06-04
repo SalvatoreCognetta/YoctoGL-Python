@@ -1,204 +1,180 @@
-# Yocto/PathExtension: Tiny Path Tracer Extension
+# USING PYBIND11 TO IMPORT YOCTO TO PYTHON
+Salvatore Cognetta - 1874383  
+Daniele Appetito - 1916560
 
-In this homework, you will implement a new path tracing feature from scratch
-and without assistance. In this assignment, you will have to chose one project 
-between the ones suggested below. To make sure the assignment is inclusive we 
-propose topics that are either algorithmic improvements, system implementations
-or large scene creations. Choose the assignment that better fits your interest
-and consider carefully the amount of time you will have to implement the feature.
+# Disclaimer
+This project is still not 100% functional, we have been trying everything to fix it, but haven't been able to come up with a solution.
 
-To complete the assignment, you will have to
+# Installation
+On linux:
+```bash
+sudo apt install pybind11-dev
+```
+Follow the guide of the official repository for the requirements: https://github.com/pybind/pybind11
+# Include pybind lib
+Clone the repo inside libs folder and add submodule:
+```bash
+git submodule add https://github.com/pybind/pybind11
+git submodule init
+git submodule update
+```
+https://github.com/pybind/pybind11/issues/1817
 
-- **work either alone or in groups of two**, according to the indications of 
-  each project; we advise to work in pairs
-- develop an extension to either the Yocto/Trace renderer or the solution of 
-  the previous assignment that we include here --- if possible duplicate the 
-  code you needed in the Yocto extension of your choosing 
-- hand in the new code, scenes and demos as explained for each project
-- **write a relatively detailed report in a readme.md file** --- this should 
-  include what you did, how well it worked, performance numbers and include 
-  commented images 
-- **declare group members in the readme file right after the title**
-- if your project works really well, we will try to include it in the next Yocto
-  release, and give you credit for it
-- each of the project will be discussed by the professor in class --- you will
-  then interact with the professor during the assignment to understand how to 
-  better implement it
+# Install correctly pybind11
+```bash
+cd pybind11
+mkdir build
+cd build
+cmake ..
+make install
+```
+# How to build yocto
+Now it's possible to build yocto with the python install manager pip:
+```bash
+pip install . --no-cache-dir
+```
 
-## Framework
+# How to create a module
+Insert the pybindmodule in the principal cmakelists.txt, and the libs in the cmakelist of yoctoextension (otherwise it will blow up)
 
-If you still need details, see the descriptions on previous homeworks.
+# Task
+We were asked to create a python binding to the main Yocto functionality by writing a set of Python scripts interpreting already existing files in Yocto. More specifically we were asked to create 'yscenetrace.py', `ysceneproc.py', 'yimageproc.py', and 'yshapeproc.py' by binding functions enclosed in the corresponding ".cpp" files to Python, using pybind11.
 
-## Functionality
+# What was done
+As instructed we downloaded pybind11 and linked it to the yocto library. We wrote the list of bindings inside "yocto_extension.cpp" as told, creating a pybind11 module for each header file we bound (yocto_shapeio, yocto_image, yocto_commonio, yocto_pathtrace, yocto_sceneio, and filesystem). 
+Inside the modules we added bindings to functions, overloaded functions, constants, classes/structures, and templates that were used by the 3 .py scripts.  
+## CMake
+In order for the pybind11 library to run we had to add lines in 2 CMakeLists.txt files to link everything together:
+```Cmake
+      set(PYBIND11_CPP_STANDARD -std=c++1z) # Experimental C++17 support
+      add_subdirectory(libs/pybind11)
+```
+The above code was added in the main CMakeLists.txt file in order to point it to the pybind11 library. On top of that, for every module created we had to add:
+```Cmake
+      pybind11_add_module()
+```
+with the name of the module and the file in which it was contained. 
+(as yocto_extension was used for all the bindings we also had to add a pybind_add_module(yocto_extension) for it).
+The second CMakeLists.txt we altered was the one in the yocto_extension directory, where we had to add:
+```CMake
+      target_include_directories(py_module PUBLIC ${CMAKE_SOURCE_DIR}/libs)
+      target_link_libraries(py_module PRIVATE yocto)
+```
+replacing py_module with the name of each created module in yocto_extension.cpp (having one set of "target links" for each module)
+## Cmake changes
+To allow
+```
+CMake Error at libs/yocto_extension/CMakeLists.txt:13 (target_link_libraries):
+      Attempt to add link library "yocto" to target "py_commonio" which is not
+      built in this directory.
+      This is allowed only when policy CMP0079 is set to NEW.
+```
+we have setted:
+`cmake_policy(SET CMP0079 NEW)`  
+See: [link to issue](https://gitlab.kitware.com/cmake/cmake/issues/19693)
 
-Pick one of the projects below.
+# Error with stl containers in pybind11
+To allow the use of PYBIND11_MAKE_OPAQUE function we had to move "namespace py = pybind11" outside of every namespace and we moved it upon yocto::extension aliases namespace.
 
-### Algorithmic Projects
+# Error with parse_cli
+Due to a segmentation fault in the parse_cli call:  
+![Core dumped error](report/img/error_parce_cli.png)
+we had to create a workaround by creating a simplified parce_cli in python.
+Main problem is in `*(std::string*)option.value = value; //*(std::string*) create the problem` inside 
+`inline bool parse_cli(cli_state& cli, int argc, const char** argv, std::string& error)";` it looks like it cant convert the object into an std::string pointer.  
+We tried with differen methods, like creating a lambda function that wraps the parse cli function and call directly from the cpp file (see [strackoverflow](https://stackoverflow.com/questions/49195418/pybind11-binding-a-function-that-uses-double-pointers)), but even with this method it doesn't seems to work.
 
-- **Hair Shading (1-2 people, medium)**:
-    - implement a hair BSDF to shade realistic-looking hairs
-    - you can follow the algorithm presented in [pbrt](https://www.pbrt.org/hair.pdf)
-      that also includes a full code implementation
-    - you can get example hair models from [Bitterli](https://benedikt-bitterli.me/resources/)
-- **AI Denoising (1 person, easy)**:
-    - integrate the [Intel Open Image Denoise](https://openimagedenoise.github.io)
-    - modify the renderer to output what is needed for the denoiser
-    - write a new app `yimagedenoise` that takes the new images in and output the denoised ones
-    - favor HDR image processing but support both HDR and LDR
-    - compare this to your own implementation of an non-local-means denoiser; 
-      you can grab the code from anywhere you want
-- **Bayesian Denoising (2 people, easy)**:
-    - integrate the [Bayesian Collaborative Denoising](https://github.com/superboubek/bcd)
-    - modify the renderer to output what is needed for the denoiser
-    - write a new app `yimagedenoise` that takes the new images in and output the denoised ones
-    - favor HDR image processing but support both HDR and LDR
-    - compare this to your own implementation of an non-local-means denoiser; 
-      you can grab the code from anywhere you want
-- **Monte Carlo Geometry Processing (1-2 people, medium)**:
-    - this is really beautiful new work
-    - implement a few geometry processing functions using Monte Carlo methods
-    - you should be familiar with geometry processing ideas already
-    - take any examples from [Crane](http://www.cs.cmu.edu/~kmcrane/Projects/MonteCarloGeometryProcessing/paper.pdf)
-    - example code in 2D from [here](http://www.cs.cmu.edu/~kmcrane/Projects/MonteCarloGeometryProcessing/WoSLaplace2D.cpp.html)
-    - example code in 3D from [here](https://twitter.com/keenanisalive/status/1258152695074033664)
-- **Volumetric Path Tracing (2 people, hard)** for heterogenous materials:
-    - implement proper volumetric models for heterogenous materials
-    - implement volumetric textures, for now just using `image::volume`, 
-      for density and emission
-    - add these textures to both the SceneIO loader and the path tracer
-    - on this data structure, implement delta tracking as presented in [pbrt](http://www.pbr-book.org/3ed-2018/Light_Transport_II_Volume_Rendering/Sampling_Volume_Scattering.html)
-    - also implement a modern volumetric method to choose from
-        - Spectral Tracking from [Kutz et al](https://s3-us-west-1.amazonaws.com/disneyresearch/wp-content/uploads/20170823124227/Spectral-and-Decomposition-Tracking-for-Rendering-Heterogeneous-Volumes-Paper1.pdf)
-        - pseudocode of Algorithm 1 of [Miller et al](https://cs.dartmouth.edu/~wjarosz/publications/miller19null.html) --- ignore most of the math here since it is not that helpful
-    - get examples from OpenVDB
-- **Texture Synthesis (1 person, easy)**:
-    - implement texture synthesis following the [Disney method](http://www.jcgt.org/published/0008/04/02/paper.pdf)
-    - [source code](https://benedikt-bitterli.me/histogram-tiling/)
-    - for this, just add properties to the `trace::texture` object and change `eval_texture()`
-    - you should alsop provide a 2D image generator for it in the spirit of the code above but in C++
-- **SDF Shapes (1-2 people, medium)**:
-    - implement a high quality SDF shape object that is integrated within the path tracer
-    - represent SDFs as sparse hash grids; an [example on GPU](https://nosferalatu.com/SimpleGPUHashTable.html)
-    - add a new `sdf` to represent the SDF and have `object` hold a pointer to either `sdf` or `shape`
-    - change `eval_xxx()` to work for SDFs too
-    - add code to load/save SDFs in `sceneio`; just make up your own file format for now
-    - get examples from OpenVDB
-- **Adaptive rendering (1 person - easy)**
-    - implement a stropping criterion to focus render resources when more needed
-    - technique is described [here](https://jo.dreggn.org/home/2009_stopping.pdf)
-    - possible implementation [here](https://github.com/mkanada/yocto-gl) 
-    - your job here is to integrate really well the code, provide test cases and make it run interactively
-- **Better adaptive rendering (1-2 person - medium)**
-    - implement adaptive rendering and reconstruction as described [here](https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.100/institut/Papers/atrousGIfilter.pdf)
-    - this will provide better quality than the above method
-    - alsop consider the [new variant from NVidia](https://www.highperformancegraphics.org/wp-content/uploads/2017/Papers-Session1/HPG2017_SpatiotemporalVarianceGuidedFiltering.pdf)
+# Error with yocto_sceneio
+To avoid the error below, while creating a new module for yocto_sceneio (and others):  
+![Error yocto_sceneio](report/img/error_yoctosceneio.png)  
+we had to include all the all the yocto cpp file:  
+![Error yocto_sceneio](report/img/solved_error_yoctosceneio.png)  
 
-### System Projects
+# yscenetrace problem
+The binding of yscenetrace.cpp file caused the majority of problems:
+1. parce cli had to be redefined as we had problems with 
+2. in init_subdivs a floating point exception was created inside eval_textures in pathtrace.cpp:
 
-- **Yocto/Python (1-2 people, easy-medium)**
-    - provide Python binding to the main Yocto/GL functionality so that 
-      we can call Yocto from Python
-    - generate the binding using [PyBind11](https://github.com/pybind/pybind11)
-    - providing full coverage of the entire API is not helpful at this point
-    - instead focus on providing enough coverage to be able to
-        - write a `yscenetrace.py` that is a Python script that can run a 
-          path tracer similar to `yscenetrace.cpp` 
-        - similarly write a `ysceneproc.py`, `yimageproc.py` and `yshapeprc.py`
-        - you should be able to call Yocto from inside Python Jupyter and see 
-          images rendered by Yocto in Jupyter
-        - extra credit: run the interactive path tracer inside Python Jupyter
-        - make sure we can pip install Yocto
-    - non-goals: do not worry about supporting the entire Yocto api
-- **Yocto/QBVH (1 person, medium)**
-    - implement a QBVH tree by translating our BVH2 to a BVH4 as described [here](http://jcgt.org/published/0004/04/05/)
-    - implement QBVH intersection with only one ray at a time
-    - optimize QBVH intersection using SIMD instruction
-    - for example code for the optimization look for QBVH on 
-- **Yocto/BVHBuild (1 person, medium)**
-    - implement faster BVH build as described [here](http://jcgt.org/published/0004/03/02/)
-- **Yocto/BVHMorton (1 person, medium)**
-    - implement faster BVH build as described [here](https://www.highperformancegraphics.org/wp-content/uploads/2017/Papers-Session3/HPG207_ExtendedMortonCodes.pdf)
-    - source code is available from the authors
-- **NoYocto/PyTrace (2 people, medium)**
-    - do not use yocto for this
-    - write a path tracer in pure Python code
-    - use Intel's embree python wrapper
-    - your code should show images similar to hoemwork02, skip volumes
-    - to get the speed right, use `numpy` to hold all data and `jax` or `numba` to JIT fast code
-    - also write your path tracer in a wavefront fashion, which means that all actions are repeated for the whole image
-    - so, instead of runing a loop over pixel and then follow a single path, send all paths at once, ona wavefront, and iterate over the wavefront
-- **Yocto/Web (1-2 people, medium-hard)**
-    - run the Yocto/Pathtracer in the browser using [emscripten](https://emscripten.org)
-    - I know little about this so I cannot help you that much
-- **Yocto/GPU (2 people, hard)**
-    - Try to run Yocto on the GPU in any way you want, e.g. CUDA
-    - For ray-intersection either compile our code or try [NVidia/Optix](https://developer.nvidia.com/optix)
-    - I know little about this so I cannot help you that much
-- **NoYocto/Optix (2 people, hard)**
-    - I know little about this so I cannot help you that much
-    - Write a GPU path tracer outside of Yocto using [NVidia/Optix](https://developer.nvidia.com/optix)
-    - This library is targeted at high-quality GPU rendering and used by many industry GPU tracers
-    - Use as much Yocto as useful
-- **NoYocto/DXR (2 people, hard)**
-    - I know little about this so I cannot help you that much
-    - Write a GPU path tracer outside of Yocto using DXR
-    - This is targeted at games more than final quality rendering
-    - Use as much Yocto as useful
-    - [Tutorial](http://intro-to-dxr.cwyman.org)
-    - Maybe try this framework [Falcor](https://github.com/nvidiagameworks/falcor)
+```cpp
+auto ii = (i + 1) % size.x, jj = (j + 1) % size.y; //size is equal to (0,0)
+```  
 
-### Scene Creation Projects
+this happens because in the init_scene function, in the loop over ioscene.objects, set_subdiv_displacement function set a displacement_tex = `nullptr`, infact `texture_map[ioobject.material.displacement_tex]` is a `Null/None`, even if the texture_map is correctly created: 
 
-- **MYOT (1 person, medium)**, make your own tree:
-    - write a tree generator that creates 3D trees
-    - either implement a space colonization method from 
-      [TreeSketch](https://www.researchgate.net/publication/235765743_TreeSketch_Interactive_Procedural_Modeling_of_Trees_on_a_Tablet)
-      and [Runions](http://algorithmicbotany.org/papers/colonization.egwnp2007.large.pdf)
-    - or implement a parametric generator from [Weber and Penn](https://www2.cs.duke.edu/courses/cps124/fall01/resources/p119-weber.pdf) 
-      used in [sapling tree gen](https://github.com/abpy/improved-sapling-tree-generator)
-- **MYOC (1 person, medium)**, make your own city:
-    - create a city-size scene yo show off Yocto scalability
-    - use any asset you want that is CC licensed
-    - start from openstreetmaps
-    - this will require coding
-- **MYOF (1 person, medium)**, make your own forest:
-    - create a large, detailed, natural scene like a forest
-    - use any asset you want that is CC licensed
-    - or use generators like Blender trees and grass
-    - write a command line utility that assemble these assets onto a plane 
-      randomly to create a realistic environment
-    - see tutorials on the web on how to do procedural placement (it is very easy)
-    - modify `ysceneproc` for this
-- **MYOH (1 person, easy)**, make your own homework:
-    - make small to large environment to show off Yocto/GL that we can use for next year homeworks
-    - these environments should show off the rendering features we demonstrated
-    - we are particularly interested in subdiv examples, displacement maps, etc
-    - the scenes should be compelling and of quality similar to the ones proposed this year
-    - remember to use CC licensed assets only, and include the license for them
-- **MYOS 2.0 (1 person, easy)**, make your own scene 2.0:
-    - create additional scenes that are _really compelling to look at_
-    - for this assignment, do not worry about license; use anything you want
-    - include paid models if really want to, but only if you really want to; 
-      you are not required at all for this, but I have to be honest and say that 
-      those are the best looking models
-    - the scenes have to be really compelling
-    - something like [cgtrader](https://www.cgtrader.com/3d-models/interior)
-      or [evermotion](https://evermotion.org/shop)
-    - or like [blender](https://www.blender.org/download/demo-files/)
-    - how you convert them is up to you
+```cpp
+ptr.set_subdiv_displacement(subdiv_map[ioobject.subdiv],
+      ioobject.material.displacement,
+      texture_map[ioobject.material.displacement_tex])
+```
+we managed to dodge the problem, at least for testing purpose, creating a iotexture_tmp index inside the loop over ioscene.textures:
 
-## Grading
+```cpp
+for iotexture in ioscene.textures:
+    if progress_cb:
+      progress.x += 1
+      progress_cb("convert texture", progress.x, progress.y)
+    texture = ptr.add_texture(scene)
+    # if ptr.texture_empty(texture, 'colorf'):
+    if texture.colorf: 
+      ptr.set_texture(texture, iotexture.colorf)
+      size_colorf = img.image_vec3f.size(iotexture.colorf) 
+      if size_colorf.x:
+        iotexture_tmp = iotexture
 
-In this assignment, there is no extra credit. Instead the assignment will 
-have a higher point grade than previous assignments. We will grade on both
-difficulty and quality of the resulting images/demos and also take into
-account the number of people in the group.
+      ...
 
-## Submission
+      ptr.set_subdiv_displacement(subdiv_map[ioobject.subdiv],
+            ioobject.material.displacement,
+            texture_map[iotexture_tmp])
+```
 
-To submit the homework, you need to pack a ZIP file that contains all the code
-you wrote, a readme file, all scenes and images you generated.
-**Both people in the group should submit the same material.**
-The file should be called `<lastname>_<firstname>_<studentid>.zip` 
-(`<cognome>_<nome>_<matricola>.zip`) and you should exclude 
-all other directories. Send it on Google Classroom.
+We then encountered another problem, however, in the pathtrace::trace_samples function, created inside the eval_camera, specifically at this line:
+
+```cpp
+auto p = dc * camera->focus / abs(dc.z);
+```
+
+Where the division by abd(dc.z) ended up giving a value of infinity. We tested it by printing out the value of dc.z:
+
+```cpp
+      cli::print_info("Inside eval_camera, dc.z: " + std::to_string(dc.z));
+```
+```cpp
+      Inside eval_camera, dc.z: 0.983158
+      Inside eval_camera, dc.z: 0.983204
+      Inside eval_camera, dc.z: 0.983065
+      Inside eval_camera, dc.z: 0.983240
+      Inside eval_camera, dc.z: 0.983212
+      Inside eval_camera, dc.z: 0.983251
+      Inside eval_camera, dc.z: 0.983235
+      Inside eval_camera, dc.z: 0.983272
+      Inside eval_camera, dc.z: 0.983285
+      Inside eval_camera, dc.z: 0.983204
+      Inside eval_camera, dc.z: 0.983212
+      Inside eval_camera, dc.z: 0.983170
+      Inside eval_camera, dc.z: 0.983138
+```
+The above output repeated for several thousands of lines and then cut out, meaning we were not able to decypher where the value goes to 0. As such This problem remains unresolved.
+
+# yshapeproc problem
+In yshapeproc the problem is created inside the make_* functions, the vectors passed to them (such as quads, positions, etc.) are not being changed. To avoid this problem we have tried different possible solutions, such as exposing stl containers as native Python object, as stated in pybind documentation ([expose stl container](https://pybind11.readthedocs.io/en/stable/advanced/cast/stl.html#making-opaque-types)):
+
+```cpp
+PYBIND11_MAKE_OPAQUE(std::vector<int>);
+PYBIND11_MAKE_OPAQUE(std::vector<float>);
+PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec2f>);
+PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec3f>);
+PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec2i>);
+PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec3i>);
+PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec4i>);
+...
+py::bind_vector<std::vector<int>>(m, "VectorInt", py::module_local(false));
+py::bind_vector<std::vector<float>>(m, "VectorFloat", py::module_local(false));
+py::bind_vector<std::vector<vec2f>>(m, "VectorVec2f", py::module_local(false));
+py::bind_vector<std::vector<vec3f>>(m, "VectorVec3f", py::module_local(false));
+py::bind_vector<std::vector<vec2i>>(m, "VectorVec2i", py::module_local(false));
+py::bind_vector<std::vector<vec3i>>(m, "VectorVec3i", py::module_local(false));
+py::bind_vector<std::vector<vec4i>>(m, "VectorVec4i", py::module_local(false));
+```
+
+but even with this method we ended up with the same empty vectors problem.
