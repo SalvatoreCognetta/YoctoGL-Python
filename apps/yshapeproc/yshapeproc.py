@@ -273,8 +273,8 @@ def main(*argv):
   ioerror = ""
   commonio.print_progress("load shape", 0, 1)
   if not facevarying:
-    ext = fs.path_extension(filename)
-    basename = fs.path_stem(filename)
+    ext = fs.path_extension(filename) # ".ypreset" 
+    basename = fs.path_stem(filename) # "default-hairball"
     if ext == ".ypreset":
       ret_flag, points, lines, triangles, quads, positions, normals, texcoords, colors, radius, basename, ioerror = make_shape_preset1(points, lines, triangles, quads, positions, 
               normals, texcoords, colors, radius, basename, ioerror)
@@ -295,17 +295,7 @@ def main(*argv):
       if not shp.load_fvshape(filename, quadspos, quadsnorm,  quadstexcoord,
               positions, normals, texcoords, ioerror):
         commonio.print_fatal(ioerror)
-  
-
   commonio.print_progress("load shape", 1, 1)
-
-  # swap function
-  def swap(left, right):
-    temp = left
-    left = right
-    right = temp
-    return (left, right)
-
 
   # remove data
   if positiononly:
@@ -315,8 +305,7 @@ def main(*argv):
     radius = []
     quadsnorm = []
     quadstexcoord = []
-    if quadsnorm:
-      swap(quads, quadspos)#not sure about swap
+    if quadsnorm: mth.swap(quads, quadspos)
 
   # convert data
   if trianglesonly:
@@ -349,11 +338,7 @@ def main(*argv):
   if smooth:
     commonio.print_progress("smooth shape", 0, 1)
     if points:
-      vec_normals = []
-      i = 0
-      while i < len(positions):
-        vec_normals.append(mth.vec3f(0, 0, 1))
-        i += 1
+      vec_normals = [mth.vec3f(0, 0, 1)]*len(positions)
       normals = vec_normals
     elif lines:
       shp.compute_tangents(lines, positions)
@@ -386,18 +371,12 @@ def main(*argv):
     field = shp.compute_geodesic_distances(solver, sources)
 
     if slise:
-      vec_tags = []
-
-      j = 0 
-      while j < len(triangles):
-         vec_tags.append(0)
-         j += 1
-
+      tags = [0]*len(triangles)
       shp.meandering_triangles(
-          field, geodesic_scale, 0, 1, 2, triangles, vec_tags, positions, normals)
+          field, geodesic_scale, 0, 1, 2, triangles, tags, positions, normals)
       i = 0
       while i < len(triangles):
-        if vec_tags[i] == 1: triangles[i] = mth.vec3i(-1, -1, -1)
+        if tags[i] == 1: triangles[i] = mth.vec3i(-1, -1, -1)
         i += 1
     else:
       i = 0
@@ -408,30 +387,26 @@ def main(*argv):
 
   if p0 != -1:
     commonio.print_progress("cut mesh", 0, 1)
-    vec_tags = [] 
-    i = 0
-    while i < len(triangles):
-      vec_tags.append(0)
-      i += 1
+    tags = [0]*len(triangles) 
     adjacencies = shp.face_adjacencies(triangles)
     solver = shp.make_geodesic_solver(triangles, adjacencies, positions)
 
     paths     = []
-    fields    = [3]
-    fields[0] = shp.compute_geodesic_distances(solver, [p0])
-    fields[1] = shp.compute_geodesic_distances(solver, [p1])
-    fields[2] = shp.compute_geodesic_distances(solver, [p2])
-    for i in range(0,3): # maybe wrong
+    fields    = []
+    fields.append(shp.compute_geodesic_distances(solver, [p0]))
+    fields.append(shp.compute_geodesic_distances(solver, [p1]))
+    fields.append(shp.compute_geodesic_distances(solver, [p2]))
+    for i in range(0,3):
       for f in fields[i]: f = -f
     
     paths.append(shp.integrate_field(
-      triangles, positions, adjacencies, vec_tags, 0, fields[1], p0, p1))
+      triangles, positions, adjacencies, tags, 0, fields[1], p0, p1))
 
     paths.append(shp.integrate_field(
-      triangles, positions, adjacencies, vec_tags, 0, fields[2], p1, p2))
+      triangles, positions, adjacencies, tags, 0, fields[2], p1, p2))
 
     paths.append(shp.integrate_field(
-      triangles, positions, adjacencies, vec_tags, 0, fields[0], p2, p0))
+      triangles, positions, adjacencies, tags, 0, fields[0], p2, p0))
     
     plines     = []
     ppositions = []
@@ -439,12 +414,14 @@ def main(*argv):
       pos = shp.make_positions_from_path(paths[i], positions)
       line = []
       k = 0
-      while k < len(pos):
+      while k < len(pos - 1):
         line.append(mth.vec2i(k, k+1))
         line[k] += int(len(lines))
         k += 1
-      # plines.insert(plines.end(), line.begin(), line.end())
-      # ppositions.insert(plines.end(), line.begin(), line.end())
+      for l in line:
+        plines.insert(plines[-1], l)
+      for p in pos:
+        ppositions.insert(ppositions[-1], p)
     points    = []
     lines     = plines
     triangles = []
@@ -457,7 +434,7 @@ def main(*argv):
     commonio.print_progress("cut mesh", 1, 1)
   
   if info:
-    commonio.print_progress("shape stats ------------")
+    commonio.print_info("shape stats ------------")
     stats = shp.shape_stats(points, lines, triangles, quads, quadspos,
         quadsnorm, quadstexcoord, positions, normals, texcoords, colors,
         radius)

@@ -368,7 +368,7 @@ PYBIND11_MODULE(py_shape, m) {
 
   m.def("make_geodesic_solver", &shp::make_geodesic_solver, py::arg("triangles"), py::arg("adjecencies"), py::arg("positions"));
   m.def("compute_geodesic_distances", &shp::compute_geodesic_distances, py::arg("solver"), py::arg("sources"), py::arg("max_distance")= flt_max);
-  m.def("sample_vertices_poisson", &shp::sample_vertices_poisson, py::arg("solver"), py::arg("num_samples");)
+  m.def("sample_vertices_poisson", &shp::sample_vertices_poisson, py::arg("solver"), py::arg("num_samples"));
   py::class_<shp::surface_path::vertex>(m, "vertex")
     .def(py::init<vec2i, int, float>(),
       py::arg("edge") = vec2i(0, 0),
@@ -387,26 +387,16 @@ PYBIND11_MODULE(py_shape, m) {
     const std::vector<vec3f>& , const std::vector<vec3i>& ,
     const std::vector<int>& , int , const std::vector<float>& ,
     int ))&shp::integrate_field, 
-    py::arg("triangles"),
-    py::arg("positions"),
-    py::arg("adjacency"),
-    py::arg("tags"),
-    py::arg("tag"),
-    py::arg("field"),
-    py::arg("from"));
+      py::arg("triangles"), py::arg("positions"), py::arg("adjacency"),
+      py::arg("tags"), py::arg("tag"), py::arg("field"), py::arg("from"));
 
   m.def("integrate_field", (shp::surface_path (*)(const std::vector<vec3i>&,
-    const std::vector<vec3f>& , const std::vector<vec3i>& ,
-    const std::vector<int>& , int , const std::vector<float>& ,
-    int ))&shp::integrate_field, 
-    py::arg("triangles"),
-    py::arg("positions"),
-    py::arg("adjacency"),
-    py::arg("tags"),
-    py::arg("tag"),
-    py::arg("field"),
-    py::arg("from"),
-    py::arg("to"));
+    const std::vector<vec3f>&, const std::vector<vec3i>&,
+    const std::vector<int>&, int, const std::vector<float>&,
+    int, int))&shp::integrate_field, 
+      py::arg("triangles"), py::arg("positions"), py::arg("adjacency"),
+      py::arg("tags"), py::arg("tag"), py::arg("field"),
+      py::arg("from"), py::arg("to"));
 
   m.def("make_positions_from_path", &shp::make_positions_from_path, py::arg("path"), py::arg("mesh_positions"));
   // -----------------------------------------------------------------------------
@@ -530,7 +520,7 @@ PYBIND11_MODULE(py_shape, m) {
   // Make hair ball around a shape
   m.def("make_hair", &shp::make_hair, py::arg("lines"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("radius"),
                       py::arg("striangles"), py::arg("squads"), py::arg("spos"), py::arg("snorm"), py::arg("stexcoor"),
-                      py::arg("steps") = vec2i(8, 65536), py::arg("length") = vec2f(0.1, 0.1), py::arg("rad") = vec2f(0.001, 0001),
+                      py::arg("steps") = vec2i(8, 65536), py::arg("len") = vec2f(0.1, 0.1), py::arg("rad") = vec2f(0.001, 0001),
                       py::arg("noise") = vec2f(0, 10), py::arg("clump") = vec2f(0, 128), py::arg("rotation") = vec2f(0, 0), py::arg("seed") = 7);
   m.def("make_shell", &shp::make_shell, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"), py::arg("thickness"));
   // Make a heightfield mesh
