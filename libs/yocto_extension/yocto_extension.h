@@ -39,7 +39,7 @@
 #include <pybind11/stl.h> //For stl container
 #include <pybind11/functional.h> //For callback and anonymous function
 #include <pybind11/operators.h> //For operator overloading
-#include <pybind11/stl_bind.h> //For operator overloading
+#include <pybind11/stl_bind.h> //For bind of stl data type
 
 #include <yocto/yocto_commonio.h>
 #include <yocto/yocto_image.h>

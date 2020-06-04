@@ -75,13 +75,13 @@ using math::zero4i;
 
 }  // namespace yocto::extension
 
-PYBIND11_MAKE_OPAQUE(std::vector<int>);
-PYBIND11_MAKE_OPAQUE(std::vector<float>);
-PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec2f>);
-PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec3f>);
-PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec2i>);
-PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec3i>);
-PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec4i>);
+// PYBIND11_MAKE_OPAQUE(std::vector<int>);
+// PYBIND11_MAKE_OPAQUE(std::vector<float>);
+// PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec2f>);
+// PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec3f>);
+// PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec2i>);
+// PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec3i>);
+// PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec4i>);
 
 // -----------------------------------------------------------------------------
 // IMPLEMENTATION FOR EXTENSION
@@ -321,13 +321,13 @@ PYBIND11_MODULE(py_math, m) {
   // RANDOM NUMBER GENERATION
   // -----------------------------------------------------------------------------
 
-  py::bind_vector<std::vector<int>>(m, "VectorInt", py::module_local(false));
-  py::bind_vector<std::vector<float>>(m, "VectorFloat", py::module_local(false));
-  py::bind_vector<std::vector<vec2f>>(m, "VectorVec2f", py::module_local(false));
-  py::bind_vector<std::vector<vec3f>>(m, "VectorVec3f", py::module_local(false));
-  py::bind_vector<std::vector<vec2i>>(m, "VectorVec2i", py::module_local(false));
-  py::bind_vector<std::vector<vec3i>>(m, "VectorVec3i", py::module_local(false));
-  py::bind_vector<std::vector<vec4i>>(m, "VectorVec4i", py::module_local(false));
+  // py::bind_vector<std::vector<int>>(m, "VectorInt", py::module_local(false));
+  // py::bind_vector<std::vector<float>>(m, "VectorFloat", py::module_local(false));
+  // py::bind_vector<std::vector<vec2f>>(m, "VectorVec2f", py::module_local(false));
+  // py::bind_vector<std::vector<vec3f>>(m, "VectorVec3f", py::module_local(false));
+  // py::bind_vector<std::vector<vec2i>>(m, "VectorVec2i", py::module_local(false));
+  // py::bind_vector<std::vector<vec3i>>(m, "VectorVec3i", py::module_local(false));
+  // py::bind_vector<std::vector<vec4i>>(m, "VectorVec4i", py::module_local(false));
 }
 
 
@@ -913,6 +913,143 @@ PYBIND11_MODULE(py_pathtrace, m) {
       return (ptr::texture*)nullptr;
     }, py::return_value_policy::reference);
 
+  m.def("texture_empty", [](ptr::texture* texture, std::string param) {
+    if (param.compare("colorf"))
+      return texture->colorf.empty();
+    else if (param.compare("colorb"))
+      return texture->colorb.empty();
+    else if (param.compare("scalarf"))
+      return texture->scalarf.empty();
+    else if (param.compare("scalarb"))
+      return texture->scalarb.empty();
+    return true;    
+  });
+
+  py::class_<ptr::material>(m, "material")
+    .def(py::init<vec3f, vec3f, float, float, float, float, vec3f,
+                  float, vec3f, float, float, float, bool,
+                  ptr::texture*, ptr::texture*, ptr::texture*,
+                  ptr::texture*, ptr::texture*, ptr::texture*,
+                  ptr::texture*, ptr::texture*, ptr::texture*, ptr::texture*>(),
+        // material
+        py::arg("emission") = vec3f(0,0,0),
+        py::arg("color") = vec3f(0,0,0),
+        py::arg("specular") = 0,
+        py::arg("roughness") = 0, 
+        py::arg("metallic") = 0, 
+        py::arg("ior") = 1.5,
+        py::arg("spectint") = vec3f(1,1,1),
+        py::arg("transmission") = 0,
+        py::arg("scattering") = vec3f(0,0,0),
+        py::arg("scanisotropy") = 0,
+        py::arg("trdepth") = 0.01,
+        py::arg("opacity") = 1,
+        py::arg("thin") = true,
+        // textures
+        py::arg("emission_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("color_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("specular_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("metallic_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("roughness_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("transmission_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("spectint_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("scattering_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("opacity_tex") = py::cast<ptr::texture*>(nullptr),
+        py::arg("normal_tex") = py::cast<ptr::texture*>(nullptr))
+    .def_readwrite("emission", &ptr::material::emission)
+    .def_readwrite("color", &ptr::material::color)
+    .def_readwrite("specular", &ptr::material::specular)
+    .def_readwrite("roughness", &ptr::material::roughness)
+    .def_readwrite("metallic", &ptr::material::metallic)
+    .def_readwrite("ior", &ptr::material::ior)
+    .def_readwrite("spectint", &ptr::material::spectint)
+    .def_readwrite("transmission", &ptr::material::transmission)
+    .def_readwrite("scattering", &ptr::material::scattering)
+    .def_readwrite("scanisotropy", &ptr::material::scanisotropy)
+    .def_readwrite("trdepth", &ptr::material::trdepth)
+    .def_readwrite("opacity", &ptr::material::opacity)
+    .def_readwrite("thin", &ptr::material::thin)
+    .def_readwrite("emission_tex", &ptr::material::emission_tex)
+    .def_readwrite("color_tex", &ptr::material::color_tex)
+    .def_readwrite("specular_tex", &ptr::material::specular_tex)
+    .def_readwrite("metallic_tex", &ptr::material::metallic_tex)
+    .def_readwrite("roughness_tex", &ptr::material::roughness_tex)
+    .def_readwrite("transmission_tex", &ptr::material::transmission_tex)
+    .def_readwrite("spectint_tex", &ptr::material::spectint_tex)
+    .def_readwrite("scattering_tex", &ptr::material::scattering_tex)
+    .def_readwrite("opacity_tex", &ptr::material::opacity_tex)
+    .def_readwrite("normal_tex", &ptr::material::normal_tex);
+
+  py::class_<ptr::shape>(m, "shape")
+    .def(py::init<std::vector<int>, std::vector<vec2i>, std::vector<vec3i>, 
+                  std::vector<vec3f>, std::vector<vec3f>, std::vector<vec2f>, 
+                  std::vector<float>, std::vector<vec4i>, std::vector<vec4i>, 
+                  std::vector<vec3f>, std::vector<vec2f>, int, bool, float, 
+                  ptr::texture*, ptr::bvh_tree*>(),
+        // primitives
+        py::arg("points") = std::vector<int>(),
+        py::arg("lines") = std::vector<vec2i>(),
+        py::arg("triangles") = std::vector<vec3i>(),
+        // vertex data
+        py::arg("positions") = std::vector<vec3f>(),
+        py::arg("normals") = std::vector<vec3f>(),
+        py::arg("texcoords") = std::vector<vec2f>(),
+        py::arg("radius") = std::vector<float>(),
+        // subdivision data
+        py::arg("subdiv_quadsposition") = std::vector<vec4i>(),
+        py::arg("subdiv_quadstexcoord") = std::vector<vec4i>(),
+        py::arg("subdiv_positions") = std::vector<vec3f>(),
+        py::arg("subdiv_texcoords") = std::vector<vec2f>(),
+        py::arg("subdiv_level") = 0,
+        py::arg("subdiv_smooth") = false,
+        py::arg("subdiv_displacement") = 0,
+        py::arg("subdiv_displacement_tex") = py::cast<ptr::texture*>(nullptr),
+        // computed properties
+        py::arg("bvh") = py::cast<ptr::bvh_tree*>(nullptr))
+    .def_readwrite("points", &ptr::shape::points)
+    .def_readwrite("lines", &ptr::shape::lines)
+    .def_readwrite("triangles", &ptr::shape::triangles)
+    .def_readwrite("positions", &ptr::shape::positions)
+    .def_readwrite("normals", &ptr::shape::normals)
+    .def_readwrite("texcoords", &ptr::shape::texcoords)
+    .def_readwrite("radius", &ptr::shape::radius)
+    .def_readwrite("subdiv_quadsposition", &ptr::shape::subdiv_quadsposition)
+    .def_readwrite("subdiv_quadstexcoord", &ptr::shape::subdiv_quadstexcoord)
+    .def_readwrite("subdiv_positions", &ptr::shape::subdiv_positions)
+    .def_readwrite("subdiv_texcoords", &ptr::shape::subdiv_texcoords)
+    .def_readwrite("subdiv_level", &ptr::shape::subdiv_level)
+    .def_readwrite("subdiv_smooth", &ptr::shape::subdiv_smooth)
+    .def_readwrite("subdiv_displacement", &ptr::shape::subdiv_displacement)
+    .def_readwrite("subdiv_displacement_tex", &ptr::shape::subdiv_displacement_tex)
+    .def_readwrite("bvh", &ptr::shape::bvh);
+
+  py::class_<ptr::object>(m, "object")
+    .def(py::init<frame3f, ptr::shape*, ptr::material*>(),
+        py::arg("frame") = identity3x4f,
+        py::arg("shape") = py::cast<ptr::shape*>(nullptr),
+        py::arg("material") = py::cast<ptr::material*>(nullptr))
+    .def_readwrite("frame", &ptr::object::frame)
+    .def_readwrite("shape", &ptr::object::shape)
+    .def_readwrite("material", &ptr::object::material);
+
+  py::class_<ptr::environment>(m, "environment")
+    .def(py::init<frame3f, vec3f, ptr::texture*>(),
+        py::arg("frame") = identity3x4f,
+        py::arg("emission") = vec3f(0, 0, 0),
+        py::arg("emission_tex") = py::cast<ptr::texture*>(nullptr))
+    .def_readwrite("frame", &ptr::environment::frame)
+    .def_readwrite("emission" , &ptr::environment::emission)
+    .def_readwrite("emission_tex", &ptr::environment::emission_tex);
+
+  py::class_<ptr::light>(m, "light")
+    .def(py::init<ptr::object*, ptr::environment*, std::vector<float>>(),
+        py::arg("object") = py::cast<ptr::object*>(nullptr),
+        py::arg("environment") = py::cast<ptr::environment*>(nullptr),
+        py::arg("cdf") = std::vector<float>())
+    .def_readwrite("object", &ptr::light::object)
+    .def_readwrite("environment", &ptr::light::environment)
+    .def_readwrite("cdf", &ptr::light::cdf);
+
   py::class_<ptr::scene>(m, "scene")
     .def(py::init<std::vector<ptr::camera*>, std::vector<ptr::object*>,
                   std::vector<ptr::shape*>, std::vector<ptr::material*>,
@@ -954,7 +1091,13 @@ PYBIND11_MODULE(py_pathtrace, m) {
         py::arg("render") = img::image<vec4f>(),
         py::arg("pixels") = img::image<ptr::pixel>())
     .def_readwrite("render", &ptr::state::render)
-    .def_readwrite("pixels", &ptr::state::pixels);
+    .def_readwrite("pixels", &ptr::state::pixels)
+    .def("make_unique", []() {
+      return std::make_unique<ptr::state>();
+    }, py::return_value_policy::reference);
+    // .def("get", [](std::unique_ptr<ptr::state>& state_guard) { //not allowed in pybind
+    //   return state_guard.get();
+    // }, py::return_value_policy::reference);
   // -----------------------------------------------------------------------------
   // SCENE AND RENDERING DATA
   // -----------------------------------------------------------------------------
@@ -1422,19 +1565,6 @@ PYBIND11_MODULE(py_sceneio, m) {
 
 
 // -----------------------------------------------------------------------------
-// YOCTO-TRACE
-// -----------------------------------------------------------------------------
-PYBIND11_MODULE(py_trace, m) {
-
-  // const py::object coat_ior = py::cast(trace::coat_ior);
-  // m.attr("coat_ior") = coat_ior; 
-
-  // m.def("eval_normal", &trace::eval_normal);
-
-}
-
-
-// -----------------------------------------------------------------------------
 // FYLESYSTEM
 // -----------------------------------------------------------------------------
 PYBIND11_MODULE(py_filesystem, m) {
@@ -1457,6 +1587,48 @@ PYBIND11_MODULE(py_filesystem, m) {
   m.def("path_parent_path", [](std::string output){
     return fs::path(output).parent_path();
   });
+}
+  
+
+// // -----------------------------------------------------------------------------
+// // TEST
+// // -----------------------------------------------------------------------------
+// PYBIND11_MODULE(py_test, m) {
+
+//   m.def("parse_cli", [](cli::cli_state& cli, std::vector<std::string> argv) {
+//     std::vector<const char *> cstrs; //(argv.size() + 1);
+
+//     // make the pointers point to the C strings in the std::strings in the
+//     // std::vector
+//     // for (auto &s : argv) cstrs.push_back((char *)(s.c_str()));
+//     // guarantee contiguous, null terminated strings
+//     std::vector<std::vector<char>> vstrings;
+
+//     // pointers to rhose strings
+//     std::vector<char*> cstrings;
+
+//     vstrings.reserve(argv.size());
+//     cstrings.reserve(argv.size());
+//     for(size_t i = 0; i < argv.size(); ++i)
+//     {
+//       vstrings.emplace_back(argv[i].begin(), argv[i].end());
+//       vstrings.back().push_back('\0');
+//       cstrings.push_back(vstrings.back().data());
+//     }
+
+//     // for(size_t i = 0; i < argv.size(); ++i) {
+//     //     cstrs[i] = argv[i].data();
+//     // }
+    
+//     // add a terminating nullptr (main wants that, so perhaps the closed source
+//     // function wants it too)
+//     // cstrs[argv.size()] = nullptr;
+
+//     // call the closed source function
+//     cli::parse_cli(cli, static_cast<int>(cstrs.size()), cstrs.data());
+//   });
+
+  
 }
   
 }  // namespace yocto::extension

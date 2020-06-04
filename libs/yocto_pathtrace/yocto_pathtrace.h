@@ -41,6 +41,7 @@
 
 #include <yocto/yocto_image.h>
 #include <yocto/yocto_math.h>
+#include <yocto/yocto_commonio.h>
 
 #include <atomic>
 #include <future>
@@ -54,6 +55,7 @@ namespace yocto::pathtrace {
 // Namespace aliases
 namespace ptr = yocto::pathtrace;
 namespace img = yocto::image;
+namespace cli = yocto::commonio;
 
 // Math defitions
 using math::bbox3f;
@@ -152,7 +154,7 @@ void set_subdiv_texcoords(
     ptr::shape* shape, const std::vector<vec2f>& texcoords);
 void set_subdiv_subdivision(ptr::shape* shape, int level, bool smooth);
 void set_subdiv_displacement(
-    ptr::shape* shape, float dispalcement, ptr::texture* displacement_tex);
+    ptr::shape* shape, float displacement, ptr::texture* displacement_tex);
 
 // environment properties
 void set_frame(ptr::environment* environment, const frame3f& frame);
