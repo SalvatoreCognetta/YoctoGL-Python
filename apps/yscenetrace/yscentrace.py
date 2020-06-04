@@ -161,7 +161,7 @@ def main(*argv):
   camera_name = ""
   # imfilename  = "out.hdr"
   filename    = "surface.json"
-  imfilename  = "out/lowres/01_surface_720_256.jpg"
+  imfilename  = "out.jpg"
   if len(argv) > 0 and len(argv[0]) > 1:
     if (argv[0][1]).startswith('tests/'):
       filename    = argv[0][1]

@@ -101,11 +101,11 @@ def make_shape_preset(points, lines, triangles, quads, quadspos, quadsnorm,
     shp.make_sphere(quads, positions, normals, texcoords, 32, 0.075)
     for p in positions: p = p + mth.vec3f(0, 0.075, 0)
   elif type_yocto == "test-hairball1":
-    base_triangles = []
-    base_quads = []
-    base_positions = []
-    base_normals = []
-    base_texcoords = []
+    base_triangles = mth.VectorVec3i()
+    base_quads     = mth.VectorVec4i()
+    base_positions = mth.VectorVec3f()
+    base_normals   = mth.VectorVec3f()
+    base_texcoords = mth.VectorVec2f()
     shp.make_sphere(base_quads, base_positions, base_normals, base_texcoords, 32, 0.075*0.8 , 1)
     for p in positions: p = p + mth.vec3f(0, 0.075, 0)
     shp.make_hair(lines, positions, normals, texcoords, radius, base_triangles, 
@@ -113,11 +113,11 @@ def make_shape_preset(points, lines, triangles, quads, quadspos, quadsnorm,
         mth.vec2f( 0.1*0.15, 0.1*0.15), mth.vec2f(0.1*0.15, 0.1*0.15),
         mth.vec2f(0.03, 100))
   elif type_yocto == "test-hairball2":
-    base_triangles = []
-    base_quads = []
-    base_positions = []
-    base_normals = []
-    base_texcoords = []
+    base_triangles = mth.VectorVec3i()
+    base_quads     = mth.VectorVec4i()
+    base_positions = mth.VectorVec3f()
+    base_normals   = mth.VectorVec3f()
+    base_texcoords = mth.VectorVec2f()
     shp.make_sphere(base_quads, base_positions, base_normals, base_texcoords, 
         32, 0.075*0.8 , 1)
     for p in positions: p = p + mth.vec3f(0, 0.075, 0)
@@ -125,11 +125,11 @@ def make_shape_preset(points, lines, triangles, quads, quadspos, quadsnorm,
         base_quads, base_positions, base_normals, base_texcoords, mth.vec2i(4, 65536),
         mth.vec2f( 0.1*0.15, 0.1*0.15), mth.vec2f(0.1*0.15, 0.1*0.15))
   elif type_yocto == "test-hairball3":
-    base_triangles = []
-    base_quads = []
-    base_positions = []
-    base_normals = []
-    base_texcoords = []
+    base_triangles = mth.VectorVec3i()
+    base_quads     = mth.VectorVec4i()
+    base_positions = mth.VectorVec3f()
+    base_normals   = mth.VectorVec3f()
+    base_texcoords = mth.VectorVec2f()
     shp.make_sphere(base_quads, base_positions, base_normals, base_texcoords, 
         32, 0.075*0.8 , 1)
     for p in positions: p = p + mth.vec3f(0, 0.075, 0)
@@ -180,9 +180,9 @@ def make_shape_preset(points, lines, triangles, quads, quadspos, quadsnorm,
 # Shape presets for testing
 def make_shape_preset1(points, lines, triangles, quads, 
     positions, normals, texcoords, colors, radius, type_yocto, error):
-  quadspos = []
-  quadsnorm = []
-  quadstexcoord = []
+  quadspos      = mth.VectorVec4i()
+  quadsnorm     = mth.VectorVec4i()
+  quadstexcoord = mth.VectorVec4i()
   ret_flag, points, lines, triangles, quads, quadspos, quadsnorm, quadstexcoord, positions, normals, texcoords, colors, radius, type_yocto, error = make_shape_preset(points, lines, triangles, quads, quadspos, quadsnorm, quadstexcoord, positions, normals, texcoords, colors, radius, type_yocto, error)
   if not ret_flag:
     return False, points, lines, triangles, quads, positions, normals, texcoords, colors, radius, type_yocto, error 
@@ -193,12 +193,12 @@ def make_shape_preset1(points, lines, triangles, quads,
  # Shape presets for testing
 def make_shape_preset2(quadspos, quadsnorm, quadstexcoord, positions,
     normals, texcoords, type_yocto, error):
-  points    = []
-  lines     = []
-  triangles = []
-  quads     = []
-  colors    = []
-  radius    = []
+  points    = mth.VectorInt()
+  lines     = mth.VectorVec2i()
+  triangles = mth.VectorVec3i()
+  quads     = mth.VectorVec4i()
+  colors    = mth.VectorVec3f()
+  radius    = mth.VectorFloat()
 
   ret_flag, points, lines, triangles, quads, quadspos, quadsnorm, quadstexcoord, positions, normals, texcoords, colors, radius, type_yocto, error  = make_shape_preset(points, lines, triangles, quads, quadspos, quadsnorm, quadstexcoord, positions, normals, texcoords, colors, radius, type_yocto, error)
   if not ret_flag:
@@ -257,24 +257,24 @@ def main(*argv):
   commonio.add_option(cli, "--output,-o", output, "output mesh", False)
   commonio.add_option(cli, "mesh", filename, "input mesh", True)
 
-  positions= []
-  normals = []
-  texcoords = []
-  colors = []
-  radius = []
-  points = []
-  lines = []
-  triangles = []
-  quads = []
-  quadspos = []
-  quadsnorm = []
-  quadstexcoord = []
+  positions     = mth.VectorVec3f()
+  normals       = mth.VectorVec3f()
+  texcoords     = mth.VectorVec2f()
+  colors        = mth.VectorVec3f()
+  radius        = mth.VectorFloat()
+  points        = mth.VectorInt()
+  lines         = mth.VectorVec2i()
+  triangles     = mth.VectorVec3i()
+  quads         = mth.VectorVec4i()
+  quadspos      = mth.VectorVec4i()
+  quadsnorm     = mth.VectorVec4i()
+  quadstexcoord = mth.VectorVec4i()
 
   ioerror = ""
   commonio.print_progress("load shape", 0, 1)
   if not facevarying:
-    ext = fs.path_extension(filename) # ".ypreset" 
-    basename = fs.path_stem(filename) # "default-hairball"
+    ext = fs.path_extension(filename)
+    basename = fs.path_stem(filename)
     if ext == ".ypreset":
       ret_flag, points, lines, triangles, quads, positions, normals, texcoords, colors, radius, basename, ioerror = make_shape_preset1(points, lines, triangles, quads, positions, 
               normals, texcoords, colors, radius, basename, ioerror)
@@ -299,12 +299,12 @@ def main(*argv):
 
   # remove data
   if positiononly:
-    normals = []
-    texcoords =[]
-    colors = []
-    radius = []
-    quadsnorm = []
-    quadstexcoord = []
+    normals       = mth.VectorVec3f()
+    texcoords     = mth.VectorVec2f()
+    colors        = mth.VectorVec3f()
+    radius        = mth.VectorFloat()
+    quadsnorm     = mth.VectorVec4i()
+    quadstexcoord = mth.VectorVec4i()
     if quadsnorm: mth.swap(quads, quadspos)
 
   # convert data
@@ -313,7 +313,7 @@ def main(*argv):
       raise "cannot convert facevarying data to triangles"
     if quads:
       triangles = shp.quads_to_triangles(quads)
-      quads = []
+      quads = mth.VectorVec4i()
   
   # print info
   if info:
@@ -354,16 +354,16 @@ def main(*argv):
   # remove normals
   if faceted:
     commonio.print_progress("facet shape", 0, 1)
-    normals = []
-    quadsnorm = []
+    normals   = mth.VectorVec3f()
+    quadsnorm = mth.VectorVec4i()
     commonio.print_progress("facet shape", 1, 1)
   
   # compute geodesic and store them as colors
   if geodesic_source >= 0 or num_geodesic_samples > 0:
     commonio.print_progress("compute geodesic", 0, 1)
     adjacencies = shp.face_adjacencies(triangles)
-    solver = shp.make_geodesic_solver(triangles, adjacencies, positions)
-    sources = []
+    solver  = shp.make_geodesic_solver(triangles, adjacencies, positions)
+    sources = mth.VectorInt()
     if geodesic_source >= 0:
       sources = [geodesic_source]
     else:
@@ -408,8 +408,8 @@ def main(*argv):
     paths.append(shp.integrate_field(
       triangles, positions, adjacencies, tags, 0, fields[0], p2, p0))
     
-    plines     = []
-    ppositions = []
+    plines     = mth.VectorVec2i()
+    ppositions = mth.VectorVec3f()
     for i in range(0,3):
       pos = shp.make_positions_from_path(paths[i], positions)
       line = []
@@ -422,15 +422,15 @@ def main(*argv):
         plines.insert(plines[-1], l)
       for p in pos:
         ppositions.insert(ppositions[-1], p)
-    points    = []
+    points    = mth.VectorInt()
     lines     = plines
-    triangles = []
-    quads     = []
+    triangles = mth.VectorVec3i()
+    quads     = mth.VectorVec4i()
     positions = ppositions
-    normals   = []
-    texcoords = []
-    colors    = []
-    radius    = []
+    normals   = mth.VectorVec3f()
+    texcoords = mth.VectorVec2f()
+    colors    = mth.VectorVec3f()
+    radius    = mth.VectorFloat()
     commonio.print_progress("cut mesh", 1, 1)
   
   if info:

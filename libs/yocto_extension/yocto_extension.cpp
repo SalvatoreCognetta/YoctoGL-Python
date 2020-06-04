@@ -75,11 +75,18 @@ using math::zero4i;
 
 }  // namespace yocto::extension
 
+PYBIND11_MAKE_OPAQUE(std::vector<int>);
+PYBIND11_MAKE_OPAQUE(std::vector<float>);
+PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec2f>);
+PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec3f>);
+PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec2i>);
+PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec3i>);
+PYBIND11_MAKE_OPAQUE(std::vector<yocto::math::vec4i>);
+
 // -----------------------------------------------------------------------------
 // IMPLEMENTATION FOR EXTENSION
 // -----------------------------------------------------------------------------
 namespace yocto::extension {
-namespace py = pybind11;
 
 // -----------------------------------------------------------------------------
 // YOCTO-MATH
@@ -88,6 +95,10 @@ PYBIND11_MODULE(py_math, m) {
 
   m.def("swap", [](vec4i& source, vec4i& dest) {
     swap(source, dest);
+  });
+
+  m.def("vector_vec3f", []() -> std::vector<vec3f> {
+    return std::vector<vec3f>{};
   });
 
   // -----------------------------------------------------------------------------
@@ -310,6 +321,13 @@ PYBIND11_MODULE(py_math, m) {
   // RANDOM NUMBER GENERATION
   // -----------------------------------------------------------------------------
 
+  py::bind_vector<std::vector<int>>(m, "VectorInt", py::module_local(false));
+  py::bind_vector<std::vector<float>>(m, "VectorFloat", py::module_local(false));
+  py::bind_vector<std::vector<vec2f>>(m, "VectorVec2f", py::module_local(false));
+  py::bind_vector<std::vector<vec3f>>(m, "VectorVec3f", py::module_local(false));
+  py::bind_vector<std::vector<vec2i>>(m, "VectorVec2i", py::module_local(false));
+  py::bind_vector<std::vector<vec3i>>(m, "VectorVec3i", py::module_local(false));
+  py::bind_vector<std::vector<vec4i>>(m, "VectorVec4i", py::module_local(false));
 }
 
 
@@ -438,7 +456,9 @@ PYBIND11_MODULE(py_shape, m) {
   // SHAPE EXAMPLES
   // -----------------------------------------------------------------------------
   // Make a Plane
-  m.def("make_rect", &shp::make_rect, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
+  m.def("make_rect", (void (*)(std::vector<vec4i>&, std::vector<vec3f>&, std::vector<vec3f>&, 
+        std::vector<vec2f>&, const vec2i&, const vec2f&, const vec2f&))&shp::make_rect, 
+                      py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec2i(1, 1), py::arg("scale") = vec2f(1, 1), py::arg("uvscale") = vec2f(1, 1));
   m.def("make_bulged_rect", &shp::make_bulged_rect, py::arg("quads"), py::arg("positions"), py::arg("normals"), py::arg("texcoords"),
                       py::arg("steps") = vec2i(1, 1), py::arg("scale") = vec2f(1, 1), py::arg("uvscale") = vec2f(1, 1), py::arg("radius") = 0.3);
