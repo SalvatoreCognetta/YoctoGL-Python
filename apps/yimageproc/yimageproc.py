@@ -62,7 +62,8 @@ def parse_cli(args):
       output = args[i+1]
     i += 1
 
-  return filename, output, tonemap_on, tonemap_exposure, tonemap_filmic, logo, resize_width, resize_height, spatial_sigma, range_sigma, alpha_to_color, alpha_filename, diff_filename, diff_signal, diff_threshold
+  return filename, output, tonemap_on, tonemap_exposure, tonemap_filmic, logo, resize_width, resize_height, spatial_sigma, range_sigma, alpha_to_color, alpha_filename, coloralpha_filename, diff_filename, diff_signal, diff_threshold
+
 def filter_bilateral(image,
     spatial_sigma, range_sigma,
     features, features_sigma):
@@ -266,7 +267,7 @@ def main(*argv):
   output              = "out.png"
   filename            = "img.hdr"
 
-  filename, output, tonemap_on, tonemap_exposure, tonemap_filmic, logo, resize_width, resize_height, spatial_sigma, range_sigma, alpha_to_color, alpha_filename, diff_filename, diff_signal, diff_threshold = parse_cli(argv[0][1:])
+  filename, output, tonemap_on, tonemap_exposure, tonemap_filmic, logo, resize_width, resize_height, spatial_sigma, range_sigma, alpha_to_color, alpha_filename, coloralpha_filename, diff_filename, diff_signal, diff_threshold = parse_cli(argv[0][1:])
 
   # parse command line
   cli = commonio.make_cli("yimgproc", "Transform images")

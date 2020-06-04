@@ -5,7 +5,6 @@ import py_pathtrace as ptr
 import py_commonio  as commonio
 import py_sceneio   as sio
 import py_filesystem   as fs
-import py_test as t
 import sys
 
 def parse_cli(args, params: ptr.trace_params):
